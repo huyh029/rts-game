@@ -1,0 +1,15 @@
+# Files Modified - Phase 1: Remove Lua System
+
+## CMake Build Files (2 files):
+- rts/Lua/CMakeLists.txt - Commented out LuaRules, LuaUI, LuaGaia, LuaMenu, LuaInputReceiver, LuaRulesParams, LuaUICommand
+- rts/Menu/CMakeLists.txt - Commented out LuaMenuController
+
+## Core Game Files (1 file):
+- rts/Game/Game.cpp
+  - Removed #includes for LuaGaia, LuaInputReceiver, LuaMenu, LuaRules, LuaUI
+  - Stubbed LoadLua() method - no longer loads any Lua components
+  - Stubbed KillLua() method - removed FreeHandler() calls for LuaUI, LuaGaia, LuaRules
+  - Removed Lua CheckStack() and CheckAction() calls in UpdateUnsynced()
+  - Removed luaMenu GotChatMsg() call in HandleChatMsg()
+
+Total modified: 3 files

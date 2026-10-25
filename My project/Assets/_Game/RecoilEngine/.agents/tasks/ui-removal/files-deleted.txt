@@ -1,0 +1,23 @@
+# Files Deleted - Phase 1: Remove Lua System
+
+## Lua System Files (14 files):
+- rts/Lua/LuaMenu.cpp
+- rts/Lua/LuaMenu.h
+- rts/Lua/LuaInputReceiver.cpp
+- rts/Lua/LuaInputReceiver.h
+- rts/Lua/LuaRules.cpp
+- rts/Lua/LuaRules.h
+- rts/Lua/LuaUI.cpp
+- rts/Lua/LuaUI.h
+- rts/Lua/LuaRulesParams.cpp
+- rts/Lua/LuaRulesParams.h
+- rts/Lua/LuaUICommand.cpp
+- rts/Lua/LuaUICommand.h
+- rts/Lua/LuaGaia.cpp
+- rts/Lua/LuaGaia.h
+
+## Menu System Files (2 files):
+- rts/Menu/LuaMenuController.cpp
+- rts/Menu/LuaMenuController.h
+
+Total deleted: 16 files
