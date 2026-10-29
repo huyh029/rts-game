@@ -1,0 +1,25 @@
+#pragma kernel Cull
+#include "../Scripts/RecoilPathfinding/Shaders/RecoilGpuImpostorData.hlsl"
+StructuredBuffer<RecoilGpuImpostorInstance> _RecoilInstances;
+AppendStructuredBuffer<uint> _RecoilVisible;
+uint _Count;
+float4 _Planes[6];
+float4 _LocalSphere;
+float3 _CameraPosition;
+float _MaxDistance;
+[numthreads(64, 1, 1)]
+void Cull(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= _Count) return;
+    RecoilGpuImpostorInstance unit = _RecoilInstances[id.x];
+    if (unit.Flags.x < 0.5) return;
+    float3 center = mul(unit.ObjectToWorld, float4(_LocalSphere.xyz, 1)).xyz;
+    float scale = max(length(mul((float3x3)unit.ObjectToWorld, float3(1,0,0))),
+        max(length(mul((float3x3)unit.ObjectToWorld, float3(0,1,0))),
+            length(mul((float3x3)unit.ObjectToWorld, float3(0,0,1)))));
+    float radius = _LocalSphere.w * scale;
+    if (_MaxDistance > 0 && distance(center, _CameraPosition) > _MaxDistance + radius) return;
+    for (uint p = 0; p < 6; p++)
+        if (dot(_Planes[p].xyz, center) + _Planes[p].w < -radius) return;
+    _RecoilVisible.Append(id.x);
+}
