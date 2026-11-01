@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3b8f76d9dd44acb138d1533cfba261, type: 3}
+  m_Name: KY_BINH_red_Impostor
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilImpostorSpriteLibrary
+  SourcePrefab: {fileID: 4301879766643548551, guid: a9adb629f322b1942b9dc9e9aa83b106, type: 3}
+  FrameWidth: 128
+  FrameHeight: 256
+  FramesPerState: 8
+  HorizontalDirections: 8
+  ElevatedDirections: 8
+  ElevatedViewAngle: 55
+  CaptureOffset: {x: 0, y: 0, z: 0}
+  OrthographicScale: 1
+  Animations:
+  - State: Idle
+    SourceClip: Armature_TUONG03|KYBINH_idle
+    Atlas: {fileID: 2800000, guid: 5db433b7a49e51f428410aca97fbce9d, type: 3}
+    Duration: 4.9583335
+    Loop: 1
+  - State: Run
+    SourceClip: Armature_TUONG03|KYBiNH_run (1)
+    Atlas: {fileID: 2800000, guid: 74f7a286fd876574aae9863a08d282b0, type: 3}
+    Duration: 2
+    Loop: 1
+  - State: Attack
+    SourceClip: Armature_TUONG03|KYBINH_attack_02
+    Atlas: {fileID: 2800000, guid: a32bb3ce5c8d92c41b7fc2272cbb8b1f, type: 3}
+    Duration: 1.8333334
+    Loop: 0
+  - State: Death
+    SourceClip: KY_BINH_red__Death
+    Atlas: {fileID: 2800000, guid: f21555a817b6c6d4d834925809bc539d, type: 3}
+    Duration: 6.9583335
+    Loop: 0

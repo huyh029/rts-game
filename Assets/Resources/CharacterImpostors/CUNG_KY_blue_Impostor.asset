@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3b8f76d9dd44acb138d1533cfba261, type: 3}
+  m_Name: CUNG_KY_blue_Impostor
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilImpostorSpriteLibrary
+  SourcePrefab: {fileID: 5433705014315375280, guid: e1eac32434370cd42bec060dd3d810e3, type: 3}
+  FrameWidth: 128
+  FrameHeight: 256
+  FramesPerState: 5
+  WorldWidth: 1.5903823
+  WorldHeight: 1.787376
+  HorizontalDirections: 8
+  ElevatedDirections: 8
+  ElevatedViewAngle: 55
+  CaptureOffset: {x: 0, y: 0, z: 0}
+  OrthographicScale: 1
+  Animations:
+  - State: Idle
+    SourceClip: root|CUNGKY_IDLE
+    Atlas: {fileID: 2800000, guid: 8ebacf65eed31a34787f7309f9b53308, type: 3}
+    Frames: 5
+    Duration: 5.0833335
+    Loop: 1
+  - State: Run
+    SourceClip: root|CUNGKY_RUN
+    Atlas: {fileID: 2800000, guid: 970a1670654ddac4eafe433381c7a06b, type: 3}
+    Frames: 5
+    Duration: 0.875
+    Loop: 1
+  - State: Attack
+    SourceClip: root|CUNGKY_ATTACK
+    Atlas: {fileID: 2800000, guid: 8fa15ef48c4457640b894f9a6b68df54, type: 3}
+    Frames: 5
+    Duration: 1.625
+    Loop: 0
+  - State: Death
+    SourceClip: CUNG_KY_blue__Death
+    Atlas: {fileID: 2800000, guid: 2d6c2aaef40ecef4cbf41328440c3d52, type: 3}
+    Frames: 5
+    Duration: 8.25
+    Loop: 0

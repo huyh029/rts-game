@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a7de98e49d4f328b81c7f1e32651bf, type: 3}
+  m_Name: RecoilTerrainBackend
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilTerrainBackendSettings
+  terrainMap: {fileID: 11400000, guid: 1ea173efe64302c4f80b90283550c37c, type: 2}
+  maxLeafCells: 32

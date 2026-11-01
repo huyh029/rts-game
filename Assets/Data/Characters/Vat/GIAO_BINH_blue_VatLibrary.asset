@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441976eb301e35147b3443129aeb39a8, type: 3}
+  m_Name: GIAO_BINH_blue_VatLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilVatLibrary
+  SourcePrefab: {fileID: 2505529736720149912, guid: a3fbd5efd30a13141a205f10237ec6bc, type: 3}
+  BakedMesh: {fileID: 4300000, guid: c7d154d27eeedab47971eae94e033de7, type: 2}
+  PositionTexture: {fileID: 2800000, guid: da791dccbcbcd9a4da2c928ce117b170, type: 2}
+  NormalTexture: {fileID: 2800000, guid: e66aefae6ea68a0459f41cae1b666ed4, type: 2}
+  SourceMaterials:
+  - {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+  - {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+  - {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+  - {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+  - {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+  - {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+  VertexCount: 32300
+  TextureWidth: 4096
+  RowsPerFrame: 8
+  Clips:
+  - State: Idle
+    RowOffset: 0
+    FrameCount: 51
+    Duration: 2.5416667
+    Loop: 1
+  - State: Run
+    RowOffset: 51
+    FrameCount: 15
+    Duration: 0.7083334
+    Loop: 1
+  - State: Attack
+    RowOffset: 66
+    FrameCount: 18
+    Duration: 0.875
+    Loop: 0
+  - State: Death
+    RowOffset: 84
+    FrameCount: 162
+    Duration: 8.083334
+    Loop: 0

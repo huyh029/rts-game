@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3b8f76d9dd44acb138d1533cfba261, type: 3}
+  m_Name: QUAN_SU_red_Impostor
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilImpostorSpriteLibrary
+  SourcePrefab: {fileID: 5409185216448347608, guid: 541c29d39f6806e499359def484bcfe7, type: 3}
+  FrameWidth: 128
+  FrameHeight: 256
+  FramesPerState: 5
+  WorldWidth: 2.6653697
+  WorldHeight: 1.8707328
+  HorizontalDirections: 8
+  ElevatedDirections: 8
+  ElevatedViewAngle: 55
+  CaptureOffset: {x: 0, y: 0, z: 0}
+  OrthographicScale: 1
+  Animations:
+  - State: Idle
+    SourceClip: Armature.001|quansu_idle
+    Atlas: {fileID: 2800000, guid: c553c4b53e65ea040b8d2e8f73ae258d, type: 3}
+    Frames: 5
+    Duration: 2.375
+    Loop: 1
+  - State: Run
+    SourceClip: Armature.001|quansu_run
+    Atlas: {fileID: 2800000, guid: 58b741d3a62e84f4d84ebc7ed18bd8f7, type: 3}
+    Frames: 5
+    Duration: 0.7083334
+    Loop: 1
+  - State: Attack
+    SourceClip: Armature.001|quansu_attack_01
+    Atlas: {fileID: 2800000, guid: d9a29e5b057696a4aaaabe716c3cfeef, type: 3}
+    Frames: 5
+    Duration: 1.875
+    Loop: 0
+  - State: Death
+    SourceClip: QUAN_SU_red__Death
+    Atlas: {fileID: 2800000, guid: c6560fcabde44094f985da44ddc5e2ed, type: 3}
+    Frames: 5
+    Duration: 6.9583335
+    Loop: 0

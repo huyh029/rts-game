@@ -1,0 +1,958 @@
+fileFormatVersion: 2
+guid: 6ca759db6de747d40893cbbfde5de650
+ModelImporter:
+  serializedVersion: 24300
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+    searchTexturesGlobally: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'TRS|Idle 2' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'spine1_hiResSpine5' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'spine1_hiResHips'
+      has translation animation that will be discarded.\n\t'spine1_hiResHips' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'TRS|TRS|death' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2'
+      has translation animation that will be discarded.\n\t'spine1_hiResSpine4' has
+      scale animation that will be discarded.\n\t'spine1_hiResSpine5' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'rightLeg1_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'rightLeg1_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'rightLeg1_LoResFoot' has scale
+      animation that will be discarded.\n\t'head1_head' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n\t'spine1_hiResHips' has
+      translation animation that will be discarded.\n\t'spine1_hiResHips' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'leftLeg2_LoResLowerLeg'
+      has scale animation that will be discarded.\n\nClip 'TRS|TRS|hit back' has
+      import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2'
+      has translation animation that will be discarded.\n\t'spine1_hiResSpine2' has
+      scale animation that will be discarded.\n\t'spine1_hiResSpine3' has scale animation
+      that will be discarded.\n\t'spine1_hiResSpine4' has scale animation that will
+      be discarded.\n\t'spine1_hiResSpine5' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\t'leftLeg1_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'leftLeg1_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'leftLeg1_LoResFoot' has scale animation
+      that will be discarded.\n\t'rightLeg1_LoResFoot' has scale animation that will
+      be discarded.\n\t'head1_head' is inbetween humanoid transforms and has rotation
+      animation that will be discarded.\n\t'head1_head' has scale animation that
+      will be discarded.\n\t'LeftEar01' has scale animation that will be discarded.\n\t'RrightEar01'
+      has scale animation that will be discarded.\n\t'jaw' has scale animation that
+      will be discarded.\n\t'spine1_hiResHips' has translation animation that will
+      be discarded.\n\t'spine1_hiResHips' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\nClip 'TRS|TRS|hit back.001' has
+      import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2'
+      has translation animation that will be discarded.\n\t'spine1_hiResSpine2' has
+      scale animation that will be discarded.\n\t'spine1_hiResSpine3' has scale animation
+      that will be discarded.\n\t'spine1_hiResSpine4' has scale animation that will
+      be discarded.\n\t'spine1_hiResSpine5' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\t'leftLeg1_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'leftLeg1_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'leftLeg1_LoResFoot' has scale animation
+      that will be discarded.\n\t'rightLeg1_LoResFoot' has scale animation that will
+      be discarded.\n\t'head1_head' is inbetween humanoid transforms and has rotation
+      animation that will be discarded.\n\t'head1_head' has scale animation that
+      will be discarded.\n\t'LeftEar01' has scale animation that will be discarded.\n\t'RrightEar01'
+      has scale animation that will be discarded.\n\t'jaw' has scale animation that
+      will be discarded.\n\t'spine1_hiResHips' has translation animation that will
+      be discarded.\n\t'spine1_hiResHips' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\nClip 'TRS|TRS|hit back.002' has
+      import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2'
+      has translation animation that will be discarded.\n\t'spine1_hiResSpine2' has
+      scale animation that will be discarded.\n\t'spine1_hiResSpine3' has scale animation
+      that will be discarded.\n\t'spine1_hiResSpine4' has scale animation that will
+      be discarded.\n\t'spine1_hiResSpine5' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\t'leftLeg1_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'leftLeg1_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'leftLeg1_LoResFoot' has scale animation
+      that will be discarded.\n\t'rightLeg1_LoResFoot' has scale animation that will
+      be discarded.\n\t'head1_head' is inbetween humanoid transforms and has rotation
+      animation that will be discarded.\n\t'head1_head' has scale animation that
+      will be discarded.\n\t'LeftEar01' has scale animation that will be discarded.\n\t'RrightEar01'
+      has scale animation that will be discarded.\n\t'jaw' has scale animation that
+      will be discarded.\n\t'spine1_hiResHips' has translation animation that will
+      be discarded.\n\t'spine1_hiResHips' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\nClip 'TRS|TRS|idle' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2' has translation
+      animation that will be discarded.\n\t'spine1_hiResSpine5' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'rightLeg1_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'rightLeg1_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'head1_head' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'spine1_hiResHips'
+      has translation animation that will be discarded.\n\t'spine1_hiResHips' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'leftLeg2_LoResLowerLeg'
+      has scale animation that will be discarded.\n\t'leftLeg2_LoResFoot' has scale
+      animation that will be discarded.\n\nClip 'TRS|TRS|run' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2' has translation
+      animation that will be discarded.\n\t'spine1_hiResSpine5' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'rightLeg1_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'rightLeg1_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'head1_head' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'spine1_hiResHips'
+      has translation animation that will be discarded.\n\t'spine1_hiResHips' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'rightLeg2_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'rightLeg2_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'rightLeg2_LoResFoot' has scale
+      animation that will be discarded.\n\nClip 'TRS|TRS|run attack' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2' has translation
+      animation that will be discarded.\n\t'spine1_hiResSpine5' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'rightLeg1_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'rightLeg1_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'head1_head' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'spine1_hiResHips'
+      has translation animation that will be discarded.\n\t'spine1_hiResHips' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'rightLeg2_LoResUpperLeg'
+      has scale animation that will be discarded.\n\t'rightLeg2_LoResLowerLeg' has
+      scale animation that will be discarded.\n\t'rightLeg2_LoResFoot' has scale
+      animation that will be discarded.\n\nClip 'TRS|TRS|walk' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'spine1_hiResSpine2' has translation
+      animation that will be discarded.\n\t'spine1_hiResSpine5' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'head1_head'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'spine1_hiResHips'
+      has translation animation that will be discarded.\n\t'spine1_hiResHips' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: TRS|TRS|run (1)
+      takeName: TRS|TRS|run
+      internalID: 5988669773878956973
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|death
+      takeName: TRS|TRS|death
+      internalID: -1310413108968658022
+      firstFrame: 0
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|hit back
+      takeName: TRS|TRS|hit back
+      internalID: -9011009973131282781
+      firstFrame: 0
+      lastFrame: 17
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|hit back.001
+      takeName: TRS|TRS|hit back.001
+      internalID: -5927850759361583606
+      firstFrame: 0
+      lastFrame: 17
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|hit back.002
+      takeName: TRS|TRS|hit back.002
+      internalID: -4961166612000923832
+      firstFrame: 0
+      lastFrame: 17
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|idle
+      takeName: TRS|TRS|idle
+      internalID: -8297718526992567904
+      firstFrame: 0
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|run
+      takeName: TRS|TRS|run
+      internalID: -5599690127714692692
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|run attack
+      takeName: TRS|TRS|run attack
+      internalID: 7438804426833534943
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: TRS|TRS|walk
+      takeName: TRS|TRS|walk
+      internalID: 5039413329614353259
+      firstFrame: 0
+      lastFrame: 43
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: spine1_hiResSpine1
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: leftLeg2_LoResUpperLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rightLeg2_LoResUpperLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: leftLeg2_LoResLowerLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rightLeg2_LoResLowerLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: leftLeg2_LoResFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rightLeg2_LoResFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine1_hiResSpine2
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine1_hiResSpine3
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: head1_neck
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: leftLeg1_LoResUpperLeg
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rightLeg1_LoResUpperLeg
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: leftLeg1_LoResLowerLeg
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rightLeg1_LoResLowerLeg
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: leftLeg1_LoResFoot
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rightLeg1_LoResFoot
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: leftLeg2_LoResToe
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: rightLeg2_LoResToe
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LeftEar01
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RrightEar01
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: jaw
+      humanName: Jaw
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: spine1_hiResSpine4
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: VOI_blue(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ElephantLP
+      parentName: VOI_blue(Clone)
+      position: {x: -0.7869351, y: 0, z: 0}
+      rotation: {x: -0.0000000069743957, y: 0.00000004371139, z: 3.6609288e-16, w: 1}
+      scale: {x: 0.7809846, y: 0.7809846, z: 0.7809846}
+    - name: ElephantLP_LOD1
+      parentName: VOI_blue(Clone)
+      position: {x: -0.7869351, y: 0, z: 0}
+      rotation: {x: -0.0000000069743957, y: 0.00000004371139, z: 3.6609288e-16, w: 1}
+      scale: {x: 0.7809846, y: 0.7809846, z: 0.7809846}
+    - name: ElephantLP_LOD2
+      parentName: VOI_blue(Clone)
+      position: {x: -0.7869351, y: 0, z: 0}
+      rotation: {x: -0.0000000069743957, y: 0.00000004371139, z: 3.6609288e-16, w: 1}
+      scale: {x: 0.7809846, y: 0.7809846, z: 0.7809846}
+    - name: ElephantLP_LOD3
+      parentName: VOI_blue(Clone)
+      position: {x: -0.7869351, y: 0, z: 0}
+      rotation: {x: -0.0000000069743957, y: 0.00000004371139, z: 3.6609288e-16, w: 1}
+      scale: {x: 0.7809846, y: 0.7809846, z: 0.7809846}
+    - name: TRS
+      parentName: VOI_blue(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071069, y: 5.3024508e-33, z: 5.3024522e-33, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: spine1_hiResSpine1
+      parentName: TRS
+      position: {x: 3.1664968e-10, y: 0.89551437, z: 2.22221}
+      rotation: {x: -0.012927313, y: 0.693438, z: 0.72029316, w: -0.012433191}
+      scale: {x: 1.0000465, y: 1.0000011, z: 1.0000463}
+    - name: spine1_hiResSpine2
+      parentName: spine1_hiResSpine1
+      position: {x: -0.000028738219, y: 0.6253263, z: 0.0007113994}
+      rotation: {x: 0.007038208, y: -0.00544549, z: 0.00022953594, w: 0.99996036}
+      scale: {x: 0.9999694, y: 1.0000007, z: 0.9999679}
+    - name: spine1_hiResSpine3
+      parentName: spine1_hiResSpine2
+      position: {x: 0.000000007623896, y: 0.6253582, z: -0.0000005692708}
+      rotation: {x: 0.018615458, y: -0.01822448, z: 0.00011310367, w: 0.9996607}
+      scale: {x: 1.0000114, y: 1.0000007, z: 1.0000114}
+    - name: spine1_hiResSpine4
+      parentName: spine1_hiResSpine3
+      position: {x: 0.000000004704343, y: 0.57823133, z: -0.0000005248871}
+      rotation: {x: 0.1602773, y: -0.007243824, z: -0.0030037148, w: 0.98704094}
+      scale: {x: 0.99994004, y: 1.0000008, z: 0.99993896}
+    - name: spine1_hiResSpine5
+      parentName: spine1_hiResSpine4
+      position: {x: -0.0000000033805554, y: 0.5782308, z: 0.00000083115293}
+      rotation: {x: -0.59612066, y: 0.001794165, z: 0.014263931, w: 0.80276614}
+      scale: {x: 1.0000098, y: 1.0000044, z: 1.0000058}
+    - name: leftLeg1_LoResUpperLeg
+      parentName: spine1_hiResSpine5
+      position: {x: 0.474976, y: 0.92288524, z: -0.0036381793}
+      rotation: {x: -0.40512562, y: -0.42372787, z: 0.5772647, w: -0.5684131}
+      scale: {x: 1.0000408, y: 1.0000386, z: 1.0000583}
+    - name: leftLeg1_LoResLowerLeg
+      parentName: leftLeg1_LoResUpperLeg
+      position: {x: -0.0000004196167, y: 1.0111575, z: -0.00000027656554}
+      rotation: {x: 0.0016236595, y: 0.36695212, z: -0.025048282, w: -0.9299011}
+      scale: {x: 0.9999444, y: 1.0000728, z: 1.0000752}
+    - name: leftLeg1_LoResFoot
+      parentName: leftLeg1_LoResLowerLeg
+      position: {x: 0.000055322645, y: 0.93243194, z: 0.00004305005}
+      rotation: {x: 0.0024845516, y: -0.1005538, z: 0.049325414, w: -0.99370503}
+      scale: {x: 0.9998542, y: 1.0000134, z: 0.9998649}
+    - name: leftLeg1_LoResToe
+      parentName: leftLeg1_LoResFoot
+      position: {x: -0.000000019073486, y: 0.29379362, z: -0.00000003904104}
+      rotation: {x: -0.000001215143, y: 0.4145844, z: -0.0000006045447, w: 0.91001093}
+      scale: {x: 1.0000064, y: 1.0000015, z: 1.0000975}
+    - name: leftLeg1_LoResToe_end
+      parentName: leftLeg1_LoResToe
+      position: {x: 0.00000007241964, y: 0.29379368, z: 0.000000023543834}
+      rotation: {x: 0.000000055331363, y: -0.00000008940694, z: -0.000000044512475, w: 1}
+      scale: {x: 1.000001, y: 1.0000027, z: 1.0000021}
+    - name: rightLeg1_LoResUpperLeg
+      parentName: spine1_hiResSpine5
+      position: {x: -0.47465548, y: 0.9228998, z: 0.016959716}
+      rotation: {x: 0.7049046, y: -0.7088919, z: -0.021426158, w: -0.011079563}
+      scale: {x: 1.0000091, y: 1.0000384, z: 1.0000266}
+    - name: rightLeg1_LoResLowerLeg
+      parentName: rightLeg1_LoResUpperLeg
+      position: {x: -0.0000003147125, y: 1.0111582, z: -0.00000011503696}
+      rotation: {x: 0.009403506, y: 0.3732126, z: -0.023074644, w: -0.92741114}
+      scale: {x: 0.99993676, y: 1.000071, z: 1.000068}
+    - name: rightLeg1_LoResFoot
+      parentName: rightLeg1_LoResLowerLeg
+      position: {x: 0.000000038146972, y: 0.93250847, z: -0.00000014781952}
+      rotation: {x: 0.004741325, y: -0.0894533, z: 0.06866614, w: -0.9936099}
+      scale: {x: 0.99991316, y: 1.0000042, z: 0.9999199}
+    - name: rightLeg1_LoResToe
+      parentName: rightLeg1_LoResFoot
+      position: {x: 0.000000008940696, y: 0.2937939, z: 0.000000017546117}
+      rotation: {x: 0.0000032247037, y: 0.4284228, z: 0.0000015918628, w: 0.9035784}
+      scale: {x: 1.0000008, y: 1.0000021, z: 1.0000796}
+    - name: rightLeg1_LoResToe_end
+      parentName: rightLeg1_LoResToe
+      position: {x: 0.000000033155082, y: 0.29379404, z: 0.000000016614795}
+      rotation: {x: -0.000000012048754, y: -0.00000020861619, z: 0.000000026497323, w: 1}
+      scale: {x: 1.0000001, y: 1.0000021, z: 1.0000014}
+    - name: head1_neck
+      parentName: spine1_hiResSpine5
+      position: {x: -0.00027032252, y: 0.92776805, z: -0.01320225}
+      rotation: {x: 0.7684883, y: -0.17924531, z: -0.26773477, w: 0.55282474}
+      scale: {x: 1.0000447, y: 1.0000238, z: 1.0000355}
+    - name: head1_head
+      parentName: head1_neck
+      position: {x: -0.00000004235655, y: 0.77491826, z: -0.00000037494115}
+      rotation: {x: -0.26409534, y: -0.28246576, z: 0.38467878, w: 0.83814615}
+      scale: {x: 1.0000135, y: 0.9999182, z: 0.9999591}
+    - name: LeftEar01
+      parentName: head1_head
+      position: {x: 0.38571602, y: -0.11449123, z: -0.5466919}
+      rotation: {x: -0.6609867, y: 0.3315005, z: -0.5762505, w: 0.34805095}
+      scale: {x: 1.0000486, y: 1.0000523, z: 1.0000445}
+    - name: LeftEar02
+      parentName: LeftEar01
+      position: {x: -0.0000001335144, y: 0.5745358, z: -0.000000114440915}
+      rotation: {x: -0.13726027, y: -0.3169275, z: -0.2929775, w: 0.8915609}
+      scale: {x: 1.0000607, y: 0.9999709, z: 0.99991506}
+    - name: LeftEar03
+      parentName: LeftEar02
+      position: {x: 0.00000014781952, y: 0.73286164, z: -0.00000017166137}
+      rotation: {x: 0.000000044703462, y: -0.28284386, z: -0.000000014901154, w: 0.95916593}
+      scale: {x: 0.9999433, y: 0.9999999, z: 1.0000112}
+    - name: LeftEar03_end
+      parentName: LeftEar03
+      position: {x: -0.00000044107435, y: 0.73286206, z: 0}
+      rotation: {x: -0.00000018076585, y: -0.000000029802308, z: 0.000000045537412, w: 1}
+      scale: {x: 1.0000006, y: 1.0000008, z: 1.0000004}
+    - name: RrightEar01
+      parentName: head1_head
+      position: {x: 0.044766445, y: -0.119319245, z: 0.6667377}
+      rotation: {x: 0.74745816, y: -0.019058, z: 0.46190888, w: 0.477057}
+      scale: {x: 0.9999429, y: 1.0000303, z: 1.000008}
+    - name: RrightEar02
+      parentName: RrightEar01
+      position: {x: -0.00000057220456, y: 0.57453394, z: -0.00000047683716}
+      rotation: {x: -0.31018567, y: 0.21762295, z: -0.091972105, w: -0.92085075}
+      scale: {x: 1.0000583, y: 1.0000042, z: 0.9999396}
+    - name: RrightEar03
+      parentName: RrightEar02
+      position: {x: 0.00000022888183, y: 0.7328607, z: 0.0000002479553}
+      rotation: {x: 0.00000005960463, y: 0.2828437, z: 0.000000029802315, w: -0.95916605}
+      scale: {x: 0.9999252, y: 0.9999997, z: 1.0001271}
+    - name: RrightEar03_end
+      parentName: RrightEar03
+      position: {x: -0.0000004339218, y: 0.7328606, z: 0.000000019073486}
+      rotation: {x: -0.00000007732668, y: 0.0000002682208, z: 0.000000053873574, w: 1}
+      scale: {x: 0.9999991, y: 1, z: 1.0000001}
+    - name: jaw
+      parentName: head1_head
+      position: {x: -0.3275822, y: 0.45378652, z: -0.096058175}
+      rotation: {x: 0.1914813, y: -0.76258785, z: 0.25248575, w: 0.5639554}
+      scale: {x: 0.9999841, y: 1.000057, z: 1.0000439}
+    - name: jaw_end
+      parentName: jaw
+      position: {x: -0.0000000035762786, y: 0.56783676, z: -0.00000013543293}
+      rotation: {x: 0.00000016391272, y: 0.000000059604623, z: -0, w: 1}
+      scale: {x: 0.99999994, y: 1.0000012, z: 1.0000013}
+    - name: proboscis01
+      parentName: head1_head
+      position: {x: -0.103002146, y: 1.2291055, z: -0.024045827}
+      rotation: {x: 0.2427082, y: -0.73111516, z: 0.31738043, w: 0.5530218}
+      scale: {x: 0.9999847, y: 1.0000377, z: 0.99996793}
+    - name: proboscis02
+      parentName: proboscis01
+      position: {x: -0.00000005483627, y: 0.33037695, z: -0.00000017523764}
+      rotation: {x: 0.100786835, y: 0.00000020861616, z: 0.000000014901154, w: 0.99490803}
+      scale: {x: 1.0000015, y: 1.0000145, z: 1.0000846}
+    - name: proboscis03
+      parentName: proboscis02
+      position: {x: 0.0000001001358, y: 0.39266253, z: -0.00000027477742}
+      rotation: {x: 0.053370405, y: -0.015735872, z: 0.011899192, w: 0.9983799}
+      scale: {x: 0.9999635, y: 1.0000201, z: 0.9999622}
+    - name: proboscis04
+      parentName: proboscis03
+      position: {x: 0.000000057220458, y: 0.36785302, z: 0.00000083208084}
+      rotation: {x: 0.08861036, y: 0.058520652, z: -0.03482882, w: 0.9937356}
+      scale: {x: 1.0000288, y: 1.0000658, z: 0.9999123}
+    - name: proboscis05
+      parentName: proboscis04
+      position: {x: 0.000000047683713, y: 0.36359653, z: 0.0000001001358}
+      rotation: {x: -0.05066291, y: 0.03665746, z: -0.0026310685, w: 0.99803936}
+      scale: {x: 0.9999888, y: 0.99987376, z: 1.0001051}
+    - name: proboscis06
+      parentName: proboscis05
+      position: {x: 0.00000015497207, y: 0.30667242, z: -0.0000005167723}
+      rotation: {x: 0.020666901, y: -0.20917624, z: 0.05329669, w: 0.9762058}
+      scale: {x: 1.0000092, y: 0.99992174, z: 1.0000619}
+    - name: proboscis07
+      parentName: proboscis06
+      position: {x: -0.000000047683713, y: 0.2352077, z: 0.000000320673}
+      rotation: {x: 0.005616446, y: 0.08079926, z: -0.0007799944, w: 0.99671435}
+      scale: {x: 1.0000706, y: 1.0000947, z: 0.9999002}
+    - name: proboscis08
+      parentName: proboscis07
+      position: {x: 0.00000012278556, y: 0.28230038, z: -0.000000022649765}
+      rotation: {x: 0.17946686, y: 0.0146014625, z: -0.0075497273, w: 0.98362666}
+      scale: {x: 0.9999955, y: 1.000043, z: 1.0000011}
+    - name: proboscis09
+      parentName: proboscis08
+      position: {x: -0.000000009536743, y: 0.268176, z: -0.000000069141386}
+      rotation: {x: -0.00000022351732, y: -0.22602993, z: -0.000000040978176, w: 0.97412044}
+      scale: {x: 0.9999034, y: 0.9999841, z: 1.0000055}
+    - name: proboscis09_end
+      parentName: proboscis09
+      position: {x: 0.000000166893, y: 0.26817623, z: -0.000000047683713}
+      rotation: {x: -0.000000019127768, y: -0, z: 0.000000115341805, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000008}
+    - name: spine1_hiResHips
+      parentName: spine1_hiResSpine1
+      position: {x: 0.000038290105, y: -0.17964727, z: -0.0009768198}
+      rotation: {x: -0.014863554, y: -0.5665051, z: 0.8237847, w: -0.015160839}
+      scale: {x: 1.0000002, y: 0.9999563, z: 0.999957}
+    - name: leftLeg2_LoResUpperLeg
+      parentName: spine1_hiResHips
+      position: {x: -0.4112829, y: 0.9353012, z: -0.11087511}
+      rotation: {x: 0.42109862, y: -0.46405324, z: -0.23340891, w: 0.7435394}
+      scale: {x: 1.0000153, y: 0.99994147, z: 0.99997395}
+    - name: leftLeg2_LoResLowerLeg
+      parentName: leftLeg2_LoResUpperLeg
+      position: {x: 0.00000047683716, y: 0.93144614, z: 0.000000076293944}
+      rotation: {x: -0.020109339, y: 0.3317733, z: 0.31364754, w: -0.8894647}
+      scale: {x: 1.0001674, y: 0.99997205, z: 0.9999245}
+    - name: leftLeg2_LoResFoot
+      parentName: leftLeg2_LoResLowerLeg
+      position: {x: 0.000000085830685, y: 0.9528409, z: -0.000000019073486}
+      rotation: {x: -0.030044205, y: -0.08306313, z: -0.8877984, w: -0.45167667}
+      scale: {x: 1.0000454, y: 1.0000163, z: 0.999969}
+    - name: leftLeg2_LoResToe
+      parentName: leftLeg2_LoResFoot
+      position: {x: 0.000000019073486, y: 0.32568043, z: 0.00000010669231}
+      rotation: {x: 0.0000005299224, y: 0.3161816, z: 0.00000021606677, w: 0.9486987}
+      scale: {x: 1.0001155, y: 1.0000007, z: 0.99986786}
+    - name: leftLeg2_LoResToe_end
+      parentName: leftLeg2_LoResToe
+      position: {x: -0.00000023171305, y: 0.32568064, z: 0.00000014349818}
+      rotation: {x: -0.000000070978686, y: 0.000000029802315, z: -0.00000003739928, w: 1}
+      scale: {x: 1, y: 1.0000005, z: 1.0000006}
+    - name: rightLeg2_LoResUpperLeg
+      parentName: spine1_hiResHips
+      position: {x: 0.4255723, y: 0.92832553, z: -0.11548025}
+      rotation: {x: 0.37947008, y: -0.48843473, z: -0.29750642, w: 0.7272716}
+      scale: {x: 1.0001138, y: 0.9999412, z: 1.000073}
+    - name: rightLeg2_LoResLowerLeg
+      parentName: rightLeg2_LoResUpperLeg
+      position: {x: 0.000000705719, y: 0.9314462, z: 0.00000017166137}
+      rotation: {x: -0.0199176, y: 0.33190036, z: 0.31325328, w: -0.8895605}
+      scale: {x: 1.0000527, y: 0.99996984, z: 0.9998065}
+    - name: rightLeg2_LoResFoot
+      parentName: rightLeg2_LoResLowerLeg
+      position: {x: 0.00000025749205, y: 0.95283955, z: 0.00000009059906}
+      rotation: {x: -0.12900452, y: -0.10787801, z: -0.8647217, w: -0.4732616}
+      scale: {x: 0.9999644, y: 1.0001514, z: 0.9999672}
+    - name: rightLeg2_LoResToe
+      parentName: rightLeg2_LoResFoot
+      position: {x: -0.00000019073485, y: 0.32568094, z: -0.000000095367426}
+      rotation: {x: 0.00000048801303, y: 0.34397054, z: 0.00000031664968, w: 0.93898046}
+      scale: {x: 1.0001128, y: 1.0000011, z: 0.99985707}
+    - name: rightLeg2_LoResToe_end
+      parentName: rightLeg2_LoResToe
+      position: {x: 0.00000010460615, y: 0.325681, z: -0.000000059455633}
+      rotation: {x: 0.00000006424499, y: 0.0000001490116, z: 0.000000019566981, w: 1}
+      scale: {x: 1.0000001, y: 1.0000015, z: 1.0000008}
+    - name: tail1_Joint1
+      parentName: spine1_hiResHips
+      position: {x: -0.014288515, y: 1.1990075, z: 0.22635154}
+      rotation: {x: 0.10234756, y: 0.7188969, z: -0.12431486, w: -0.6762087}
+      scale: {x: 1.0000237, y: 0.9999443, z: 0.9999828}
+    - name: tail1_Joint2
+      parentName: tail1_Joint1
+      position: {x: -0.00000018954276, y: 0.49831495, z: 0.000000026226044}
+      rotation: {x: -0.05645606, y: -0.067203514, z: -0.074624114, w: -0.9933417}
+      scale: {x: 1.0000409, y: 1.000029, z: 1.0000122}
+    - name: tail1_Joint3
+      parentName: tail1_Joint2
+      position: {x: 0.0000002837181, y: 0.49810866, z: 0.00000014305114}
+      rotation: {x: 0.034635548, y: 0.03290872, z: 0.05470062, w: 0.99735916}
+      scale: {x: 0.99990344, y: 0.99991214, z: 1.0000364}
+    - name: tail1_Joint4
+      parentName: tail1_Joint3
+      position: {x: 0.0000006151199, y: 0.49674192, z: 0}
+      rotation: {x: 0.0000001937151, y: -0.0014004, z: -0.000000074272975, w: 0.9999991}
+      scale: {x: 1.0000007, y: 1.0001068, z: 0.9999741}
+    - name: tail1_Joint4_end
+      parentName: tail1_Joint4
+      position: {x: -0.000000021457671, y: 0.4967421, z: -0.000000057220458}
+      rotation: {x: -0.00000008183064, y: 0.00000009720676, z: 0.00000008987086, w: 1}
+      scale: {x: 1.0000013, y: 1.0000017, z: 1.0000011}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

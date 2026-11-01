@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3b8f76d9dd44acb138d1533cfba261, type: 3}
+  m_Name: DAN_BINH_red_Impostor
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilImpostorSpriteLibrary
+  SourcePrefab: {fileID: 3594677941541393755, guid: a2ae5cac47dd3ae4cbfda27b7911803d, type: 3}
+  FrameWidth: 128
+  FrameHeight: 256
+  FramesPerState: 5
+  WorldWidth: 1.8986678
+  WorldHeight: 2.2898827
+  HorizontalDirections: 8
+  ElevatedDirections: 8
+  ElevatedViewAngle: 55
+  CaptureOffset: {x: 0, y: 0, z: 0}
+  OrthographicScale: 1
+  Animations:
+  - State: Idle
+    SourceClip: BO BINH.001|DAO_BINH_idle
+    Atlas: {fileID: 2800000, guid: c1d88f7b6d4eb2449b925f6c200e67b3, type: 3}
+    Frames: 5
+    Duration: 3.6666667
+    Loop: 1
+  - State: Run
+    SourceClip: BO BINH.001|DAO_BINH_RUN
+    Atlas: {fileID: 2800000, guid: 9a0c613cdcffe414793102be3d4f247c, type: 3}
+    Frames: 5
+    Duration: 0.7083334
+    Loop: 1
+  - State: Attack
+    SourceClip: BO BINH.001|DAO_BINH_ATTACK
+    Atlas: {fileID: 2800000, guid: 88e2873355683f4429249ff893060e0d, type: 3}
+    Frames: 5
+    Duration: 1.375
+    Loop: 0
+  - State: Death
+    SourceClip: DAN_BINH_red__Death
+    Atlas: {fileID: 2800000, guid: fbf0491bed8156045a5274053cc31f02, type: 3}
+    Frames: 5
+    Duration: 8.083334
+    Loop: 0

@@ -1,0 +1,16 @@
+BO_BINH_blue: LOD1/2/3: 3/3/3; LOD4 chấm: 1
+BO_BINH_red: LOD1/2/3: 3/3/3; LOD4 chấm: 1
+CUNG_KY_blue: LOD1/2/3: 2/1/1; LOD4 chấm: 1
+CUNG_KY_red: LOD1/2/3: 2/1/1; LOD4 chấm: 1
+DAN_BINH_blue: LOD1/2/3: 4/2/2; LOD4 chấm: 1
+DAN_BINH_red: LOD1/2/3: 2/2/2; LOD4 chấm: 1
+GIAO_BINH_blue: LOD1/2/3: 6/3/3; LOD4 chấm: 1
+GIAO_BINH_red: LOD1/2/3: 6/3/3; LOD4 chấm: 1
+KY_BINH_blue: LOD1/2/3: 6/3/3; LOD4 chấm: 1
+KY_BINH_red: LOD1/2/3: 6/3/3; LOD4 chấm: 1
+maybanda_v02_blue: LOD1/2/3: 6/3/3; LOD4 chấm: 1
+maybanda_v02_red: LOD1/2/3: 6/3/3; LOD4 chấm: 1
+QUAN_SU_blue: LOD1/2/3: 4/2/2; LOD4 chấm: 1
+QUAN_SU_red: LOD1/2/3: 2/2/2; LOD4 chấm: 1
+VOI_blue: LOD1/2/3: 2/1/1; LOD4 chấm: 1
+VOI_red: LOD1/2/3: 2/1/1; LOD4 chấm: 1

@@ -1,0 +1,1 @@
+{"currentPhase": 0, "phases": [{"id": 1, "name": "Remove Lua", "status": "pending"}, {"id": 2, "name": "Remove GUI", "status": "pending"}, {"id": 3, "name": "Remove Input", "status": "pending"}, {"id": 4, "name": "Remove Networking", "status": "pending"}, {"id": 5, "name": "Finalize", "status": "pending"}]}

@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3b8f76d9dd44acb138d1533cfba261, type: 3}
+  m_Name: VOI_blue_Impostor
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilImpostorSpriteLibrary
+  SourcePrefab: {fileID: 2749619747641695281, guid: 57a47273515792d438d57dd4e5c4ec9e, type: 3}
+  FrameWidth: 128
+  FrameHeight: 256
+  FramesPerState: 5
+  WorldWidth: 4.8924274
+  WorldHeight: 4.489124
+  HorizontalDirections: 8
+  ElevatedDirections: 8
+  ElevatedViewAngle: 55
+  CaptureOffset: {x: 0, y: 0, z: 0}
+  OrthographicScale: 1
+  Animations:
+  - State: Idle
+    SourceClip: TRS|TRS|idle
+    Atlas: {fileID: 2800000, guid: a807ac364c4c64c47842eaaa1a500b3d, type: 3}
+    Frames: 5
+    Duration: 4.041667
+    Loop: 1
+  - State: Run
+    SourceClip: TRS|TRS|run (1)
+    Atlas: {fileID: 2800000, guid: f44ad1b91a2aeeb419727a928e9d7cad, type: 3}
+    Frames: 5
+    Duration: 0.8333334
+    Loop: 1
+  - State: Attack
+    SourceClip: TRS|TRS|run attack
+    Atlas: {fileID: 2800000, guid: 4c3a7e5870bc1e5479727bd4d6edca2d, type: 3}
+    Frames: 5
+    Duration: 0.8333334
+    Loop: 0
+  - State: Death
+    SourceClip: VOI_blue__Death
+    Atlas: {fileID: 2800000, guid: 98a61e72ad1e2fb4b91be1ffb276953a, type: 3}
+    Frames: 5
+    Duration: 7.9583335
+    Loop: 0

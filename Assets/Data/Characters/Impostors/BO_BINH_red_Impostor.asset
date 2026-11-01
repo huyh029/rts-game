@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3b8f76d9dd44acb138d1533cfba261, type: 3}
+  m_Name: BO_BINH_red_Impostor
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilImpostorSpriteLibrary
+  SourcePrefab: {fileID: 1664643354770027472, guid: c7b5f9a17bfaea1478885df28fe90b0e, type: 3}
+  FrameWidth: 128
+  FrameHeight: 256
+  FramesPerState: 8
+  HorizontalDirections: 8
+  ElevatedDirections: 8
+  ElevatedViewAngle: 55
+  CaptureOffset: {x: 0, y: 0, z: 0}
+  OrthographicScale: 1
+  Animations:
+  - State: Idle
+    SourceClip: root|LINH_RED_Idle
+    Atlas: {fileID: 2800000, guid: a28fb9e0480118c42bd2814dee688b83, type: 3}
+    Duration: 2.375
+    Loop: 1
+  - State: Run
+    SourceClip: root|LINH_RED_Run
+    Atlas: {fileID: 2800000, guid: 88eb1f709f71d75488ee24e2cd015020, type: 3}
+    Duration: 0.7083334
+    Loop: 1
+  - State: Attack
+    SourceClip: root|LINH_RED_ATTACK
+    Atlas: {fileID: 2800000, guid: 503bbca28d038494b9a2cbf68e7f91ee, type: 3}
+    Duration: 1.5
+    Loop: 0
+  - State: Death
+    SourceClip: BO_BINH_red__Death
+    Atlas: {fileID: 2800000, guid: b0fdee6a6a32eef4f928c68cf60fa136, type: 3}
+    Duration: 7.25
+    Loop: 0
