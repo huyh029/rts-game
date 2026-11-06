@@ -8,10 +8,57 @@ namespace GameToolsEditor
 {
     public sealed class CongThanhLobbyUiSetupWindow : EditorWindow
     {
+        [InitializeOnLoadMethod]
+        private static void RegisterInfantryMigration()
+        {
+            EditorApplication.delayCall += AddMissingInfantry;
+            EditorApplication.playModeStateChanged -= OnInfantryPlayModeChanged;
+            EditorApplication.playModeStateChanged += OnInfantryPlayModeChanged;
+        }
+
+        private static void OnInfantryPlayModeChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.ExitingEditMode) AddMissingInfantry();
+        }
+
+        private static void AddMissingInfantry()
+        {
+            if (EditorApplication.isPlaying) return;
+            foreach (var battle in Resources.FindObjectsOfTypeAll<RecoilAutoBattleDemo>())
+            {
+                if (!battle.gameObject.scene.IsValid() || !battle.gameObject.scene.isLoaded ||
+                    EditorUtility.IsPersistent(battle)) continue;
+                var serialized = new SerializedObject(battle);
+                foreach (var team in new[] { "blue", "red" })
+                {
+                    var units = serialized.FindProperty(team + "UnitsByType");
+                    if (units.arraySize < 8)
+                    {
+                        units.arraySize = 8;
+                        units.GetArrayElementAtIndex(7).objectReferenceValue = null;
+                    }
+                    var slot = units.GetArrayElementAtIndex(7);
+                    if (slot.objectReferenceValue == null)
+                        slot.objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(
+                            "Assets/Data/Characters/Prefabs/BO_BINH_" + team + ".prefab");
+                }
+                var images = serialized.FindProperty("lobbyUnitImages");
+                if (images.arraySize < 8)
+                {
+                    images.arraySize = 8;
+                    images.GetArrayElementAtIndex(7).objectReferenceValue = null;
+                }
+                if (images.GetArrayElementAtIndex(7).objectReferenceValue == null)
+                    images.GetArrayElementAtIndex(7).objectReferenceValue = AssetDatabase.LoadAssetAtPath<Texture2D>(
+                        "Assets/_Game/UI/Đội Hình Khiên Đỏ Xung Trận.png");
+                if (serialized.ApplyModifiedProperties()) EditorSceneManager.MarkSceneDirty(battle.gameObject.scene);
+            }
+        }
+
         private static readonly string[] DurationLabels =
             { "Ảnh nút 5 phút", "Ảnh nút 10 phút", "Ảnh nút 15 phút", "Ảnh nút 30 phút" };
         private static readonly string[] UnitLabels =
-            { "Cung kỵ", "Đao binh", "Giáo binh", "Kỵ binh", "Máy bắn đá", "Quân sư", "Voi chiến" };
+            { "Cung kỵ", "Đao binh", "Giáo binh", "Kỵ binh", "Máy bắn đá", "Quân sư", "Voi chiến", "Bộ binh" };
         private RecoilAutoBattleDemo _battle;
         private Vector2 _scroll;
 

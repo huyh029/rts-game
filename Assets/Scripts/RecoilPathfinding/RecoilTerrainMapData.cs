@@ -55,6 +55,27 @@ namespace RecoilPathfinding
         public bool IsWalkable(int x, int z) => x >= 0 && z >= 0 && x < columns - 1 && z < rows - 1 &&
             walkableCells[z * (columns - 1) + x] != 0;
 
+        public bool IsWalkableForTeam(int x, int z, RecoilCastleTeam team)
+        {
+            if (!IsWalkable(x, z) || (team != RecoilCastleTeam.Blue && team != RecoilCastleTeam.Red))
+                return false;
+            var cellSize = CellSize;
+            var minX = worldOrigin.x + x * cellSize.x;
+            var minZ = worldOrigin.z + z * cellSize.y;
+            var maxX = minX + cellSize.x;
+            var maxZ = minZ + cellSize.y;
+            for (var i = 0; i < CastleBlockCount; i++)
+            {
+                var castle = GetCastleBlock(i);
+                if (castle.Team == team) continue;
+                var bounds = castle.WorldBounds;
+                if (minX < bounds.max.x && maxX > bounds.min.x &&
+                    minZ < bounds.max.z && maxZ > bounds.min.z)
+                    return false;
+            }
+            return true;
+        }
+
         public bool TrySample(Vector3 position, out float worldHeight, out bool walkable)
         {
             worldHeight = 0f;

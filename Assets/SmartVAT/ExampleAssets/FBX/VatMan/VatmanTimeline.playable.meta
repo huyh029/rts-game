@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f78fa869ba7cf0d4789aeeeafde70382
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/FBX/VatMan/VatmanTimeline.playable
+  uploadId: 919962

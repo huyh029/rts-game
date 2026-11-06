@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VOI_red
+  m_Shader: {fileID: 4800000, guid: 82dce5ec17f246d9bb20b2ece4dbff93, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: f839cc08b4dedf247ba537d3deedfb66, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AnimationFrames: 4
+    - _BakeVersion: 6
+    - _ColorGain: 1
+    - _Cutoff: 0.2
+    - _Diameter: 2.118849
+    - _FootHeight: 0.45572126
+    - _ImpostorFrame: -1
+    - _Saturation: 1
+    - _ViewOffsetSteps: 6
+    m_Colors: []
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

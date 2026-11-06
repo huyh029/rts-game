@@ -89,7 +89,7 @@ namespace RecoilPathfinding
         }
 
         private static RecoilCharacterPresentationScheduler _instance;
-        private static readonly ProfilerMarker TickMarker = new("Recoil.CharacterPresentation.Batch");
+        private static readonly RecoilCpuPhases.Marker TickMarker = new("Recoil.CharacterPresentation.Batch");
         private readonly Registry _registry = new();
         public int ActiveCharacterCount => _registry.Count;
 

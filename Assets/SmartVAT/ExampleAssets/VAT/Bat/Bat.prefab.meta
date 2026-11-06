@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6f0008cbd7165924693fc51e2c4ab674
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/VAT/Bat/Bat.prefab
+  uploadId: 919962

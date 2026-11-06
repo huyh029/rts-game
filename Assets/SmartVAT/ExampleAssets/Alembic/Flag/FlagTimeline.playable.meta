@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1758a9fb3844c5f428d3732bf724b407
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/Alembic/Flag/FlagTimeline.playable
+  uploadId: 919962

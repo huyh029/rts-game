@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b136f79c79aba924a8aeec3a57b72b8c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4300000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/VAT/Crab/Mesh_Crab.asset
+  uploadId: 919962

@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: DaoBinh_UDIM
-    second: {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
+    second: {fileID: 2100000, guid: 04d42739553532642aefa102678a434e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

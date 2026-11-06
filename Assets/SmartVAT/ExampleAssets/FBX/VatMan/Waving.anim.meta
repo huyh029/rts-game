@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9a8af10718f94da42b00c3176d63652b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/FBX/VatMan/Waving.anim
+  uploadId: 919962

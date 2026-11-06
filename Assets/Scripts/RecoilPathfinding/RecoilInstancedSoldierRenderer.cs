@@ -8,25 +8,15 @@ namespace RecoilPathfinding
     public sealed class RecoilInstancedSoldierRenderer : MonoBehaviour
     {
         private const int MaxInstancesPerDraw = 1023;
-        private static readonly ProfilerMarker CullingMarker =
-            new ProfilerMarker("RecoilBattle.Rendering.Culling");
-        private static readonly ProfilerMarker DrawMarker =
-            new ProfilerMarker("RecoilBattle.Rendering.Draw");
+        private static readonly RecoilCpuPhases.Marker CullingMarker =
+            new RecoilCpuPhases.Marker("RecoilBattle.Rendering.Culling");
+        private static readonly RecoilCpuPhases.Marker DrawMarker =
+            new RecoilCpuPhases.Marker("RecoilBattle.Rendering.Draw");
 
         [SerializeField] private GameObject blueUnitTemplate = null;
         [SerializeField] private GameObject redUnitTemplate = null;
         [SerializeField, Min(1f)] private float lowDetailDistance = 100f;
         [SerializeField, Min(1f)] private float maxRenderDistance = 300f;
-#if SKGAMES_ANIMATED_IMPOSTOR
-        [SerializeField] private bool gpuCullAnimatedImpostors = true;
-        private RecoilGpuImpostorRenderer _gpuImpostors;
-        public int GpuImpostorCount => _gpuImpostors != null ? _gpuImpostors.RegisteredCount : 0;
-        public int GpuIndirectDrawCalls => _gpuImpostors != null ? _gpuImpostors.LastDrawCallCount : 0;
-#else
-        // Animated impostor metrics stay available while the optional plugin is absent.
-        public int GpuImpostorCount => 0;
-        public int GpuIndirectDrawCalls => 0;
-#endif
 
         private readonly List<Transform> _blueUnits = new();
         private readonly List<Transform> _redUnits = new();
@@ -75,21 +65,11 @@ namespace RecoilPathfinding
             if (unit == null)
                 return false;
 
-            // Hybrid mesh/impostor units must let LODGroup control visibility. The
+            // Mesh units must let LODGroup control visibility. The
             // indirect/static batchers bypass renderer visibility and would draw LOD4 up close.
             if (unit.GetComponentInChildren<LODGroup>(true) != null)
                 return false;
 
-#if SKGAMES_ANIMATED_IMPOSTOR
-            if (gpuCullAnimatedImpostors && unit.GetComponentInChildren<SKGames.AnimatedImpostor.AnimatedImpostorPlayer>(true) != null)
-            {
-                if (_gpuImpostors == null)
-                    _gpuImpostors = GetComponent<RecoilGpuImpostorRenderer>();
-                if (_gpuImpostors == null)
-                    _gpuImpostors = gameObject.AddComponent<RecoilGpuImpostorRenderer>();
-                if (_gpuImpostors.TryRegister(unit)) return true;
-            }
-#endif
 
             // This batcher draws static meshes with shared materials. Preserve skinned meshes and
             // per-unit property blocks on their own renderers.

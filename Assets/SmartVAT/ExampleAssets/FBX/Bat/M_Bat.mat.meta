@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0e411ce986eedf94fa7987e9c6d36a8f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/FBX/Bat/M_Bat.mat
+  uploadId: 919962

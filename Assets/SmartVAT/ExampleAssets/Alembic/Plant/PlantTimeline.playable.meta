@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ef1a3d3ebb4820441b89dc1522527344
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/Alembic/Plant/PlantTimeline.playable
+  uploadId: 919962

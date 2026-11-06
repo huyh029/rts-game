@@ -13,16 +13,17 @@ namespace RecoilPathfinding
         private static readonly int[][] Rows =
         {
             new[] { 3, 1, 6, 1, 3 }, new[] { 5, 5, 5 }, new[] { 2, 2, 2 },
-            new[] { 0, 0, 0 }, new[] { 4, 4, 4 }
+            new[] { 7, 7, 7 }, new[] { 0, 0, 0 }, new[] { 4, 4, 4 }
         };
 
         public static Vector3 ToWorld(Vector3 spawn, Vector3 forward, Vector2 slot) =>
             spawn + Vector3.Cross(Vector3.up, forward) * slot.x + forward * slot.y;
 
-        public static Vector2[][] Build(int[] counts, float[] radii)
+        public static Vector2[][] Build(int[] counts, float[] radii, int maxDepthRows)
         {
-            var result = new Vector2[7][];
-            for (var type = 0; type < 7; type++) result[type] = new Vector2[counts[type]];
+            var result = new Vector2[counts.Length][];
+            for (var type = 0; type < counts.Length; type++) result[type] = new Vector2[counts[type]];
+            maxDepthRows = Mathf.Max(1, maxDepthRows);
             var front = ForwardDistance;
             foreach (var row in Rows)
             {
@@ -36,6 +37,7 @@ namespace RecoilPathfinding
                 for (var block = 0; block < row.Length; block++)
                 {
                     var type = row[block];
+                    if (type >= counts.Length) continue;
                     if (counts[type] == 0) continue;
                     var blocks = 0;
                     foreach (var item in row) if (item == type) blocks++;
@@ -43,9 +45,9 @@ namespace RecoilPathfinding
                     capacities[block] = capacity;
                     var radius = Mathf.Max(.05f, radii[type]);
                     var pitch = Mathf.Max(1f, radius * 2f + .1f);
-                    // Grow both axes instead of extending a fixed five-column strip.
-                    // Prefer a block roughly twice as wide as it is deep.
-                    var cols = Mathf.Min(capacity, Mathf.CeilToInt(Mathf.Sqrt(capacity * 2f)));
+                    // Keep the assembled force within the configured maximum depth.
+                    // SpawnColumns is the requested depth in rows; width grows as needed.
+                    var cols = Mathf.Min(capacity, Mathf.CeilToInt((float)capacity / maxDepthRows));
                     columns[block] = cols;
                     pitches[block] = pitch;
                     widths[block] = (cols - 1) * pitch + radius * 2f;
@@ -60,6 +62,7 @@ namespace RecoilPathfinding
                 {
                     if (capacities[block] == 0) continue;
                     var type = row[block];
+                    if (type >= counts.Length) continue;
                     var ordinal = 0;
                     var blocks = 0;
                     for (var i = 0; i < row.Length; i++)
@@ -84,22 +87,81 @@ namespace RecoilPathfinding
 
     public sealed partial class RecoilAutoBattleDemo
     {
-        private bool _formationDirty = true;
         private bool _formationReady;
-        private bool _formationBlocked;
-        private float _nextFormationCheck;
-        private string _assemblyStatus = "Đang sinh lính để vào vị trí";
+        private string _assemblyStatus = "Đang xuất quân từ điểm spawn";
         private Vector2[][] _blueSpawnFormation;
         private Vector2[][] _redSpawnFormation;
         private int[] _blueSpawnFormationIndices;
         private int[] _redSpawnFormationIndices;
+        private readonly List<Vector3> _preparedBluePositions = new();
+        private readonly List<Vector3> _preparedRedPositions = new();
+        private bool _preparedPositionsBuilt;
 
+        private bool TryGetPreparedSpawnPosition(bool blue, out NavMeshHit hit)
+        {
+            hit = default;
+            if (!_preparedPositionsBuilt)
+            {
+                _preparedPositionsBuilt = true;
+                var middle = (GetSpawnTargetPosition(true) + GetSpawnTargetPosition(false)) * .5f;
+                var axis = BattleAxis();
+                var lateral = Vector3.Cross(Vector3.up, axis);
+                var targetBlue = PreparedTeamTarget(true);
+                BuildPreparedPositions(_preparedBluePositions, true, targetBlue, middle, axis, lateral);
+                BuildPreparedPositions(_preparedRedPositions, false, PreparedTeamTarget(false),
+                    middle, -axis, lateral);
+                if (_preparedBluePositions.Count < targetBlue || _preparedRedPositions.Count < PreparedArmyTarget - targetBlue)
+                    Debug.LogError($"Prepared formation does not fit walkable terrain: blue={_preparedBluePositions.Count}/{targetBlue}, red={_preparedRedPositions.Count}/{PreparedArmyTarget - targetBlue}. Reduce army size or spacing.", this);
+            }
+            var positions = blue ? _preparedBluePositions : _preparedRedPositions;
+            var index = blue ? _blueSpawnedTotal : _redSpawnedTotal;
+            if (index >= positions.Count) return false;
+            hit.position = positions[index];
+            return true;
+        }
+
+        private void BuildPreparedPositions(List<Vector3> result, bool blue, int count, Vector3 middle,
+            Vector3 forward, Vector3 lateral)
+        {
+            var extent = Mathf.Sqrt((SpawnMaxX - SpawnMinX) * (SpawnMaxX - SpawnMinX) +
+                (SpawnMaxZ - SpawnMinZ) * (SpawnMaxZ - SpawnMinZ));
+            var depth = 10f;
+            var previousRadius = 0f;
+            for (var type = 0; type < CharacterTypeCount; type++)
+            {
+                var radius = .5f;
+                var template = FindTemplateForType(blue, type);
+                if (template != null && template.TryGetComponent<RecoilNavMeshPathAgent>(out var agent))
+                    radius = Mathf.Max(.15f, agent.MovementSettings.BodyRadius);
+                var pitch = radius * 2f + .1f;
+                // Each type gets its own compact rows, with clearance at type boundaries.
+                depth += radius - previousRadius;
+                previousRadius = radius;
+                var typeCount = PreparedTypeCount(blue, type);
+                var target = result.Count + typeCount;
+                var halfWidth = Mathf.Min(extent * .5f, Mathf.Max(pitch, preparedFormationHalfWidth));
+                var columns = Mathf.FloorToInt(halfWidth / pitch) * 2 + 1;
+                for (; depth < extent && result.Count < target; depth += pitch)
+                    for (var column = 0; column < columns && result.Count < target; column++)
+                    {
+                        var ordinal = (column + 1) / 2;
+                        var cross = ordinal * pitch * (column % 2 == 0 ? -1f : 1f);
+                        var point = middle - forward * depth + lateral * cross;
+                        if (point.x < SpawnMinX + radius || point.x > SpawnMaxX - radius ||
+                            point.z < SpawnMinZ + radius || point.z > SpawnMaxZ - radius) continue;
+                        if (!TryGetGroundHeight(point, out var height)) continue;
+                        point.y = height;
+                        if (!pathService.TrySamplePosition(point, .25f, GetSpawnAreaMask(blue), out var projected)) continue;
+                        if ((projected - point).sqrMagnitude > .01f) continue;
+                        result.Add(projected);
+                    }
+                if (result.Count < target) return;
+            }
+        }
         private void InvalidateAssembly()
         {
-            _formationDirty = true;
             _formationReady = false;
-            _formationBlocked = false;
-            _assemblyStatus = "Đang sinh lính để vào vị trí";
+            _assemblyStatus = "Đang xuất quân từ điểm spawn";
         }
 
         private Vector3 BattleAxis()
@@ -109,34 +171,9 @@ namespace RecoilPathfinding
             return direction.sqrMagnitude > .001f ? direction.normalized : Vector3.right;
         }
 
-        private bool TryFindInitialFormationSpawnPosition(bool blue, byte characterType, out NavMeshHit hit)
+        private bool TryFindInitialSpawnPosition(bool blue, out NavMeshHit hit)
         {
-            hit = default;
-            EnsureSpawnFormationPlans();
-            var formation = blue ? _blueSpawnFormation : _redSpawnFormation;
-            var indices = blue ? _blueSpawnFormationIndices : _redSpawnFormationIndices;
-            if (characterType >= formation.Length ||
-                indices[characterType] >= formation[characterType].Length)
-                return false;
-
-            var axis = BattleAxis();
-            var forward = axis * (blue ? 1f : -1f);
-            var midpoint = (GetSpawnTargetPosition(true) + GetSpawnTargetPosition(false)) * .5f;
-            midpoint.y = 0f;
-            var formationOrigin = midpoint - forward * (RecoilBattleFormation.ForwardDistance * 2f);
-            var desired = RecoilBattleFormation.ToWorld(
-                formationOrigin, forward, formation[characterType][indices[characterType]]);
-            if (!TryGetGroundHeight(desired, out var groundHeight)) return false;
-            desired.y = groundHeight;
-
-            var projectionDistance = terrainMap != null && terrainMap.HasValidData
-                ? Mathf.Max(.5f, Mathf.Max(terrainMap.CellSize.x, terrainMap.CellSize.y) * .5f)
-                : Mathf.Max(.5f, spawnSpacing * .5f);
-            if (!pathService.TrySamplePosition(desired, projectionDistance, NavMesh.AllAreas, out var position))
-                return false;
-
-            hit = new NavMeshHit { position = position };
-            return true;
+            return TryFindSpawnInFixedArea(blue, out hit);
         }
 
         private void EnsureSpawnFormationPlans()
@@ -194,7 +231,7 @@ namespace RecoilPathfinding
             for (var type = 0; type < CharacterTypeCount; type++)
                 counts[type] = Mathf.Max(counts[type], opposingCounts[type]);
 
-            formation = RecoilBattleFormation.Build(counts, radii);
+            formation = RecoilBattleFormation.Build(counts, radii, spawnColumns);
             nextIndices = existingCounts;
         }
 
@@ -202,10 +239,10 @@ namespace RecoilPathfinding
         {
             foreach (var soldier in team)
             {
-                if (!IsAlive(soldier)) continue;
+                if (!IsAlive(soldier) || !TryGetMovementSettings(soldier, out var movementSettings)) continue;
                 counts[soldier.CharacterType]++;
                 radii[soldier.CharacterType] = Mathf.Max(
-                    radii[soldier.CharacterType], soldier.Simulation.Settings.BodyRadius);
+                    radii[soldier.CharacterType], movementSettings.BodyRadius);
             }
         }
 
@@ -231,181 +268,114 @@ namespace RecoilPathfinding
                 radii[type] = Mathf.Max(radii[type], agent.MovementSettings.BodyRadius);
         }
 
-        private bool TryStartBattle()
+        private double _startCountdownEndsAt;
+        private readonly RecoilCountdownVisual _startCountdownVisual = new();
+
+        private void UpdateStartCountdown()
+        {
+            if (_startCountdownEndsAt <= 0 || Time.realtimeSinceStartupAsDouble < _startCountdownEndsAt) return;
+            _startCountdownEndsAt = 0;
+            if (!_combatStarted && !_matchFinished) TryStartBattle(true);
+        }
+
+        private void DrawStartCountdown()
+        {
+            _startCountdownVisual.Draw(_startCountdownEndsAt - Time.realtimeSinceStartupAsDouble);
+        }
+
+        private bool TryStartBattle(bool finishCountdown = false)
         {
             if (_combatStarted) return true;
-            UpdateAssembly();
-            if (!_formationReady || _formationDirty || HasQueuedSpawns)
+            if (_startCountdownEndsAt > 0) return false;
+            if (prepareArmyBeforeCombat && !IsPreparedArmyRendered())
+            {
+                Debug.Log("Waiting for all " + PreparedArmyTarget + " soldier models before starting combat.", this);
+                return false;
+            }
+            if (!HasQueuedSpawns)
+                UpdateAssembly();
+            if (!HasAliveSoldier(_blueTeam) || !HasAliveSoldier(_redTeam))
             {
                 Debug.Log("Chưa thể bắt đầu trận: " + _assemblyStatus, this);
                 return false;
             }
+            if (!finishCountdown)
+            {
+                _startCountdownEndsAt = Time.realtimeSinceStartupAsDouble + 3.0;
+                return false;
+            }
             _combatStarted = true;
+            InitializeCastleCombatState();
+            IssueInitialCombatMovement(_blueTeam);
+            IssueInitialCombatMovement(_redTeam);
             _lobbyStarting = false;
             _matchElapsedSeconds = 0f;
             return true;
         }
 
+        private bool IsPreparedArmyRendered()
+        {
+            if (HasQueuedSpawns) return false;
+            var rendered = 0;
+            foreach (var team in new[] { _blueTeam, _redTeam })
+                foreach (var soldier in team)
+                {
+                    if (soldier == null || soldier.Retired) continue;
+                    if (soldier.Agent == null || !soldier.Agent.gameObject.activeInHierarchy) return false;
+                    rendered++;
+                }
+            return rendered >= Mathf.Max(2, PreparedArmyTarget);
+        }
+
+        private void IssueInitialCombatMovement(List<Soldier> team)
+        {
+            for (var i = 0; i < team.Count; i++)
+            {
+                var soldier = team[i];
+                if (soldier == null || soldier.Retired || soldier.Simulation == null ||
+                    !soldier.Simulation.Exists || !IsAlive(soldier))
+                    continue;
+                soldier.LastMovementCommandTime = SimulationNow;
+                if (useFightCorridors && pathService != null && pathService.UsingTerrainMap)
+                {
+                    var timing = _entityManager.GetComponentData<RecoilUnitCombatTiming>(soldier.Entity);
+                    if (timing.Fight.Enabled != 0)
+                    {
+                        var settings = soldier.Simulation.Settings;
+                        if (pathService.TerrainHeightField.TryFindUnitApproach(soldier.Simulation.Position,
+                            timing.Fight.End, settings.AreaMask, out var destination, settings.BodyRadius + .05f))
+                            soldier.Simulation.SetDestination(destination);
+                        continue;
+                    }
+                }
+                UpdateNavigationBridge(soldier, null);
+            }
+        }
+
         private void UpdateAssembly()
         {
             if (_combatStarted) return;
-            if (HasQueuedSpawns)
+            if (prepareArmyBeforeCombat)
             {
-                _formationReady = false;
-                _assemblyStatus = "Đang sinh lính để vào vị trí";
+                _formationReady = !HasQueuedSpawns && _fullDetailSoldierCount >= Mathf.Max(2, PreparedArmyTarget);
+                _assemblyStatus = _formationReady
+                    ? "Ready: " + PreparedArmyTarget + " soldier models - press L to start combat"
+                    : "Preparing soldier models: " + _fullDetailSoldierCount + "/" + PreparedArmyTarget;
                 return;
             }
-            if (_formationDirty)
-            {
-                _formationDirty = false;
-                _formationReady = false;
-                _formationBlocked = false;
-                AssignFormation(_blueTeam, _redTeam);
-                AssignFormation(_redTeam, _blueTeam);
-                if (_formationBlocked)
-                {
-                    _assemblyStatus = "Không tìm thấy đủ vị trí đi được để xếp đội hình";
-                    Debug.LogWarning(_assemblyStatus, this);
-                    return;
-                }
-            }
-            if (_formationBlocked || _formationReady || Time.unscaledTime < _nextFormationCheck) return;
-            _nextFormationCheck = Time.unscaledTime + .2f;
-            var remaining = CheckFormation(_blueTeam, true) + CheckFormation(_redTeam, false);
-            _formationReady = remaining == 0 &&
-                              HasAliveSoldier(_blueTeam) && HasAliveSoldier(_redTeam);
-            if (_formationReady)
-            {
-                SetAssemblyMovement(_blueTeam, false);
-                SetAssemblyMovement(_redTeam, false);
-            }
-            _assemblyStatus = _formationReady
-                ? "Đội hình đã ổn định — bấm L để giao chiến"
-                : remaining == 0
-                    ? "Chưa có đủ quân — chọn loại lính để thêm"
-                    : $"Đang tự xếp đội hình — còn {remaining} lính";
-        }
-
-        private void AssignFormation(List<Soldier> team, List<Soldier> opposingTeam)
-        {
-            var counts = new int[CharacterTypeCount];
-            var opposingCounts = new int[CharacterTypeCount];
-            var radii = new float[CharacterTypeCount];
-            foreach (var soldier in team)
-            {
-                if (!IsAlive(soldier)) continue;
-                counts[soldier.CharacterType]++;
-                radii[soldier.CharacterType] = Mathf.Max(
-                    radii[soldier.CharacterType], soldier.Simulation.Settings.BodyRadius);
-            }
-            foreach (var soldier in opposingTeam)
-            {
-                if (!IsAlive(soldier)) continue;
-                opposingCounts[soldier.CharacterType]++;
-                radii[soldier.CharacterType] = Mathf.Max(
-                    radii[soldier.CharacterType], soldier.Simulation.Settings.BodyRadius);
-            }
-            for (var type = 0; type < CharacterTypeCount; type++)
-                counts[type] = Mathf.Max(counts[type], opposingCounts[type]);
-
-            var slots = RecoilBattleFormation.Build(counts, radii);
-            var indices = new int[CharacterTypeCount];
-            var axis = BattleAxis();
-            var forward = axis * (team == _blueTeam ? 1f : -1f);
-            var facing = Quaternion.LookRotation(forward);
-            var midpoint = (GetSpawnTargetPosition(true) + GetSpawnTargetPosition(false)) * .5f;
-            midpoint.y = 0f;
-            var origin = midpoint - forward * (RecoilBattleFormation.ForwardDistance * 2f);
-            foreach (var soldier in team)
-            {
-                if (!IsAlive(soldier)) continue;
-                var type = soldier.CharacterType;
-                var desired = RecoilBattleFormation.ToWorld(origin, forward, slots[type][indices[type]++]);
-                soldier.FormationArrived = false;
-                soldier.FormationAssigned = false;
-                if (!TryGetGroundHeight(desired, out var height))
-                {
-                    _formationBlocked = true;
-                    continue;
-                }
-                desired.y = height;
-                var projectionDistance = terrainMap != null && terrainMap.HasValidData
-                    ? Mathf.Max(.5f, Mathf.Max(terrainMap.CellSize.x, terrainMap.CellSize.y) * .5f)
-                    : Mathf.Max(.5f, spawnSpacing * .5f);
-                if (!pathService.TrySamplePosition(
-                        desired, projectionDistance, NavMesh.AllAreas, out var ground) ||
-                    HorizontalDistance(desired, ground) > projectionDistance)
-                {
-                    _formationBlocked = true;
-                    continue;
-                }
-
-                var destination = ground + Vector3.up * soldier.Simulation.Settings.VerticalOffset;
-                soldier.FormationDestination = destination;
-                soldier.FormationAssigned = true;
-                soldier.FormationArrived = true;
-                soldier.Simulation.SetCombatApproach(false);
-                soldier.Simulation.SetAssemblyMovement(false);
-                soldier.Simulation.Stop();
-                var pose = soldier.Simulation.Pose;
-                pose.Position = destination;
-                pose.Rotation = facing;
-                pose.Speed = 0f;
-                pose.Velocity = Vector3.zero;
-                _entityManager.SetComponentData(soldier.Entity, pose);
-            }
-        }
-
-        private int CheckFormation(List<Soldier> team, bool blue)
-        {
-            var remaining = 0;
-            var facing = Quaternion.LookRotation(BattleAxis() * (blue ? 1f : -1f));
-            foreach (var soldier in team)
-            {
-                if (!IsAlive(soldier)) continue;
-                var simulation = soldier.Simulation;
-                var tolerance = Mathf.Max(.25f, simulation.Settings.WaypointTolerance + .05f);
-                if (!soldier.FormationAssigned ||
-                    HorizontalDistance(simulation.Position, soldier.FormationDestination) > tolerance)
-                {
-                    if (!soldier.FormationAssigned)
-                    {
-                        remaining++;
-                        continue;
-                    }
-
-                    simulation.Stop();
-                    var snappedPose = simulation.Pose;
-                    snappedPose.Position = soldier.FormationDestination;
-                    snappedPose.Rotation = facing;
-                    snappedPose.Speed = 0f;
-                    snappedPose.Velocity = Vector3.zero;
-                    _entityManager.SetComponentData(soldier.Entity, snappedPose);
-                    soldier.FormationArrived = true;
-                    continue;
-                }
-
-                if (soldier.FormationArrived) continue;
-                simulation.StopMovement();
-                var pose = simulation.Pose;
-                pose.Rotation = facing;
-                _entityManager.SetComponentData(soldier.Entity, pose);
-                soldier.FormationArrived = true;
-            }
-            return remaining;
+            // Units already have an exit-lane movement order. Never teleport/repack them
+            // when a spawn batch completes or a new type is added.
+            _formationReady = !HasQueuedSpawns && HasAliveSoldier(_blueTeam) && HasAliveSoldier(_redTeam);
+            _assemblyStatus = HasAliveSoldier(_blueTeam) && HasAliveSoldier(_redTeam)
+                ? "Lính đang đi ra từ điểm spawn — bấm L để giao chiến"
+                : "Đang xuất quân từ điểm spawn";
         }
 
         private bool HasAliveSoldier(List<Soldier> team)
         {
             foreach (var soldier in team)
-                if (IsAlive(soldier)) return true;
+                if (soldier != null && !soldier.Retired && IsAlive(soldier)) return true;
             return false;
-        }
-
-        private static void SetAssemblyMovement(List<Soldier> team, bool assembling)
-        {
-            foreach (var soldier in team)
-                soldier.Simulation?.SetAssemblyMovement(assembling);
         }
 
     }

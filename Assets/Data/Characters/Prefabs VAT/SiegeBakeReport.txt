@@ -1,0 +1,17 @@
+maybanda_v02_blue: restored authored FBX child transforms for arm pivots.
+maybanda_v02_blue/Visual: Idle uses the prefab rest pose (no motion).
+maybanda_v02_blue/Visual: Run uses the prefab rest pose (no motion).
+maybanda_v02_blue/Visual: Death uses the prefab rest pose (no motion).
+maybanda_v02_blue/Catapulte_Low.004_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.77, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_blue/xanh duohg_LOD2: vertices=603, texture=1024x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 1.80, -0.30), Extents: (2.23, 1.67, 3.91)
+maybanda_v02_blue/Catapulte_Low.003_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.77, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_blue: shared Idle foot pivot=(0.00, 0.01, -0.13), rootScale=(1.00, 1.00, 1.00), Idle local size=(4.37, 3.13, 7.36), Idle world height=3,1294
+maybanda_v02_red: restored authored FBX child transforms for arm pivots.
+maybanda_v02_red/Visual: Idle uses the prefab rest pose (no motion).
+maybanda_v02_red/Visual: Run uses the prefab rest pose (no motion).
+maybanda_v02_red/Visual: Death uses the prefab rest pose (no motion).
+maybanda_v02_red/Catapulte_Low.003_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.77, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_red/do_LOD2: vertices=603, texture=1024x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 1.80, -0.30), Extents: (2.23, 1.67, 3.91)
+maybanda_v02_red/Catapulte_Low.004_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.77, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_red: shared Idle foot pivot=(0.00, 0.01, -0.13), rootScale=(1.00, 1.00, 1.00), Idle local size=(4.37, 3.13, 7.36), Idle world height=3,1294
+Preview updated, including both siege VAT prefabs. Keys 1/2/3/4: Idle/Run/Attack/Death.

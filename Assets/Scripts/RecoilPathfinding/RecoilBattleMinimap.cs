@@ -43,21 +43,8 @@ namespace RecoilPathfinding
 
         private void OnGUI()
         {
-            if (battle == null || !battle.ShouldShowGameplayHud || castleIcon == null) return;
+            if (!TryGetMapRect(out var mapRect)) return;
             var map = battle.TerrainMap;
-            if (map == null || !map.HasValidData || map.CastleBlockCount != 2) return;
-
-            var size = Mathf.Min(PreferredSize, Screen.width - Margin * 2f, Screen.height - Margin * 2f);
-            if (size <= 0f) return;
-            var panel = new Rect(Screen.width - size - Margin, Margin, size, size);
-            GUI.Box(panel, "Minimap");
-            var available = new Rect(panel.x + 8f, panel.y + 23f, size - 16f, size - 31f);
-            var aspect = map.WorldSize.x / map.WorldSize.y;
-            var mapWidth = Mathf.Min(available.width, available.height * aspect);
-            var mapHeight = mapWidth / aspect;
-            var mapRect = new Rect(available.center.x - mapWidth * 0.5f,
-                available.center.y - mapHeight * 0.5f, mapWidth, mapHeight);
-            if (mapRect.width <= 0f || mapRect.height <= 0f) return;
 
             DrawTexture(mapRect, Texture2D.whiteTexture, new Color(0.08f, 0.1f, 0.12f, 0.92f));
             DrawGrid(mapRect);
@@ -66,6 +53,39 @@ namespace RecoilPathfinding
 
             DrawUnits(mapRect, map, _bluePositions, new Color(0.2f, 0.72f, 1f));
             DrawUnits(mapRect, map, _redPositions, new Color(1f, 0.32f, 0.28f));
+        }
+
+        private bool TryGetMapRect(out Rect mapRect)
+        {
+            mapRect = default;
+            if (!isActiveAndEnabled || battle == null || !battle.ShouldShowGameplayHud) return false;
+            var map = battle.TerrainMap;
+            if (map == null || !map.HasValidData || map.CastleBlockCount != 2) return false;
+
+            var size = Mathf.Min(PreferredSize, Screen.width - Margin * 2f, Screen.height - Margin * 2f);
+            if (size <= 0f) return false;
+            var panel = new Rect(Screen.width - size - Margin, Margin, size, size);
+            var available = panel;
+            var aspect = map.WorldSize.x / map.WorldSize.y;
+            var mapWidth = Mathf.Min(available.width, available.height * aspect);
+            var mapHeight = mapWidth / aspect;
+            mapRect = new Rect(available.center.x - mapWidth * 0.5f,
+                available.center.y - mapHeight * 0.5f, mapWidth, mapHeight);
+            return mapRect.width > 0f && mapRect.height > 0f;
+        }
+
+        public bool TryGetWorldPosition(Vector2 screenPosition, bool clampToMap, out Vector3 position)
+        {
+            position = default;
+            if (!TryGetMapRect(out var rect)) return false;
+            var point = new Vector2(screenPosition.x, Screen.height - screenPosition.y);
+            if (!clampToMap && !rect.Contains(point)) return false;
+            var map = battle.TerrainMap;
+            position = map.WorldOrigin;
+            position.x += Mathf.Clamp01((point.x - rect.x) / rect.width) * map.WorldSize.x;
+            position.z += (1f - Mathf.Clamp01((point.y - rect.y) / rect.height)) * map.WorldSize.y;
+            if (map.TrySample(position, out var height, out _)) position.y = height;
+            return true;
         }
 
         private void DrawGrid(Rect rect)
@@ -86,6 +106,7 @@ namespace RecoilPathfinding
         private void DrawCastle(
             Rect rect, RecoilTerrainMapData map, RecoilCastleTeam team, Color color)
         {
+            if (castleIcon == null) return;
             var bounds = GetCastleBounds(map, team);
             if (!TryMapPosition(rect, map, bounds.center, out var point)) return;
             var iconRect = new Rect(point.x - CastleMarkerSize * 0.5f,

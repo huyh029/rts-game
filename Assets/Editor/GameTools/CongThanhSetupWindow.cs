@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using RecoilPathfinding;
@@ -20,24 +20,26 @@ namespace GameToolsEditor
         private const float DefaultBattleCameraYaw = 0f;
 
         private GameObject _mapRoot;
+        [SerializeField] private MeshFilter _bakePlane;
         private GameObject _blueCastle;
         private GameObject _redCastle;
         private float _cellSize = 1f;
+        [SerializeField] private float _maxSlopeDegrees = 45f;
         private string _assetName = DefaultAssetName;
         private string _result = string.Empty;
         private Vector2 _scrollPosition;
-        [SerializeField] private GameObject[] _blueUnits = new GameObject[7];
-        [SerializeField] private GameObject[] _redUnits = new GameObject[7];
+        [SerializeField] private GameObject[] _blueUnits = new GameObject[8];
+        [SerializeField] private GameObject[] _redUnits = new GameObject[8];
         private static readonly string[] UnitLabels =
-            { "Cung kỵ", "Đao binh / Bộ binh", "Giáo binh", "Kỵ binh", "Máy bắn đá", "Quân sư", "Voi chiến" };
+            { "Cung kỵ", "Đao binh", "Giáo binh", "Kỵ binh", "Máy bắn đá", "Quân sư", "Voi chiến", "Bộ binh" };
 
         private void OnEnable()
         {
-            Array.Resize(ref _blueUnits, 7);
-            Array.Resize(ref _redUnits, 7);
+            Array.Resize(ref _blueUnits, UnitLabels.Length);
+            Array.Resize(ref _redUnits, UnitLabels.Length);
             var battle = FindSceneBattle(SceneManager.GetActiveScene());
             if (battle == null) return;
-            for (var i = 0; i < 7; i++)
+            for (var i = 0; i < UnitLabels.Length; i++)
             {
                 _blueUnits[i] = battle.GetTemplateForType(true, i);
                 _redUnits[i] = battle.GetTemplateForType(false, i);
@@ -59,13 +61,36 @@ namespace GameToolsEditor
             {
                 EditorGUILayout.LabelField("Công Thành map setup", EditorStyles.boldLabel);
                 _mapRoot = (GameObject)EditorGUILayout.ObjectField("Map", _mapRoot, typeof(GameObject), true);
+                _bakePlane = (MeshFilter)EditorGUILayout.ObjectField("Bake projection Plane", _bakePlane, typeof(MeshFilter), true);
+                if (GUILayout.Button("Create bake projection Plane") && _mapRoot != null)
+                {
+                    var plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                    plane.name = "Bake Projection Plane";
+                    Undo.RegisterCreatedObjectUndo(plane, "Create bake projection Plane");
+                    if (TryGetWorldBounds(_mapRoot, out var mapBounds))
+                    {
+                        plane.transform.position = new Vector3(mapBounds.center.x, mapBounds.max.y + 1f, mapBounds.center.z);
+                        plane.transform.localScale = new Vector3(mapBounds.size.x / 10f, 1f, mapBounds.size.z / 10f);
+                    }
+                    DestroyImmediate(plane.GetComponent<Collider>());
+                    plane.GetComponent<Renderer>().enabled = false;
+                    _bakePlane = plane.GetComponent<MeshFilter>();
+                    Selection.activeGameObject = plane;
+                    EditorSceneManager.MarkSceneDirty(plane.scene);
+                }
+                if (_bakePlane != null)
+                    EditorGUILayout.HelpBox("Bake only the Plane XZ projection and castles. Keeps map heights; excludes forest obstacles. Move/scale/rotate Plane to select the region.", MessageType.Info);
                 _blueCastle = (GameObject)EditorGUILayout.ObjectField("Thành xanh", _blueCastle, typeof(GameObject), true);
                 _redCastle = (GameObject)EditorGUILayout.ObjectField("Thành đỏ", _redCastle, typeof(GameObject), true);
 
                 EditorGUILayout.HelpBox(
                     "Map nhận MeshFilter, SkinnedMeshRenderer, MeshCollider và Terrain trong các object con. Mesh tắt Read/Write được lấy mẫu qua collider tạm mà không đổi import settings. Không dùng NavMesh.",
                     MessageType.Info);
+                EditorGUILayout.HelpBox(
+                    "Bake tạo đường đi riêng theo phe: quân đi xuyên thành đồng minh, thành địch là vật cản và có thể bị công kích. Bake lại sau khi đổi vị trí hoặc kích thước thành.",
+                    MessageType.Info);
                 _cellSize = EditorGUILayout.FloatField("Cell size (world units)", _cellSize);
+                _maxSlopeDegrees = EditorGUILayout.Slider("Maximum walkable slope", _maxSlopeDegrees, 0f, 89f);
                 _assetName = EditorGUILayout.TextField("Asset name", _assetName);
 
                 var valid = ValidateInputs(out var error);
@@ -202,7 +227,7 @@ namespace GameToolsEditor
             using (new EditorGUI.DisabledScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
                 EditorGUI.BeginChangeCheck();
-                for (var i = 0; i < 7; i++)
+                for (var i = 0; i < UnitLabels.Length; i++)
                 {
                     EditorGUILayout.LabelField(UnitLabels[i], EditorStyles.boldLabel);
                     _blueUnits[i] = (GameObject)EditorGUILayout.ObjectField("Phe xanh", _blueUnits[i], typeof(GameObject), true);
@@ -287,6 +312,11 @@ namespace GameToolsEditor
             if (!float.IsFinite(_cellSize) || _cellSize < 0.1f)
             {
                 error = "Cell size must be a finite value of at least 0.1.";
+                return false;
+            }
+            if (!float.IsFinite(_maxSlopeDegrees) || _maxSlopeDegrees < 0f || _maxSlopeDegrees >= 90f)
+            {
+                error = "Maximum walkable slope must be between 0 and 89 degrees.";
                 return false;
             }
             if (string.IsNullOrWhiteSpace(_assetName) || _assetName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 ||
@@ -376,8 +406,10 @@ namespace GameToolsEditor
 
                 var blueBounds = GetCastleBounds(mapData, RecoilCastleTeam.Blue);
                 var redBounds = GetCastleBounds(mapData, RecoilCastleTeam.Red);
-                var blueSpawn = CreateSpawnTarget(demoRoot.transform, "Blue Spawn Target", blueBounds.center, mapData);
-                var redSpawn = CreateSpawnTarget(demoRoot.transform, "Red Spawn Target", redBounds.center, mapData);
+                var blueSpawn = CreateSpawnTarget(demoRoot.transform, "Blue Spawn Target", blueBounds.center,
+                    mapData, RecoilCastleTeam.Blue);
+                var redSpawn = CreateSpawnTarget(demoRoot.transform, "Red Spawn Target", redBounds.center,
+                    mapData, RecoilCastleTeam.Red);
                 var center = GetMapCenter(mapData, blueBounds, redBounds);
 
                 if (battle == null) battle = Undo.AddComponent<RecoilAutoBattleDemo>(demoRoot);
@@ -456,9 +488,10 @@ namespace GameToolsEditor
             Transform parent,
             string objectName,
             Vector3 position,
-            RecoilTerrainMapData mapData)
+            RecoilTerrainMapData mapData,
+            RecoilCastleTeam team)
         {
-            position = FindNearestWalkablePosition(position, mapData);
+            position = FindNearestWalkablePosition(position, mapData, team);
             var existing = parent.Find(objectName);
             var target = existing != null ? existing.gameObject : new GameObject(objectName);
             if (existing == null)
@@ -473,7 +506,8 @@ namespace GameToolsEditor
 
         private static Vector3 FindNearestWalkablePosition(
             Vector3 position,
-            RecoilTerrainMapData mapData)
+            RecoilTerrainMapData mapData,
+            RecoilCastleTeam team)
         {
             var cellSize = mapData.CellSize;
             var centerX = Mathf.Clamp(
@@ -495,7 +529,7 @@ namespace GameToolsEditor
                         continue;
                     var cellX = centerX + dx;
                     var cellZ = centerZ + dz;
-                    if (!mapData.IsWalkable(cellX, cellZ))
+                    if (!mapData.IsWalkableForTeam(cellX, cellZ, team))
                         continue;
                     var candidate = new Vector3(
                         mapData.WorldOrigin.x + (cellX + 0.5f) * cellSize.x,
@@ -595,8 +629,8 @@ namespace GameToolsEditor
                 baked = Bake(_mapRoot, _blueCastle, _redCastle, _cellSize, progress =>
                     EditorUtility.DisplayCancelableProgressBar(
                         "Công Thành map bake",
-                        "Sampling mesh surfaces and castle blockers",
-                        progress));
+                        "Sampling heightfield, walkability and castle footprints",
+                        progress), _maxSlopeDegrees, _bakePlane);
                 EnsureDataFolder();
                 var path = $"{DataFolder}/{_assetName}.asset";
                 var existing = AssetDatabase.LoadMainAssetAtPath(path);
@@ -646,11 +680,14 @@ namespace GameToolsEditor
             GameObject blueCastle,
             GameObject redCastle,
             float cellSize,
-            Func<float, bool> cancel = null)
+            Func<float, bool> cancel = null,
+            float maxSlopeDegrees = 45f,
+            MeshFilter bakePlane = null)
         {
             if (mapRoot == null || blueCastle == null || redCastle == null ||
-                blueCastle == redCastle || !float.IsFinite(cellSize) || cellSize < 0.1f)
-                throw new ArgumentException("Select a map, two different castles, and a valid cell size.");
+                blueCastle == redCastle || !float.IsFinite(cellSize) || cellSize < 0.1f ||
+                !float.IsFinite(maxSlopeDegrees) || maxSlopeDegrees < 0f || maxSlopeDegrees >= 90f)
+                throw new ArgumentException("Select a map, two different castles, a valid cell size and slope limit.");
             if (!mapRoot.scene.IsValid() || !blueCastle.scene.IsValid() || !redCastle.scene.IsValid())
                 throw new ArgumentException("Map and castles must be scene objects from the Hierarchy.");
 
@@ -659,13 +696,34 @@ namespace GameToolsEditor
             var terrains = new List<Terrain>();
             var bounds = new Bounds();
             var hasBounds = false;
-            CollectMapGeometry(mapRoot, triangles, unreadableMeshes, terrains, ref bounds, ref hasBounds);
+            CollectMapGeometry(mapRoot, blueCastle, redCastle,
+                triangles, unreadableMeshes, terrains, ref bounds, ref hasBounds, bakePlane != null ? bakePlane.transform : null);
             if (!hasBounds || bounds.size.x <= 0f || bounds.size.z <= 0f)
                 throw new InvalidOperationException("The selected Map has no usable horizontal surface bounds.");
+
+            var projectionTriangles = new List<SurfaceTriangle>();
+            if (bakePlane != null)
+            {
+                if (!bakePlane.gameObject.scene.IsValid() || bakePlane.sharedMesh == null)
+                    throw new ArgumentException("Select a scene Plane with a mesh.");
+                var projectionBounds = new Bounds();
+                var hasProjectionBounds = false;
+                AddMesh(bakePlane.sharedMesh, bakePlane.transform, projectionTriangles, ref projectionBounds, ref hasProjectionBounds);
+                var min = Vector3.Max(bounds.min, projectionBounds.min);
+                var max = Vector3.Min(bounds.max, projectionBounds.max);
+                min.y = bounds.min.y;
+                max.y = bounds.max.y;
+                if (!hasProjectionBounds || projectionTriangles.Count == 0 || max.x <= min.x || max.z <= min.z)
+                    throw new InvalidOperationException("Plane projection does not overlap the map or is vertical.");
+                bounds.SetMinMax(min, max);
+            }
 
             if (!TryGetWorldBounds(blueCastle, out var blueBounds) ||
                 !TryGetWorldBounds(redCastle, out var redBounds))
                 throw new InvalidOperationException("Could not determine world bounds for both castles.");
+            if (!OverlapsFootprint(blueBounds.min.x, blueBounds.max.x, blueBounds.min.z, blueBounds.max.z, bounds) ||
+                !OverlapsFootprint(redBounds.min.x, redBounds.max.x, redBounds.min.z, redBounds.max.z, bounds))
+                throw new InvalidOperationException("Both castle footprints must overlap the baked map bounds.");
 
             var cellColumns = Math.Ceiling(bounds.size.x / cellSize);
             var cellRows = Math.Ceiling(bounds.size.z / cellSize);
@@ -714,6 +772,15 @@ namespace GameToolsEditor
                 }
             }
 
+            if (bakePlane != null)
+            {
+                var projectionMask = new bool[heights.Length];
+                var unusedHeights = new float[heights.Length];
+                foreach (var triangle in projectionTriangles)
+                    RasterizeTriangle(triangle, bounds.min, stepX, stepZ, columns, rows, unusedHeights, projectionMask);
+                for (var i = 0; i < sampled.Length; i++)
+                    sampled[i] &= projectionMask[i];
+            }
             var fallbackHeight = bounds.min.y;
             for (var i = 0; i < heights.Length; i++)
                 if (!sampled[i])
@@ -730,16 +797,22 @@ namespace GameToolsEditor
                     var i = z * columns + x;
                     var hasSurface = sampled[i] && sampled[i + 1] &&
                                      sampled[i + columns] && sampled[i + columns + 1];
-                    var minX = bounds.min.x + x * stepX;
-                    var maxX = minX + stepX;
-                    var minZ = bounds.min.z + z * stepZ;
-                    var maxZ = minZ + stepZ;
-                    var blocked = OverlapsFootprint(minX, maxX, minZ, maxZ, blueBounds) ||
-                                  OverlapsFootprint(minX, maxX, minZ, maxZ, redBounds);
-                    cells[z * (columns - 1) + x] = (byte)(hasSurface && !blocked ? 1 : 0);
+                    var h00 = heights[i];
+                    var h10 = heights[i + 1];
+                    var h01 = heights[i + columns];
+                    var h11 = heights[i + columns + 1];
+                    var slopeX = ((h10 + h11) - (h00 + h01)) * 0.5f / stepX;
+                    var slopeZ = ((h01 + h11) - (h00 + h10)) * 0.5f / stepZ;
+                    var slopeDegrees = Mathf.Atan(Mathf.Sqrt(slopeX * slopeX + slopeZ * slopeZ)) * Mathf.Rad2Deg;
+                    // Castle cells are team-dependent: friendly forces may cross their own
+                    // castle, while the opposing castle is a siege obstacle. Store base terrain
+                    // here; RecoilNavMeshPathService applies the opposing castle mask per team.
+                    cells[z * (columns - 1) + x] = (byte)(hasSurface && slopeDegrees <= maxSlopeDegrees ? 1 : 0);
                 }
             }
 
+            if (bakePlane == null)
+                CongThanhForestBakeUtility.Apply(mapRoot, bounds.min, stepX, stepZ, columns, rows, cells);
             var data = CreateInstance<RecoilTerrainMapData>();
             try
             {
@@ -748,7 +821,7 @@ namespace GameToolsEditor
                     new Vector2(bounds.size.x, bounds.size.z),
                     columns,
                     rows,
-                    90f,
+                    maxSlopeDegrees,
                     heights,
                     cells);
                 data.SetCastleBlocks(new[]
@@ -767,16 +840,20 @@ namespace GameToolsEditor
 
         private static void CollectMapGeometry(
             GameObject root,
+            GameObject blueCastle,
+            GameObject redCastle,
             List<SurfaceTriangle> triangles,
             List<PendingCollider> unreadableMeshes,
             List<Terrain> terrains,
             ref Bounds bounds,
-            ref bool hasBounds)
+            ref bool hasBounds,
+            Transform excludedProjection = null)
         {
             var meshFilters = root.GetComponentsInChildren<MeshFilter>(true);
             foreach (var filter in meshFilters)
             {
-                if (filter.sharedMesh == null)
+                if (filter.sharedMesh == null || IsCastleGeometry(filter.transform, blueCastle, redCastle) || (excludedProjection != null && (filter.transform == excludedProjection || filter.transform.IsChildOf(excludedProjection))) ||
+                    CongThanhForestBakeUtility.IsForestGeometry(filter.transform))
                     continue;
                 if (filter.sharedMesh.isReadable)
                     AddMesh(filter.sharedMesh, filter.transform, triangles, ref bounds, ref hasBounds);
@@ -791,7 +868,8 @@ namespace GameToolsEditor
             var skinnedRenderers = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
             foreach (var renderer in skinnedRenderers)
             {
-                if (renderer.sharedMesh == null)
+                if (renderer.sharedMesh == null || IsCastleGeometry(renderer.transform, blueCastle, redCastle) || (excludedProjection != null && (renderer.transform == excludedProjection || renderer.transform.IsChildOf(excludedProjection))) ||
+                    CongThanhForestBakeUtility.IsForestGeometry(renderer.transform))
                     continue;
                 var bakedMesh = new Mesh();
                 try
@@ -808,7 +886,8 @@ namespace GameToolsEditor
             var meshColliders = root.GetComponentsInChildren<MeshCollider>(true);
             foreach (var meshCollider in meshColliders)
             {
-                if (meshCollider.sharedMesh == null)
+                if (meshCollider.sharedMesh == null || IsCastleGeometry(meshCollider.transform, blueCastle, redCastle) || (excludedProjection != null && (meshCollider.transform == excludedProjection || meshCollider.transform.IsChildOf(excludedProjection))) ||
+                    CongThanhForestBakeUtility.IsForestGeometry(meshCollider.transform))
                     continue;
                 var filter = meshCollider.GetComponent<MeshFilter>();
                 if (filter != null && filter.sharedMesh == meshCollider.sharedMesh)
@@ -826,7 +905,7 @@ namespace GameToolsEditor
             var terrainComponents = root.GetComponentsInChildren<Terrain>(true);
             foreach (var terrain in terrainComponents)
             {
-                if (terrain.terrainData == null)
+                if (terrain.terrainData == null || IsCastleGeometry(terrain.transform, blueCastle, redCastle) || (excludedProjection != null && (terrain.transform == excludedProjection || terrain.transform.IsChildOf(excludedProjection))))
                     continue;
                 if (Quaternion.Angle(terrain.transform.rotation, Quaternion.identity) > 0.01f ||
                     Vector3.Distance(terrain.transform.lossyScale, Vector3.one) > 0.001f)
@@ -843,6 +922,10 @@ namespace GameToolsEditor
                     throw new InvalidOperationException("The selected Map contains no supported mesh or Terrain data.");
             }
         }
+
+        private static bool IsCastleGeometry(Transform candidate, GameObject blueCastle, GameObject redCastle) =>
+            candidate == blueCastle.transform || candidate.IsChildOf(blueCastle.transform) ||
+            candidate == redCastle.transform || candidate.IsChildOf(redCastle.transform);
 
         private static void SampleUnreadableMeshes(
             List<PendingCollider> meshes,
@@ -1011,12 +1094,20 @@ namespace GameToolsEditor
             bounds = default;
             var hasBounds = false;
 
-            foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
-                EncapsulateBounds(renderer.bounds, ref bounds, ref hasBounds);
             foreach (var collider in root.GetComponentsInChildren<Collider>(true))
+            {
+                if (!collider.enabled || collider.isTrigger || !collider.gameObject.activeInHierarchy)
+                    continue;
                 EncapsulateBounds(collider.bounds, ref bounds, ref hasBounds);
+            }
+            if (hasBounds)
+                return bounds.size.x > 0f && bounds.size.y > 0f && bounds.size.z > 0f;
+
+            foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
+                if (renderer.enabled && renderer.gameObject.activeInHierarchy)
+                    EncapsulateBounds(renderer.bounds, ref bounds, ref hasBounds);
             foreach (var terrain in root.GetComponentsInChildren<Terrain>(true))
-                if (terrain.terrainData != null)
+                if (terrain.enabled && terrain.gameObject.activeInHierarchy && terrain.terrainData != null)
                     EncapsulateTransformedBounds(
                         new Bounds(Vector3.zero, terrain.terrainData.size),
                         terrain.transform,
@@ -1027,12 +1118,13 @@ namespace GameToolsEditor
             {
                 foreach (var filter in root.GetComponentsInChildren<MeshFilter>(true))
                 {
-                    if (filter.sharedMesh == null)
+                    if (filter.sharedMesh == null || !filter.gameObject.activeInHierarchy)
                         continue;
                     EncapsulateTransformedBounds(filter.sharedMesh.bounds, filter.transform, ref bounds, ref hasBounds);
                 }
                 foreach (var skinnedRenderer in root.GetComponentsInChildren<SkinnedMeshRenderer>(true))
-                    EncapsulateBounds(skinnedRenderer.bounds, ref bounds, ref hasBounds);
+                    if (skinnedRenderer.enabled && skinnedRenderer.gameObject.activeInHierarchy)
+                        EncapsulateBounds(skinnedRenderer.bounds, ref bounds, ref hasBounds);
             }
 
             return hasBounds && bounds.size.x > 0f && bounds.size.y > 0f && bounds.size.z > 0f;

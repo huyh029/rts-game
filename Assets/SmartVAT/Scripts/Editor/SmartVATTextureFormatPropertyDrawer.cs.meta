@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e43e95e8d950d3f4ba7759cae2e8fb2c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/Scripts/Editor/SmartVATTextureFormatPropertyDrawer.cs
+  uploadId: 919962

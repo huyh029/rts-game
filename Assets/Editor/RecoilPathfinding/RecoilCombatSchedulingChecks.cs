@@ -54,8 +54,10 @@ namespace RecoilPathfindingEditor
                 }
                 var run = type.GetMethod("RunCombatJob", flags);
                 var scheduled = (IList)Get("_scheduledSoldiers");
-                for (var tick = 0; tick < 30; tick++)
+                for (var tick = 0; tick < 60; tick++)
                 {
+                    // Exercise both synchronization paths, including the transition.
+                    Set("useRecoilJobChaining", tick >= 30);
                     scheduled.Clear();
                     // Cover both the aggregate-only path and snapshot edits for budgeted units.
                     if (tick % 3 != 0) { scheduled.Add(units[0]); scheduled.Add(units[1]); }
@@ -65,7 +67,7 @@ namespace RecoilPathfindingEditor
                     Set("_combatJobPending", false);
                 }
                 RecoilBattleCombatValidation.ValidateUnitStats();
-                Debug.Log("Combat scheduling passed: 30 consecutive ticks, snapshot edits, AoE aggregation and empty/non-empty combat budgets.");
+                Debug.Log("Combat scheduling passed: 60 consecutive ticks across separate and chained snapshot/grid jobs, snapshot edits, AoE aggregation and empty/non-empty combat budgets.");
             }
             finally
             {

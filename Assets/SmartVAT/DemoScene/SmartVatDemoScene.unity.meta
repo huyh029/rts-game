@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: da3144ca228a07849b8c68b365c7a81d
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/DemoScene/SmartVatDemoScene.unity
+  uploadId: 919962

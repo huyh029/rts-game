@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 11500000, guid: 2859085507544bb488e7cf64a323ea89, type: 3}
+  m_Name: SmartVATDefaultSettings
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::SmartVAT.SmartVATSettings
+  baseName: VatAsset
+  texturePrefix: T_
+  materialPrefix: M_
+  meshPrefix: Mesh_
+  smartVATsuffix: _SmartVATFree
+  positionSuffix: _POS
+  normalSuffix: _NORM
+  saveLocation: Assets/
+  defaultTextureFormat:
+    platform: Default
+    positionTextureFormat: 17
+    normalTextureFormat: 7
+  textureFormatOverrides: []
+  defaultPreviewMaterial: {fileID: 2100000, guid: 9b96e51b909d97243b12509c50e4dafe, type: 2}
+  defaultVATPreset:
+    presetName: Default
+    movementFilter: 0
+    normalFilter: 1
+    movementMatchFilter: 0
+    normalMatchFilter: 1
+    bakeVertexColor: 1
+    frameCount: 32
+    standardShader: {fileID: -6465566751694194690, guid: 2e53d944c0bdb81418186bdbf2ca9355, type: 3}
+    bakePos: 1
+    normalTextureMode: 0
+    normalBake: 0
+    tangentBake: 0
+    exportType: 0
+  smartVATPresets: []

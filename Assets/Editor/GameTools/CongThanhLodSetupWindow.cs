@@ -21,12 +21,12 @@ namespace GameToolsEditor
             EditorGUILayout.LabelField("Thiết lập LOD cho toàn bộ lính", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
                 "Tự dò mesh LOD1–3 và lưu toàn bộ prefab nhân vật. Mesh gốc không ghi LOD1 cũng được nhận diện. " +
-                "Chỉ dùng mesh 3D; LOD3 giữ hiển thị đến tận đường chân trời, không chuyển sang chấm hoặc impostor.",
+                "Chỉ dùng mesh 3D; LOD3 giữ hiển thị đến tận đường chân trời, không chuyển sang chấm.",
                 MessageType.Info);
             using (new EditorGUI.DisabledScope(EditorApplication.isPlayingOrWillChangePlaymode))
             {
                 if (GUILayout.Button("Setup LOD", GUILayout.Height(38f)))
-                    _report = CongThanhImpostorLodSetup.SetupMeshLods();
+                    _report = CongThanhMeshLodSetup.SetupMeshLods();
             }
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 EditorGUILayout.HelpBox("Hãy dừng chế độ chạy trước khi thiết lập LOD.", MessageType.Info);

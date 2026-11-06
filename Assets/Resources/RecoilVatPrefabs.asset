@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf15e19ea0607044c9326b692e9a65af, type: 3}
+  m_Name: RecoilVatPrefabs
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilVatPrefabLibrary
+  Entries:
+  - Source: {fileID: 2692780606596965600, guid: 7f2cef056e2b7af4990825ea39c6111f, type: 3}
+    Vat: {fileID: 3100035842353475316, guid: 5ef60dedecbdac940b3c5655c185fef9, type: 3}
+  - Source: {fileID: 1664643354770027472, guid: c7b5f9a17bfaea1478885df28fe90b0e, type: 3}
+    Vat: {fileID: 2268232583175387556, guid: 8ffa1ff4265c1b8449d804c5859270d7, type: 3}
+  - Source: {fileID: 5433705014315375280, guid: e1eac32434370cd42bec060dd3d810e3, type: 3}
+    Vat: {fileID: 7387842502102369439, guid: b3a36a89e456ec543916971bd3085693, type: 3}
+  - Source: {fileID: 2819137553769558285, guid: e48e71dcca159ea43a212a292d8bdb80, type: 3}
+    Vat: {fileID: 8048296686151272927, guid: 36c116fdd9f9fad4584f8a2ec906deba, type: 3}
+  - Source: {fileID: 3032615311340299035, guid: a4bd0992d444b634ab05aaa484133cca, type: 3}
+    Vat: {fileID: 8667784758150018119, guid: 8f2adde770254ff43a7cdd2c595c4b9d, type: 3}
+  - Source: {fileID: 3594677941541393755, guid: a2ae5cac47dd3ae4cbfda27b7911803d, type: 3}
+    Vat: {fileID: 8544765313080857615, guid: 4d7fb3cc17cb1034ab5708cee4bcbc03, type: 3}
+  - Source: {fileID: 2505529736720149912, guid: a3fbd5efd30a13141a205f10237ec6bc, type: 3}
+    Vat: {fileID: 8785443900137188556, guid: 189ffbe35e7a9534b950dd8a45697310, type: 3}
+  - Source: {fileID: 2204044514399275775, guid: f12b51b0c365c3240bedc7363f79f063, type: 3}
+    Vat: {fileID: 5531330711750446655, guid: 644982af9149ec541bfc5ecbeb24cec8, type: 3}
+  - Source: {fileID: 1401722871493940463, guid: f71f79ac0d19ba74382eca6182f1adfb, type: 3}
+    Vat: {fileID: 3075325878101450466, guid: 26f50ce4150861a47a7f6c8d6951ed91, type: 3}
+  - Source: {fileID: 4301879766643548551, guid: a9adb629f322b1942b9dc9e9aa83b106, type: 3}
+    Vat: {fileID: 4172336043081589448, guid: 1bbda2d9c5f87e145806b317ea5b72d0, type: 3}
+  - Source: {fileID: 8213173033440352744, guid: bae70b080da3319479cc343bf1e47aaa, type: 3}
+    Vat: {fileID: 752824459534490567, guid: 3e3d2c609ccbc77409a4b6fa767bb29d, type: 3}
+  - Source: {fileID: 7499120017799365749, guid: 65722277994267c478717f8f3a118864, type: 3}
+    Vat: {fileID: 1965831294453164507, guid: b1c31c47ad71b4f499a80b188a0b6e29, type: 3}
+  - Source: {fileID: 2266480297876915128, guid: 6b78c443a96d56d4e806fa93c6d73eb1, type: 3}
+    Vat: {fileID: 1060891093700615391, guid: 47965df758513e04dab73dbaf2e034c4, type: 3}
+  - Source: {fileID: 5409185216448347608, guid: 541c29d39f6806e499359def484bcfe7, type: 3}
+    Vat: {fileID: 3308550122371695026, guid: 8c38e6c3020b6d548a3a378644437e56, type: 3}
+  - Source: {fileID: 2749619747641695281, guid: 57a47273515792d438d57dd4e5c4ec9e, type: 3}
+    Vat: {fileID: 6806141925953772971, guid: e1056a63eb4a08940b8638578c503530, type: 3}
+  - Source: {fileID: 8854561764355617410, guid: 8f84489ffc7b85b44a040e6523139b6d, type: 3}
+    Vat: {fileID: 3652045195955216588, guid: 270529ad6c50cad40bb32d40c82fa148, type: 3}

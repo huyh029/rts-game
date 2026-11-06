@@ -24,7 +24,7 @@ namespace RecoilPathfindingEditor
             _cellSize = EditorGUILayout.FloatField("Cell size (world units)", _cellSize);
             _maxSlope = EditorGUILayout.Slider("Maximum slope", _maxSlope, 0f, 89f);
             EditorGUILayout.HelpBox("Saves world origin, grid heights and walkable cells. Holes and steep slopes are blocked. " +
-                "Buildings, trees, mesh surfaces and moving obstacles are not included. " +
+                "Generated RecoilForestArea trunks under this Terrain are blocked. Other trees, buildings, mesh surfaces and moving obstacles are not included. " +
                 "Assign the saved asset in Resources/RecoilTerrainBackend to use it in the battle.", MessageType.Info);
             var valid = _terrain != null && _terrain.terrainData != null && float.IsFinite(_cellSize) && _cellSize >= 0.1f;
             if (valid)
@@ -124,6 +124,8 @@ namespace RecoilPathfindingEditor
                     cells[z * (columns - 1) + x] = (byte)(solid && slope <= maxSlope ? 1 : 0);
                 }
             }
+            GameToolsEditor.CongThanhForestBakeUtility.Apply(terrain.gameObject, terrain.GetPosition(),
+                size.x / (columns - 1), size.z / (rows - 1), columns, rows, cells);
             var asset = CreateInstance<RecoilPathfinding.RecoilTerrainMapData>();
             try { asset.SetBakedData(terrain.GetPosition(), new Vector2(size.x, size.z), columns, rows, maxSlope, heights, cells); }
             catch { DestroyImmediate(asset); throw; }

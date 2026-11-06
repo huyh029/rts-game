@@ -17,7 +17,7 @@ namespace RecoilPathfindingEditor
         {
             var counts = new[] { 30, 40, 30, 40, 30, 30, 20 };
             var radii = new[] { .3f, .5f, .6f, .7f, .8f, .4f, 1.2f };
-            var slots = RecoilBattleFormation.Build(counts, radii);
+            var slots = RecoilBattleFormation.Build(counts, radii, 20);
             var points = new System.Collections.Generic.List<(Vector2 point, float radius)>();
             for (var type = 0; type < counts.Length; type++)
             {
@@ -69,14 +69,14 @@ namespace RecoilPathfindingEditor
             foreach (var count in new[] { 0, 1, 2, 7, 51 })
             {
                 var sparse = new[] { count, 0, count, count, 0, 0, count };
-                var layout = RecoilBattleFormation.Build(sparse, radii);
+                var layout = RecoilBattleFormation.Build(sparse, radii, 20);
                 for (var type = 0; type < sparse.Length; type++)
                     foreach (var point in layout[type])
                         if (!float.IsFinite(point.x) || !float.IsFinite(point.y)) throw new Exception("Partial block has invalid coordinates.");
             }
             ValidateCombatGate();
-            var smaller = RecoilBattleFormation.Build(new[] { 0, 0, 0, 0, 0, 0, 100 }, radii)[6];
-            var larger = RecoilBattleFormation.Build(new[] { 0, 0, 0, 0, 0, 0, 1000 }, radii)[6];
+            var smaller = RecoilBattleFormation.Build(new[] { 0, 0, 0, 0, 0, 0, 100 }, radii, 20)[6];
+            var larger = RecoilBattleFormation.Build(new[] { 0, 0, 0, 0, 0, 0, 1000 }, radii, 20)[6];
             Bounds BlockBounds(Vector2[] positions)
             {
                 var bounds = new Bounds(new Vector3(positions[0].x, positions[0].y, 0f), Vector3.zero);
@@ -84,8 +84,13 @@ namespace RecoilPathfindingEditor
                 return bounds;
             }
             if (BlockBounds(larger).size.x <= BlockBounds(smaller).size.x ||
-                BlockBounds(larger).size.y <= BlockBounds(smaller).size.y)
-                throw new Exception("Growing a block must expand both columns and rows, not just its depth.");
+                BlockBounds(larger).size.y > BlockBounds(smaller).size.y + .001f)
+                throw new Exception("Growing a block must add width while respecting the configured maximum depth.");
+            var depthLimited = RecoilBattleFormation.Build(new[] { 0, 0, 0, 0, 0, 0, 1000 }, radii, 20)[6];
+            var depthRows = new System.Collections.Generic.HashSet<float>();
+            foreach (var point in depthLimited) depthRows.Add(point.y);
+            if (depthRows.Count != 20)
+                throw new Exception($"Configured formation depth should be 20 rows, got {depthRows.Count}.");
             ValidateImmediateSpawnPlacement();
             Debug.Log("Battle formation passed: mirrored teams, 50m offset, 1m gaps, body clearance, sparse blocks and pre-battle combat gate.");
         }
@@ -194,8 +199,8 @@ namespace RecoilPathfindingEditor
                 if ((bool)Get("_formationReady"))
                     throw new Exception("Combat must wait until both teams have spawned.");
 
-                var previous = RecoilBattleFormation.Build(new[] { 0, 2, 0, 0, 0, 0, 0 }, new float[7])[1];
-                var expanded = RecoilBattleFormation.Build(new[] { 0, 3, 0, 0, 0, 0, 0 }, new float[7])[1];
+                var previous = RecoilBattleFormation.Build(new[] { 0, 2, 0, 0, 0, 0, 0 }, new float[7], 20)[1];
+                var expanded = RecoilBattleFormation.Build(new[] { 0, 3, 0, 0, 0, 0, 0 }, new float[7], 20)[1];
                 if (previous.Length != 2 || expanded.Length != 3 ||
                     Vector2.Distance(previous[0], expanded[0]) < .1f)
                     throw new Exception("Adding soldiers must recalculate existing formation slots.");

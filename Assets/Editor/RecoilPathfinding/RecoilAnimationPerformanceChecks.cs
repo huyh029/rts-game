@@ -47,6 +47,7 @@ namespace RecoilPathfindingEditor
                 var sample = views[0];
                 if (!sample.Animator.isActiveAndEnabled)
                     throw new InvalidOperationException("Benchmark Animator is inactive; results would not measure animation work.");
+                ValidateProjectileLeadPresentation(sample);
                 sample.SetPresentationMovementSpeed(3.5f);
                 update(sample);
                 sample.Animator.Update(0.3f);
@@ -117,6 +118,34 @@ namespace RecoilPathfindingEditor
                 return $"64 units x 300 calls (19200): C# locomotion wrapper {watch.Elapsed.TotalMilliseconds:F3} ms; allocated {allocationReport}. Animator engine evaluation/rendering excluded; repeated same-frame calls measure the stable locomotion path, not attack/death or full-frame performance.";
             }
             finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
+        private static void ValidateProjectileLeadPresentation(RecoilCharacterPresentation sample)
+        {
+            var targetObject = new GameObject("Projectile intercept presentation check");
+            try
+            {
+                var target = targetObject.transform;
+                target.position = sample.transform.position + sample.transform.forward * 10f;
+                var intercept = target.position + sample.transform.up * 2f;
+                if (!sample.PlayAttack(target, intercept))
+                    throw new InvalidOperationException("Attack presentation could not accept a projectile intercept point.");
+
+                var pendingField = typeof(RecoilCharacterPresentation).GetField(
+                    "_pendingTargetPosition", BindingFlags.Instance | BindingFlags.NonPublic);
+                var queuedField = typeof(RecoilCharacterPresentation).GetField(
+                    "_queuedTargetPosition", BindingFlags.Instance | BindingFlags.NonPublic);
+                var pending = (Vector3?)pendingField.GetValue(sample);
+                var queued = (Vector3?)queuedField.GetValue(sample);
+                if (pending != intercept && queued != intercept)
+                    throw new InvalidOperationException(
+                        "Presentation must retain the resolved intercept point instead of replacing it with the target's current position.");
+            }
+            finally
+            {
+                sample.ResetForReuse();
+                UnityEngine.Object.DestroyImmediate(targetObject);
+            }
         }
     }
 }

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ff5451e47e6a154449babbf228bf6e1b
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/VAT/Plant/Plant.prefab
+  uploadId: 919962

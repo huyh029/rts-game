@@ -9,6 +9,7 @@ namespace RecoilPathfinding
     public struct RecoilUnitPose : IComponentData
     {
         public float3 Position;
+        public float3 PreviousPosition;
         public float3 Velocity;
         public quaternion Rotation;
         public float Speed;
@@ -23,6 +24,9 @@ namespace RecoilPathfinding
         public float WaypointTolerance;
         public float AvoidanceRadius;
         public float AvoidanceStrength;
+        public byte DisableMobileAvoidance;
+        // Nonzero, different groups may overlap within the same team. Zero preserves normal collision.
+        public int AllyPassThroughGroup;
         public float BodyRadius;
         public float Mass;
         public byte PushResistant;
@@ -30,6 +34,15 @@ namespace RecoilPathfinding
         public byte AllowEnemyPushing;
         public float VerticalOffset;
         public int AreaMask;
+    }
+
+    public static class RecoilMovementMass
+    {
+        public static float FromOccupiedCircle(float prefabMass, float bodyRadius)
+        {
+            var radius = math.max(0.05f, bodyRadius);
+            return math.max(0.01f, prefabMass) * radius * radius;
+        }
     }
 
     public enum RecoilUnitOrderKind : byte { Stop, Move, Attack }
@@ -79,7 +92,7 @@ namespace RecoilPathfinding
 
     public struct RecoilUnitCombatTiming : IComponentData
     {
-        public float NextPathRequestTime;
+        public RecoilFightCorridor Fight;
         public float NextTargetSearchTime;
         public float LastCombatUpdateTime;
         public float3 LastDestination;
@@ -131,10 +144,100 @@ namespace RecoilPathfinding
             _world.EntityManager.SetComponentData(Entity, navigation);
         }
         private EntityManager Manager => _world.EntityManager;
-        public bool Exists => _world != null && _world.IsCreated && Manager.Exists(Entity);
+        public bool Exists
+        {
+            get
+            {
+                try
+                {
+                    return _world != null && _world.IsCreated && Manager.Exists(Entity);
+                }
+                catch (System.ArgumentException)
+                {
+                    // A stale entity handle can be observed while roster and lifecycle state
+                    // are being reconciled.
+                    return false;
+                }
+                catch (System.InvalidOperationException)
+                {
+                    // The owning World may be shutting down while wrappers are still referenced.
+                    return false;
+                }
+            }
+        }
+        public bool HasRequiredComponents
+        {
+            get
+            {
+                try
+                {
+                    return Exists &&
+                        Manager.HasComponent<RecoilUnitPose>(Entity) &&
+                        Manager.HasComponent<RecoilUnitMovementSettings>(Entity) &&
+                        Manager.HasComponent<RecoilUnitNavigation>(Entity) &&
+                        Manager.HasComponent<RecoilUnitOrder>(Entity) &&
+                        Manager.HasComponent<RecoilUnitCombatTiming>(Entity) &&
+                        Manager.HasBuffer<RecoilUnitWaypoint>(Entity);
+                }
+                catch (System.ArgumentException)
+                {
+                    return false;
+                }
+                catch (System.InvalidOperationException)
+                {
+                    return false;
+                }
+            }
+        }
+        public bool TryGetSettings(out RecoilUnitMovementSettings settings)
+        {
+            settings = default;
+            try
+            {
+                if (!Exists || !Manager.HasComponent<RecoilUnitMovementSettings>(Entity)) return false;
+                settings = Manager.GetComponentData<RecoilUnitMovementSettings>(Entity);
+                return true;
+            }
+            catch (System.ArgumentException)
+            {
+                // An entity may be retired between a roster's validity check and component read.
+                settings = default;
+                return false;
+            }
+            catch (System.InvalidOperationException)
+            {
+                // EntityManager can also report an invalid entity/world transition this way.
+                settings = default;
+                return false;
+            }
+        }
+        public bool TryGetPose(out RecoilUnitPose pose)
+        {
+            pose = default;
+            try
+            {
+                if (!Exists || !Manager.HasComponent<RecoilUnitPose>(Entity)) return false;
+                pose = Manager.GetComponentData<RecoilUnitPose>(Entity);
+                return true;
+            }
+            catch (System.ArgumentException)
+            {
+                pose = default;
+                return false;
+            }
+            catch (System.InvalidOperationException)
+            {
+                pose = default;
+                return false;
+            }
+        }
         public bool IsActive => Exists && Navigation.Active != 0;
         public RecoilUnitPose Pose => Manager.GetComponentData<RecoilUnitPose>(Entity);
-        public RecoilUnitMovementSettings Settings => Manager.GetComponentData<RecoilUnitMovementSettings>(Entity);
+        // Keep this compatibility accessor safe during teardown. Combat roster rebuilds can
+        // observe a wrapper after its ECS entity has already been destroyed; callers that need
+        // to distinguish that case should use TryGetSettings instead.
+        public RecoilUnitMovementSettings Settings =>
+            TryGetSettings(out var settings) ? settings : default;
         private RecoilUnitNavigation Navigation
         {
             get => Manager.GetComponentData<RecoilUnitNavigation>(Entity);
@@ -157,7 +260,7 @@ namespace RecoilPathfinding
             _world = world;
             Entity = entity;
             _service = service;
-            SetOrAdd(new RecoilUnitPose { Position = position, Rotation = rotation });
+            SetOrAdd(new RecoilUnitPose { Position = position, PreviousPosition = position, Rotation = rotation });
             SetOrAdd(settings);
             SetOrAdd(new RecoilUnitOrder());
             SetOrAdd(new RecoilUnitCombatTiming());
@@ -256,6 +359,7 @@ namespace RecoilPathfinding
             if (math.any(pose.Position != position) || math.any(pose.Velocity != velocity) ||
                 math.any(pose.Rotation.value != rotation.value) || pose.Speed != speed)
             {
+                pose.PreviousPosition = pose.Position;
                 pose.Position = position; pose.Velocity = velocity; pose.Rotation = rotation; pose.Speed = speed;
                 Manager.SetComponentData(Entity, pose);
             }
@@ -297,6 +401,7 @@ namespace RecoilPathfinding
                     }
                 }
             }
+            pose.PreviousPosition = pose.Position;
             pose.Position = valid ? (float3)projected : pose.Position;
             pose.Velocity = deltaTime > 0f ? (pose.Position - (float3)position) / deltaTime : float3.zero;
             pose.Speed = valid ? nextSpeed : 0f;
@@ -398,7 +503,8 @@ namespace RecoilPathfinding
                     Navigation = current;
                     // GetNewPath without a path ends in Fail(): the order is dropped, not retried here.
                     FailMovement();
-                    Debug.LogWarning($"Unit {Entity} could not find a path: {result.Error}");
+                    Debug.LogWarning($"Unit {Entity} could not find a path ({Settings.AreaMask} mask, " +
+                        $"{Position} -> {current.RequestedDestination}): {result.Error}");
                 }
             }, _world, Entity, requestVersion);
         }
@@ -437,6 +543,12 @@ namespace RecoilPathfinding
         {
             if (!Exists) return;
             var navigation = Navigation;
+            var path = Manager.GetBuffer<RecoilUnitWaypoint>(Entity);
+            var pose = Pose;
+            if (navigation.HasDestination == 0 && navigation.PathPending == 0 &&
+                navigation.WaypointIndex == 0 && navigation.HasPathEnd == 0 && path.Length == 0 &&
+                pose.Speed == 0f && math.lengthsq(pose.Velocity) <= 1e-8f)
+                return;
             navigation.MovementVersion++;
             navigation.RequestVersion++;
             navigation.HasDestination = 0;
@@ -444,8 +556,7 @@ namespace RecoilPathfinding
             navigation.WaypointIndex = 0;
             navigation.HasPathEnd = 0;
             Navigation = navigation;
-            Manager.GetBuffer<RecoilUnitWaypoint>(Entity).Clear();
-            var pose = Pose;
+            path.Clear();
             pose.Speed = 0f;
             pose.Velocity = float3.zero;
             Manager.SetComponentData(Entity, pose);

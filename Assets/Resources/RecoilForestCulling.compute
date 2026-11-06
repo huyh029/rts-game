@@ -1,0 +1,37 @@
+#pragma kernel SelectChunks
+#pragma kernel SelectInstances
+
+struct ChunkData { float4 center; float4 extents; float size; int offset; int count; int padding; };
+StructuredBuffer<ChunkData> _Chunks;
+StructuredBuffer<float> _Thresholds;
+RWStructuredBuffer<int> _SelectedLods;
+StructuredBuffer<int2> _InstanceMetadata;
+AppendStructuredBuffer<uint> _VisibleIndices;
+float4 _Planes[6];
+float3 _CameraPosition;
+float _Perspective, _OrthoSize, _LodBias;
+int _Orthographic, _ChunkCount, _InstanceCount;
+
+[numthreads(64, 1, 1)]
+void SelectChunks(uint id : SV_DispatchThreadID)
+{
+    if (id >= (uint)_ChunkCount) return;
+    ChunkData c = _Chunks[id];
+    int lod = -1;
+    for (uint p = 0; p < 6; p++)
+        if (dot(_Planes[p].xyz, c.center.xyz) + _Planes[p].w + dot(abs(_Planes[p].xyz), c.extents.xyz) < 0)
+        { _SelectedLods[id] = -2; return; }
+    float denominator = _Orthographic != 0 ? _OrthoSize : max(0.01, distance(_CameraPosition, c.center.xyz)) * _Perspective;
+    float relativeSize = c.size * _LodBias / max(0.001, denominator);
+    for (int level = 0; level < c.count; level++)
+        if (relativeSize >= _Thresholds[c.offset + level]) { lod = level; break; }
+    _SelectedLods[id] = lod;
+}
+
+[numthreads(64, 1, 1)]
+void SelectInstances(uint id : SV_DispatchThreadID)
+{
+    if (id >= (uint)_InstanceCount) return;
+    int2 info = _InstanceMetadata[id];
+    if (_SelectedLods[info.x] == info.y) _VisibleIndices.Append(id);
+}

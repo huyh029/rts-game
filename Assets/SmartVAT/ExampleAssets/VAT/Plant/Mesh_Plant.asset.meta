@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6cf6c90f34e4c1145a5da3da0eb5c323
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4300000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/VAT/Plant/Mesh_Plant.asset
+  uploadId: 919962

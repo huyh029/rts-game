@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2859085507544bb488e7cf64a323ea89
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/Scripts/Editor/SmartVATSettings.cs
+  uploadId: 919962

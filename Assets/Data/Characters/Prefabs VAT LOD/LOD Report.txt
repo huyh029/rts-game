@@ -1,0 +1,92 @@
+LOD2 target: ~50%, LOD3 target: ~25% of original vertices using connected vertex clustering.
+Each retained vertex reads its original VAT pixel through UV channel 3. Original textures and prefabs are unchanged.
+Small parts retain original geometry. Normal units: original/half/quarter, screen-height .75/.50/0. Elephants and siege: original/half at .50/0; no quarter mesh.
+BO_BINH_blue/BODY_linh.001_LOD2_LOD2: 4859 -> 2430 vertices, 2464 -> 1145 triangles
+BO_BINH_blue/khien tron.001_LOD2_LOD2: 197 -> 98 vertices, 199 -> 85 triangles
+TOTAL BO_BINH_blue_LOD2: 5134 -> 2606 vertices (50,8%).
+BO_BINH_blue/BODY_linh.001_LOD2_LOD3: 4859 -> 1217 vertices, 2464 -> 534 triangles
+BO_BINH_blue/khien tron.001_LOD2_LOD3: 197 -> 49 vertices, 199 -> 28 triangles
+TOTAL BO_BINH_blue_LOD3: 5134 -> 1344 vertices (26,2%).
+BO_BINH_red/BODY_linh_LOD2_LOD2: 4859 -> 2429 vertices, 2464 -> 1144 triangles
+BO_BINH_red/khien tron_LOD2_LOD2: 197 -> 98 vertices, 199 -> 87 triangles
+TOTAL BO_BINH_red_LOD2: 5134 -> 2605 vertices (50,7%).
+BO_BINH_red/BODY_linh_LOD2_LOD3: 4859 -> 1216 vertices, 2464 -> 533 triangles
+BO_BINH_red/khien tron_LOD2_LOD3: 197 -> 49 vertices, 199 -> 28 triangles
+TOTAL BO_BINH_red_LOD3: 5134 -> 1343 vertices (26,2%).
+CUNG_KY_blue/body_cungky_blue_LOD2_LOD2: 4033 -> 2016 vertices, 2215 -> 967 triangles
+CUNG_KY_blue/cung_xanh_LOD2: 648 -> 324 vertices, 540 -> 214 triangles
+TOTAL CUNG_KY_blue_LOD2: 4681 -> 2340 vertices (50,0%).
+CUNG_KY_blue/body_cungky_blue_LOD2_LOD3: 4033 -> 1008 vertices, 2215 -> 431 triangles
+CUNG_KY_blue/cung_xanh_LOD3: 648 -> 162 vertices, 540 -> 92 triangles
+TOTAL CUNG_KY_blue_LOD3: 4681 -> 1170 vertices (25,0%).
+CUNG_KY_red/body_cungky_red_LOD2_LOD2: 4033 -> 2016 vertices, 2215 -> 967 triangles
+CUNG_KY_red/cung_do_LOD2: 2604 -> 1306 vertices, 3368 -> 1229 triangles
+TOTAL CUNG_KY_red_LOD2: 6637 -> 3322 vertices (50,1%).
+CUNG_KY_red/body_cungky_red_LOD2_LOD3: 4033 -> 1008 vertices, 2215 -> 431 triangles
+CUNG_KY_red/cung_do_LOD3: 2604 -> 651 vertices, 3368 -> 521 triangles
+TOTAL CUNG_KY_red_LOD3: 6637 -> 1659 vertices (25,0%).
+DAN_BINH_blue/Cylinder.001_LOD2_LOD2: 140 -> 71 vertices, 54 -> 29 triangles
+DAN_BINH_blue/Cylinder.009_LOD2_LOD2: 2543 -> 1272 vertices, 1827 -> 801 triangles
+TOTAL DAN_BINH_blue_LOD2: 2683 -> 1343 vertices (50,1%).
+DAN_BINH_blue/Cylinder.001_LOD2_LOD3: 140 -> 32 vertices, 54 -> 14 triangles
+DAN_BINH_blue/Cylinder.009_LOD2_LOD3: 2543 -> 635 vertices, 1827 -> 318 triangles
+TOTAL DAN_BINH_blue_LOD3: 2683 -> 667 vertices (24,9%).
+DAN_BINH_red/Cylinder.001_LOD2.001_LOD2: 140 -> 70 vertices, 54 -> 28 triangles
+DAN_BINH_red/Cylinder.009_LOD2.001_LOD2: 2543 -> 1272 vertices, 1827 -> 801 triangles
+TOTAL DAN_BINH_red_LOD2: 2683 -> 1342 vertices (50,0%).
+DAN_BINH_red/Cylinder.001_LOD2.001_LOD3: 140 -> 36 vertices, 54 -> 16 triangles
+DAN_BINH_red/Cylinder.009_LOD2.001_LOD3: 2543 -> 635 vertices, 1827 -> 318 triangles
+TOTAL DAN_BINH_red_LOD3: 2683 -> 671 vertices (25,0%).
+GIAO_BINH_blue/BODY_linh.001_LOD2_LOD2: 4859 -> 2430 vertices, 2464 -> 1124 triangles
+GIAO_BINH_blue/khien dai.001_LOD2_LOD2: 165 -> 84 vertices, 85 -> 44 triangles
+GIAO_BINH_blue/giao.001_LOD2_LOD2: 130 -> 65 vertices, 160 -> 69 triangles
+TOTAL GIAO_BINH_blue_LOD2: 5154 -> 2579 vertices (50,0%).
+GIAO_BINH_blue/BODY_linh.001_LOD2_LOD3: 4859 -> 1215 vertices, 2464 -> 531 triangles
+GIAO_BINH_blue/khien dai.001_LOD2_LOD3: 165 -> 41 vertices, 85 -> 21 triangles
+GIAO_BINH_blue/giao.001_LOD2_LOD3: 130 -> 32 vertices, 160 -> 26 triangles
+TOTAL GIAO_BINH_blue_LOD3: 5154 -> 1288 vertices (25,0%).
+GIAO_BINH_red/BODY_linh_LOD2_LOD2: 4859 -> 2430 vertices, 2464 -> 1124 triangles
+GIAO_BINH_red/khien dai_LOD2_LOD2: 165 -> 81 vertices, 85 -> 43 triangles
+GIAO_BINH_red/giao_LOD2_LOD2: 130 -> 65 vertices, 160 -> 69 triangles
+TOTAL GIAO_BINH_red_LOD2: 5154 -> 2576 vertices (50,0%).
+GIAO_BINH_red/BODY_linh_LOD2_LOD3: 4859 -> 1216 vertices, 2464 -> 530 triangles
+GIAO_BINH_red/khien dai_LOD2_LOD3: 165 -> 41 vertices, 85 -> 21 triangles
+GIAO_BINH_red/giao_LOD2_LOD3: 130 -> 32 vertices, 160 -> 26 triangles
+TOTAL GIAO_BINH_red_LOD3: 5154 -> 1289 vertices (25,0%).
+KY_BINH_blue/character.002_LOD2_LOD2: 566 -> 284 vertices, 307 -> 143 triangles
+KY_BINH_blue/character.003_LOD2_LOD2: 7902 -> 3951 vertices, 4995 -> 2390 triangles
+KY_BINH_blue/Horse.001_LOD2_LOD2: 2576 -> 1286 vertices, 1735 -> 752 triangles
+TOTAL KY_BINH_blue_LOD2: 11044 -> 5521 vertices (50,0%).
+KY_BINH_blue/character.002_LOD2_LOD3: 566 -> 142 vertices, 307 -> 67 triangles
+KY_BINH_blue/character.003_LOD2_LOD3: 7902 -> 1977 vertices, 4995 -> 920 triangles
+KY_BINH_blue/Horse.001_LOD2_LOD3: 2576 -> 641 vertices, 1735 -> 316 triangles
+TOTAL KY_BINH_blue_LOD3: 11044 -> 2760 vertices (25,0%).
+KY_BINH_red/character.001_LOD2_LOD2: 566 -> 284 vertices, 307 -> 143 triangles
+KY_BINH_red/character_LOD2_LOD2: 7902 -> 3949 vertices, 4995 -> 2388 triangles
+KY_BINH_red/Horse.004_LOD2_LOD2: 2576 -> 1290 vertices, 1735 -> 754 triangles
+TOTAL KY_BINH_red_LOD2: 11044 -> 5523 vertices (50,0%).
+KY_BINH_red/character.001_LOD2_LOD3: 566 -> 142 vertices, 307 -> 67 triangles
+KY_BINH_red/character_LOD2_LOD3: 7902 -> 1975 vertices, 4995 -> 918 triangles
+KY_BINH_red/Horse.004_LOD2_LOD3: 2576 -> 640 vertices, 1735 -> 315 triangles
+TOTAL KY_BINH_red_LOD3: 11044 -> 2757 vertices (25,0%).
+maybanda_v02_blue/xanh duohg_LOD2_LOD2: 603 -> 300 vertices, 523 -> 221 triangles
+TOTAL maybanda_v02_blue_LOD2: 727 -> 424 vertices (58,3%).
+maybanda_v02_red/do_LOD2_LOD2: 603 -> 300 vertices, 523 -> 221 triangles
+TOTAL maybanda_v02_red_LOD2: 727 -> 424 vertices (58,3%).
+QUAN_SU_blue/gaicatluong.002_LOD2_LOD2: 172 -> 88 vertices, 93 -> 36 triangles
+QUAN_SU_blue/gaicatluong.001_LOD2_LOD2: 2801 -> 1400 vertices, 2333 -> 1009 triangles
+TOTAL QUAN_SU_blue_LOD2: 2973 -> 1488 vertices (50,1%).
+QUAN_SU_blue/gaicatluong.002_LOD2_LOD3: 172 -> 43 vertices, 93 -> 15 triangles
+QUAN_SU_blue/gaicatluong.001_LOD2_LOD3: 2801 -> 699 vertices, 2333 -> 411 triangles
+TOTAL QUAN_SU_blue_LOD3: 2973 -> 742 vertices (25,0%).
+QUAN_SU_red/gaicatluong.002_LOD2.001_LOD2: 172 -> 88 vertices, 93 -> 36 triangles
+QUAN_SU_red/gaicatluong.001_LOD2.001_LOD2: 2801 -> 1400 vertices, 2333 -> 1009 triangles
+TOTAL QUAN_SU_red_LOD2: 2973 -> 1488 vertices (50,1%).
+QUAN_SU_red/gaicatluong.002_LOD2.001_LOD3: 172 -> 43 vertices, 93 -> 15 triangles
+QUAN_SU_red/gaicatluong.001_LOD2.001_LOD3: 2801 -> 699 vertices, 2333 -> 411 triangles
+TOTAL QUAN_SU_red_LOD3: 2973 -> 742 vertices (25,0%).
+VOI_blue/ElephantLP_LOD2_LOD2: 1169 -> 584 vertices, 1162 -> 476 triangles
+TOTAL VOI_blue_LOD2: 1169 -> 584 vertices (50,0%).
+VOI_red/ElephantLP.001_LOD2_LOD2: 1169 -> 585 vertices, 1162 -> 487 triangles
+TOTAL VOI_red_LOD2: 1169 -> 585 vertices (50,0%).
+Completed LOD prefabs: 16

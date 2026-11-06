@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 7a8675eb396637d43b4ba0a69cc715a5, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -143,13 +143,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117111417}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 320, y: 41.087795, z: 1.5903519}
+  m_LocalRotation: {x: -0.042097192, y: 0.02219367, z: -0.04592499, w: 0.9978108}
+  m_LocalPosition: {x: 78.3, y: 8.5, z: 2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2117366671}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.702, y: 2.77, z: -5.384}
 --- !u!1 &322280033
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 322280033}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -320, y: 42.615814, z: 2.5903308}
+  m_LocalPosition: {x: -57.5, y: 4.1, z: 4.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -209,8 +209,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.6698113, g: 0.5723296, b: 0.30647027, a: 1}
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -330,20 +330,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 28775.998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 21151.133
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 159764.5
+      value: 28775.996
       objectReference: {fileID: 0}
     - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 398.44617
+      value: 3.3479004
       objectReference: {fileID: 0}
     - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00001
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 75.97728
+      value: 3.44841
       objectReference: {fileID: 0}
     - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -373,9 +381,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4336960387004625363, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1799698270}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33041eb45336fab4db430ee70e43ab1b, type: 3}
 --- !u!1 &992024820
@@ -403,13 +418,14 @@ Transform:
   m_GameObject: {fileID: 992024820}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -395.09827, y: 1, z: -72.52887}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1718735401}
   - {fileID: 1619920470}
   - {fileID: 778562361}
+  - {fileID: 1718735401}
+  - {fileID: 1432256524}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1003614877
@@ -500,7 +516,7 @@ Transform:
   m_GameObject: {fileID: 1003614877}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14251663, y: 0, z: 0, w: 0.9897924}
-  m_LocalPosition: {x: 3.722656, y: 205.2302, z: -440.6}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -564,13 +580,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilDemoCameraController
   panUnitsPerPixel: 0.08
   rotationDegreesPerPixel: 0.2
-  zoomUnitsPerNotch: 5
-  zoomSensitivityMultiplier: 3
-  pitchDegrees: 16.387
+  zoomUnitsPerNotch: 2
+  zoomSensitivityMultiplier: 1
+  pitchDegrees: 10
   yawDegrees: 0
   terrainMap: {fileID: 11400000, guid: c5a824b2bd5696a419f560be0c4cc159, type: 2}
   minHeightAboveMap: 3
-  maxHeightAboveMap: 70
+  maxHeightAboveMap: 30
+--- !u!1 &1032739007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1032739008}
+  - component: {fileID: 1032739009}
+  m_Layer: 0
+  m_Name: Instanced Forest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1032739008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032739007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1799698270}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1032739009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032739007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538c2b4a893c4bbabcfcc539b9ef7ce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilForestInstancedRenderer
+  data: {fileID: 11400000, guid: 4a6d1f0003fbc1a4dacfc5a08b820094, type: 2}
+  useIndirect: 0
+  indirectCulling: {fileID: 0}
+  indirectShaders: []
+  logToConsole: 1
+  logIntervalSeconds: 2
+  logSceneCamera: 0
 --- !u!1001 &1402472567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -581,55 +648,55 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalScale.x
-      value: 40
+      value: 11.818187
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalScale.y
-      value: 40
+      value: 11.818182
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalScale.z
-      value: 40
+      value: 11.818182
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 794.39825
+      value: 61.50174
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 44.9
+      value: 11.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 72.12887
+      value: -1.4288712
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.4773415
+      value: 0.4919449
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5234915
+      value: -0.5069374
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.49940017
+      value: 0.49824408
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.4986995
+      value: 0.50275004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -93.741
+      value: -91.268
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 44.052002
+      value: 61.789
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 45.792007
+      value: 28.332993
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 57c083b95161ef346967361287c75302, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -652,6 +719,119 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c083b95161ef346967361287c75302, type: 3}
+--- !u!1 &1432256523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1432256524}
+  - component: {fileID: 1432256527}
+  - component: {fileID: 1432256526}
+  - component: {fileID: 1432256525}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1432256524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432256523}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.9017334, y: 8, z: -1.7288666}
+  m_LocalScale: {x: 15.6, y: 1.8909092, z: 4.561818}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 992024821}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1432256525
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432256523}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1432256526
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432256523}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1432256527
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432256523}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1619920470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
@@ -691,6 +871,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4d991d6d314df394c69a918d532a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilNavMeshPathService
+  sharedFieldMinRequests: 4
+  maxSearchesPerBatch: 256
   maxProjectionDistance: 5
   terrainMap: {fileID: 11400000, guid: c5a824b2bd5696a419f560be0c4cc159, type: 2}
   useProjectTerrainMap: 0
@@ -699,7 +881,9 @@ MonoBehaviour:
   pathCompletionBudgetMilliseconds: 2
   maxProjectionRequestsPerFrame: 128
   crowdCellSize: 2.5
-  maxAvoidanceNeighbors: 8
+  avoidanceUpdateRate: 3
+  allowUnitCollisionOverlap: 1
+  maxCollisionPushMultiplier: 0
   crowdSimulationRate: 30
   showSamplePaths: 1
   debugPathSamples: 8
@@ -720,6 +904,1635 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1799698269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1799698270}
+  - component: {fileID: 1799698271}
+  m_Layer: 0
+  m_Name: Map Forest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1799698270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799698269}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071067, y: 0.000000030908616, z: -0.000000030908623, w: 0.7071068}
+  m_LocalPosition: {x: -0.0001163435, y: 0.0001630366, z: -0.00006950238}
+  m_LocalScale: {x: 0.00003475118, y: 0.000034751185, z: 0.000047278787}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1032739008}
+  m_Father: {fileID: 1718735401}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1799698271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799698269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f292ebbb051084d8ab47b5d641197c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilForestArea
+  trunks:
+  - LocalPosition: {x: -89.94158, y: 8.326222, z: -74.69066}
+    Radius: 0.66973907
+  - LocalPosition: {x: -10.002229, y: 6.366934, z: 91.94935}
+    Radius: 0.6811339
+  - LocalPosition: {x: -33.974213, y: 7.876134, z: -97.51881}
+    Radius: 0.8288018
+  - LocalPosition: {x: 136.5495, y: 6.3592553, z: -60.050808}
+    Radius: 0.8479087
+  - LocalPosition: {x: -0.69415265, y: 7.576352, z: 85.76147}
+    Radius: 0.71856165
+  - LocalPosition: {x: -87.32806, y: 6.3402677, z: 78.842735}
+    Radius: 0.76746356
+  - LocalPosition: {x: -33.682495, y: 10.171779, z: -51.27692}
+    Radius: 0.68640536
+  - LocalPosition: {x: 111.83093, y: 20.96383, z: -42.871464}
+    Radius: 0.882203
+  - LocalPosition: {x: -112.31818, y: 8.611448, z: -42.86091}
+    Radius: 0.68021595
+  - LocalPosition: {x: -40.37976, y: 8.538345, z: -41.597218}
+    Radius: 0.7456227
+  - LocalPosition: {x: 128.21156, y: 6.298795, z: 83.78016}
+    Radius: 0.66826063
+  - LocalPosition: {x: 129.04193, y: 7.3790827, z: 30.60401}
+    Radius: 0.7415182
+  - LocalPosition: {x: 110.935974, y: 6.3028016, z: 100.37376}
+    Radius: 0.6768757
+  - LocalPosition: {x: -97.87399, y: 21.50924, z: 54.464844}
+    Radius: 0.60902864
+  - LocalPosition: {x: 135.08241, y: 6.297422, z: 69.88326}
+    Radius: 0.8656988
+  - LocalPosition: {x: 48.213562, y: 6.357272, z: 93.30574}
+    Radius: 0.70182806
+  - LocalPosition: {x: -57.33374, y: 6.2898846, z: 106.49748}
+    Radius: 0.56924623
+  - LocalPosition: {x: 118.15394, y: 19.186152, z: 29.188633}
+    Radius: 0.85438335
+  - LocalPosition: {x: -97.10012, y: 19.000288, z: -19.104189}
+    Radius: 0.7616336
+  - LocalPosition: {x: 89.12799, y: 18.170324, z: -52.052963}
+    Radius: 0.70493186
+  - LocalPosition: {x: -111.63193, y: 7.907962, z: 38.55353}
+    Radius: 0.69931394
+  - LocalPosition: {x: -119.09653, y: 7.348045, z: -49.45339}
+    Radius: 0.8653567
+  - LocalPosition: {x: 70.53818, y: 14.24765, z: -57.30534}
+    Radius: 0.5689203
+  - LocalPosition: {x: 105.069885, y: 14.57714, z: -33.852825}
+    Radius: 0.73433137
+  - LocalPosition: {x: 80.02463, y: 18.306698, z: -59.83789}
+    Radius: 0.5898981
+  - LocalPosition: {x: 95.966064, y: 12.299182, z: -4.0249095}
+    Radius: 0.6899395
+  - LocalPosition: {x: 6.234558, y: 14.172102, z: -59.71023}
+    Radius: 0.8112123
+  - LocalPosition: {x: 112.37772, y: 7.769498, z: -66.13701}
+    Radius: 0.62157685
+  - LocalPosition: {x: -95.18978, y: 7.043131, z: -75.883286}
+    Radius: 0.6432302
+  - LocalPosition: {x: -0.5626525, y: 6.3680058, z: 102.16143}
+    Radius: 0.621165
+  - LocalPosition: {x: 143.21082, y: 6.288491, z: 100.51762}
+    Radius: 0.5981316
+  - LocalPosition: {x: 118.029305, y: 10.309336, z: -50.85538}
+    Radius: 0.6534351
+  - LocalPosition: {x: -73.13177, y: 13.384852, z: 54.407967}
+    Radius: 0.77578175
+  - LocalPosition: {x: 30.294495, y: 8.299664, z: -35.24857}
+    Radius: 0.74353135
+  - LocalPosition: {x: -24.881105, y: 6.273349, z: 106.67028}
+    Radius: 0.9002608
+  - LocalPosition: {x: 95.15577, y: 11.359488, z: 20.302727}
+    Radius: 0.7209853
+  - LocalPosition: {x: 110.14685, y: 19.598593, z: -10.272192}
+    Radius: 0.5872155
+  - LocalPosition: {x: -23.23944, y: 19.73401, z: 77.50345}
+    Radius: 0.6826771
+  - LocalPosition: {x: 134.04431, y: 6.298226, z: 45.45671}
+    Radius: 0.7746399
+  - LocalPosition: {x: 72.1192, y: 13.15668, z: 44.451317}
+    Radius: 0.79589874
+  - LocalPosition: {x: 14.090331, y: 17.592525, z: 86.76137}
+    Radius: 0.86624104
+  - LocalPosition: {x: -105.118774, y: 23.59967, z: -34.306034}
+    Radius: 0.6594913
+  - LocalPosition: {x: -0.62100214, y: 9.957582, z: 44.41846}
+    Radius: 0.6310704
+  - LocalPosition: {x: -63.374268, y: 11.545801, z: -59.242954}
+    Radius: 0.7366633
+  - LocalPosition: {x: 104.935425, y: 18.235403, z: -49.22574}
+    Radius: 0.72771114
+  - LocalPosition: {x: 126.07081, y: 6.362217, z: -74.331276}
+    Radius: 0.6073112
+  - LocalPosition: {x: -129.02191, y: 5.387316, z: -57.760162}
+    Radius: 0.7695627
+  - LocalPosition: {x: -1.299988, y: 8.129241, z: 29.989937}
+    Radius: 0.8712032
+  - LocalPosition: {x: -63.70318, y: 8.620098, z: 37.323093}
+    Radius: 0.5931299
+  - LocalPosition: {x: -103.505486, y: 16.768303, z: 20.854021}
+    Radius: 0.8861671
+  - LocalPosition: {x: -63.815277, y: 6.2900586, z: 106.66781}
+    Radius: 0.72394115
+  - LocalPosition: {x: -79.33227, y: 6.840418, z: 84.61458}
+    Radius: 0.6013867
+  - LocalPosition: {x: 95.16755, y: 6.2999077, z: 85.3927}
+    Radius: 0.7092928
+  - LocalPosition: {x: -113.528435, y: 6.2942257, z: 106.76745}
+    Radius: 0.7043363
+  - LocalPosition: {x: 23.462341, y: 19.545864, z: 69.43011}
+    Radius: 0.6111268
+  - LocalPosition: {x: 95.05018, y: 6.3268814, z: 101.49759}
+    Radius: 0.8531835
+  - LocalPosition: {x: -81.02764, y: 10.824331, z: -12.187581}
+    Radius: 0.89514345
+  - LocalPosition: {x: 55.58807, y: 19.470335, z: -73.67715}
+    Radius: 0.71748286
+  - LocalPosition: {x: 94.16681, y: 6.920328, z: -83.28824}
+    Radius: 0.6275404
+  - LocalPosition: {x: 110.81653, y: 20.562048, z: -18.831766}
+    Radius: 0.6203256
+  - LocalPosition: {x: 54.515015, y: 19.024467, z: -65.87849}
+    Radius: 0.7264584
+  - LocalPosition: {x: 103.272675, y: 8.339039, z: 52.640045}
+    Radius: 0.5847406
+  - LocalPosition: {x: 95.89893, y: 11.143092, z: -28.279789}
+    Radius: 0.7481672
+  - LocalPosition: {x: -72.438354, y: 7.6539507, z: -82.46808}
+    Radius: 0.81037307
+  - LocalPosition: {x: 105.04798, y: 14.813807, z: 20.022676}
+    Radius: 0.79694796
+  - LocalPosition: {x: 105.06373, y: 6.29842, z: 86.57259}
+    Radius: 0.702536
+  - LocalPosition: {x: 24.603941, y: 12.68004, z: 61.113407}
+    Radius: 0.9057428
+  - LocalPosition: {x: 79.160095, y: 6.340737, z: 107.628296}
+    Radius: 0.6490907
+  - LocalPosition: {x: -128.55304, y: 5.6982718, z: -18.713928}
+    Radius: 0.6619021
+  - LocalPosition: {x: -31.975037, y: 9.619195, z: 60.32142}
+    Radius: 0.77853173
+  - LocalPosition: {x: 31.102785, y: 17.079653, z: -83.60712}
+    Radius: 0.7886486
+  - LocalPosition: {x: 142.4259, y: 6.3169923, z: -74.41608}
+    Radius: 0.87395316
+  - LocalPosition: {x: 110.88269, y: 6.3098836, z: 62.8856}
+    Radius: 0.81878275
+  - LocalPosition: {x: -104.7431, y: 6.4943395, z: 77.51466}
+    Radius: 0.8381082
+  - LocalPosition: {x: 144.70367, y: 6.325806, z: 30.059761}
+    Radius: 0.5898364
+  - LocalPosition: {x: 23.716675, y: 9.475857, z: 52.43286}
+    Radius: 0.77709866
+  - LocalPosition: {x: 57.018803, y: 13.589697, z: -59.22847}
+    Radius: 0.8575857
+  - LocalPosition: {x: 31.963558, y: 19.553213, z: 69.654396}
+    Radius: 0.810189
+  - LocalPosition: {x: -65.080505, y: 18.407444, z: 77.43988}
+    Radius: 0.8782732
+  - LocalPosition: {x: 40.629517, y: 10.775286, z: -49.222393}
+    Radius: 0.5817646
+  - LocalPosition: {x: -113.738945, y: 7.170872, z: -73.77536}
+    Radius: 0.5768877
+  - LocalPosition: {x: 95.805824, y: 7.0963554, z: -89.29461}
+    Radius: 0.8741048
+  - LocalPosition: {x: -103.684814, y: 9.048957, z: -59.793983}
+    Radius: 0.7904741
+  - LocalPosition: {x: -88.30322, y: 10.043422, z: 62.765728}
+    Radius: 0.79951936
+  - LocalPosition: {x: -7.58313, y: 10.003677, z: 45.444183}
+    Radius: 0.89690083
+  - LocalPosition: {x: 112.45522, y: 22.410143, z: 22.367836}
+    Radius: 0.9025033
+  - LocalPosition: {x: -120.394745, y: 7.9279747, z: -20.15297}
+    Radius: 0.7976166
+  - LocalPosition: {x: -119.7847, y: 6.6886644, z: 44.30549}
+    Radius: 0.7869018
+  - LocalPosition: {x: -87.83731, y: 7.053563, z: -83.908714}
+    Radius: 0.60785174
+  - LocalPosition: {x: -56.320736, y: 9.216898, z: -41.654293}
+    Radius: 0.60848796
+  - LocalPosition: {x: 48.32159, y: 20.455193, z: -74.69544}
+    Radius: 0.7525241
+  - LocalPosition: {x: -71.760315, y: 6.456458, z: -98.85756}
+    Radius: 0.6590642
+  - LocalPosition: {x: -113.75104, y: 6.497254, z: 77.486275}
+    Radius: 0.7966557
+  - LocalPosition: {x: 22.621094, y: 22.59619, z: -83.38951}
+    Radius: 0.8788647
+  - LocalPosition: {x: 70.09259, y: 7.953652, z: -91.35825}
+    Radius: 0.6261762
+  - LocalPosition: {x: -88.22054, y: 18.513445, z: -49.98091}
+    Radius: 0.6881304
+  - LocalPosition: {x: -121.24236, y: 4.786392, z: -89.860504}
+    Radius: 0.601681
+  - LocalPosition: {x: 7.2419434, y: 12.851967, z: -91.04088}
+    Radius: 0.57600373
+  - LocalPosition: {x: 8.469055, y: 9.764624, z: -42.498108}
+    Radius: 0.88982236
+  - LocalPosition: {x: -41.779728, y: 20.175215, z: 76.63283}
+    Radius: 0.6036237
+  - LocalPosition: {x: 72.19483, y: 7.005598, z: 76.03554}
+    Radius: 0.90957755
+  - LocalPosition: {x: 88.88422, y: 6.329521, z: 100.1453}
+    Radius: 0.6665005
+  - LocalPosition: {x: -41.13025, y: 19.0537, z: -74.285065}
+    Radius: 0.88836646
+  - LocalPosition: {x: -119.19323, y: 6.34203, z: 75.86128}
+    Radius: 0.7454498
+  - LocalPosition: {x: -41.903442, y: 8.57148, z: 52.773575}
+    Radius: 0.58923984
+  - LocalPosition: {x: -17.931946, y: 9.150083, z: -43.447205}
+    Radius: 0.9058688
+  - LocalPosition: {x: 62.837708, y: 16.631367, z: -65.23222}
+    Radius: 0.7285222
+  - LocalPosition: {x: -7.848817, y: 6.3910666, z: 101.76945}
+    Radius: 0.7585415
+  - LocalPosition: {x: 112.37561, y: 7.4338245, z: 44.502712}
+    Radius: 0.8983385
+  - LocalPosition: {x: -103.52252, y: 17.590652, z: -12.138217}
+    Radius: 0.8985344
+  - LocalPosition: {x: -95.99414, y: 24.933214, z: 45.512527}
+    Radius: 0.84518456
+  - LocalPosition: {x: -121.264946, y: 6.079731, z: 13.99451}
+    Radius: 0.58558
+  - LocalPosition: {x: -33.438385, y: 7.993329, z: 38.209873}
+    Radius: 0.60088146
+  - LocalPosition: {x: 0.73269653, y: 13.686195, z: -60.17688}
+    Radius: 0.6033853
+  - LocalPosition: {x: 89.04541, y: 18.67321, z: 45.78004}
+    Radius: 0.7037881
+  - LocalPosition: {x: -22.906496, y: 11.860183, z: 59.934784}
+    Radius: 0.78142875
+  - LocalPosition: {x: 16.99304, y: 11.314212, z: 53.42749}
+    Radius: 0.57236457
+  - LocalPosition: {x: 56.054626, y: 12.925003, z: 52.566113}
+    Radius: 0.6328745
+  - LocalPosition: {x: -78.900635, y: 10.158195, z: 28.263784}
+    Radius: 0.84753734
+  - LocalPosition: {x: 47.945923, y: 6.352944, z: 107.3484}
+    Radius: 0.67787546
+  - LocalPosition: {x: -113.28177, y: 8.375701, z: -50.81548}
+    Radius: 0.6308256
+  - LocalPosition: {x: -73.86767, y: 11.361292, z: 45.954006}
+    Radius: 0.90113527
+  - LocalPosition: {x: -79.64325, y: 14.372941, z: -25.878693}
+    Radius: 0.5786135
+  - LocalPosition: {x: 135.36829, y: 6.289134, z: 102.65363}
+    Radius: 0.5754152
+  - LocalPosition: {x: 78.70752, y: 6.3220706, z: 94.67094}
+    Radius: 0.7762084
+  - LocalPosition: {x: 103.41034, y: 16.791721, z: 5.0186663}
+    Radius: 0.8248274
+  - LocalPosition: {x: -41.53189, y: 9.921824, z: -51.640526}
+    Radius: 0.86924183
+  - LocalPosition: {x: 80.49415, y: 17.310358, z: 52.94006}
+    Radius: 0.68595296
+  - LocalPosition: {x: 104.62336, y: 6.4085603, z: -74.430756}
+    Radius: 0.7649549
+  - LocalPosition: {x: -55.510803, y: 13.157544, z: 84.80241}
+    Radius: 0.69509244
+  - LocalPosition: {x: 80.971016, y: 6.344998, z: 100.84576}
+    Radius: 0.7220271
+  - LocalPosition: {x: 32.456055, y: 9.855529, z: -43.41996}
+    Radius: 0.6795967
+  - LocalPosition: {x: 78.313515, y: 6.3043227, z: 78.421715}
+    Radius: 0.699588
+  - LocalPosition: {x: -48.054443, y: 8.337438, z: -82.90573}
+    Radius: 0.5643689
+  - LocalPosition: {x: 95.31842, y: 7.698706, z: -97.29253}
+    Radius: 0.6807808
+  - LocalPosition: {x: -33.7735, y: 7.2672706, z: -91.19828}
+    Radius: 0.79473937
+  - LocalPosition: {x: 80.34036, y: 12.634266, z: -41.50047}
+    Radius: 0.8847044
+  - LocalPosition: {x: -87.41104, y: 6.9799776, z: 68.70151}
+    Radius: 0.6205679
+  - LocalPosition: {x: -137.80106, y: 6.296852, z: 101.06332}
+    Radius: 0.9089119
+  - LocalPosition: {x: -0.38677981, y: 18.131207, z: 77.53545}
+    Radius: 0.77634
+  - LocalPosition: {x: 46.650635, y: 8.591473, z: -97.59481}
+    Radius: 0.70491976
+  - LocalPosition: {x: 89.10316, y: 6.781921, z: 59.90475}
+    Radius: 0.82728136
+  - LocalPosition: {x: -63.822685, y: 16.009626, z: 70.67386}
+    Radius: 0.63462144
+  - LocalPosition: {x: 70.371765, y: 12.58408, z: -49.278473}
+    Radius: 0.7273124
+  - LocalPosition: {x: 112.55866, y: 6.4142084, z: -83.736885}
+    Radius: 0.7631367
+  - LocalPosition: {x: 38.73785, y: 20.180288, z: -74.81744}
+    Radius: 0.5870402
+  - LocalPosition: {x: -16.307314, y: 11.381559, z: -81.79339}
+    Radius: 0.6219498
+  - LocalPosition: {x: 126.21924, y: 14.37749, z: -18.078867}
+    Radius: 0.8068728
+  - LocalPosition: {x: -56.908714, y: 19.118555, z: 76.429695}
+    Radius: 0.5622658
+  - LocalPosition: {x: 73.01136, y: 10.533435, z: 36.851307}
+    Radius: 0.65144116
+  - LocalPosition: {x: -127.24047, y: 5.675246, z: -35.69836}
+    Radius: 0.75451976
+  - LocalPosition: {x: 143.56506, y: 6.292953, z: -98.13409}
+    Radius: 0.77498937
+  - LocalPosition: {x: 112.46149, y: 6.7162147, z: -90.29243}
+    Radius: 0.88777214
+  - LocalPosition: {x: 78.9599, y: 7.1386924, z: 68.534645}
+    Radius: 0.65405583
+  - LocalPosition: {x: 72.82385, y: 6.3082824, z: 84.45683}
+    Radius: 0.6098409
+  - LocalPosition: {x: 126.00843, y: 6.3065205, z: 54.42563}
+    Radius: 0.6177143
+  - LocalPosition: {x: 1.0342407, y: 20.582417, z: 60.322994}
+    Radius: 0.8812976
+  - LocalPosition: {x: -127.85626, y: 6.163051, z: 20.98792}
+    Radius: 0.83900857
+  - LocalPosition: {x: -103.64077, y: 24.032629, z: -27.85042}
+    Radius: 0.79325414
+  - LocalPosition: {x: 39.31201, y: 8.323351, z: 36.645603}
+    Radius: 0.83442813
+  - LocalPosition: {x: 22.514038, y: 14.702368, z: -58.810013}
+    Radius: 0.7865179
+  - LocalPosition: {x: 54.444977, y: 8.735212, z: -91.05441}
+    Radius: 0.8655714
+  - LocalPosition: {x: -25.916445, y: 12.503389, z: -60.0996}
+    Radius: 0.8102168
+  - LocalPosition: {x: 137.06172, y: 6.355229, z: -66.77233}
+    Radius: 0.6402057
+  - LocalPosition: {x: 23.55597, y: 7.9655614, z: 29.247091}
+    Radius: 0.8741262
+  - LocalPosition: {x: 110.987854, y: 22.283962, z: 28.347784}
+    Radius: 0.6791788
+  - LocalPosition: {x: 134.07918, y: 6.2972608, z: 77.96588}
+    Radius: 0.6785487
+  - LocalPosition: {x: -88.17349, y: 16.894108, z: 38.58872}
+    Radius: 0.8767424
+  - LocalPosition: {x: 118.29443, y: 19.316689, z: -42.170113}
+    Radius: 0.8307452
+  - LocalPosition: {x: 135.41162, y: 6.7010207, z: 14.132968}
+    Radius: 0.7157518
+  - LocalPosition: {x: -97.66617, y: 6.959496, z: -83.191734}
+    Radius: 0.60803413
+  - LocalPosition: {x: 134.11017, y: 10.262932, z: 21.866096}
+    Radius: 0.68741286
+  - LocalPosition: {x: -39.180088, y: 19.87491, z: 84.51969}
+    Radius: 0.664553
+  - LocalPosition: {x: -103.58328, y: 7.7388725, z: -68.244736}
+    Radius: 0.64490753
+  - LocalPosition: {x: -55.104923, y: 17.397985, z: -73.251144}
+    Radius: 0.71649396
+  - LocalPosition: {x: -89.5212, y: 13.253494, z: -57.54512}
+    Radius: 0.65882754
+  - LocalPosition: {x: 103.069405, y: 19.94321, z: 36.455418}
+    Radius: 0.58155936
+  - LocalPosition: {x: -127.74566, y: 6.3161345, z: 43.72519}
+    Radius: 0.7502852
+  - LocalPosition: {x: -112.77481, y: 7.9529486, z: 45.44566}
+    Radius: 0.6358572
+  - LocalPosition: {x: 0.83483875, y: 10.965393, z: -91.63152}
+    Radius: 0.6108433
+  - LocalPosition: {x: 14.694457, y: 9.982586, z: -43.81388}
+    Radius: 0.8816167
+  - LocalPosition: {x: -97.14654, y: 13.675278, z: -10.805073}
+    Radius: 0.7050835
+  - LocalPosition: {x: 64.85275, y: 8.297157, z: -84.19882}
+    Radius: 0.6224692
+  - LocalPosition: {x: -126.85583, y: 6.2996464, z: 70.5873}
+    Radius: 0.68415457
+  - LocalPosition: {x: 40.96997, y: 7.4309635, z: 84.293}
+    Radius: 0.86311585
+  - LocalPosition: {x: -113.311, y: 7.5762715, z: 51.76344}
+    Radius: 0.662376
+  - LocalPosition: {x: -127.389946, y: 3.7249086, z: -99.77049}
+    Radius: 0.6510757
+  - LocalPosition: {x: -136.29471, y: 6.32252, z: 68.81013}
+    Radius: 0.8583662
+  - LocalPosition: {x: 127.091194, y: 17.938768, z: 19.789988}
+    Radius: 0.88608235
+  - LocalPosition: {x: 46.085358, y: 19.141884, z: 62.234936}
+    Radius: 0.6604124
+  - LocalPosition: {x: 64.37082, y: 6.795736, z: 77.33459}
+    Radius: 0.88074076
+  - LocalPosition: {x: -65.56702, y: 9.9989605, z: -50.722412}
+    Radius: 0.881416
+  - LocalPosition: {x: 63.90094, y: 6.3740892, z: 101.49146}
+    Radius: 0.806444
+  - LocalPosition: {x: 79.58881, y: 7.4965825, z: -89.15651}
+    Radius: 0.6744424
+  - LocalPosition: {x: 102.85303, y: 7.025095, z: -92.19663}
+    Radius: 0.63411915
+  - LocalPosition: {x: -113.835144, y: 6.634003, z: 20.487597}
+    Radius: 0.6678652
+  - LocalPosition: {x: 7.1873174, y: 10.073611, z: 46.576885}
+    Radius: 0.6826063
+  - LocalPosition: {x: -1.5205687, y: 8.745651, z: -41.821987}
+    Radius: 0.73087
+  - LocalPosition: {x: 41.06604, y: 6.3614798, z: 107.11123}
+    Radius: 0.8229137
+  - LocalPosition: {x: 16.491302, y: 6.3590546, z: 107.25305}
+    Radius: 0.76443535
+  - LocalPosition: {x: 135.30615, y: 6.497113, z: -100.028755}
+    Radius: 0.8212153
+  - LocalPosition: {x: 112.05726, y: 19.635164, z: -34.43205}
+    Radius: 0.8713372
+  - LocalPosition: {x: 8.840637, y: 8.316705, z: 35.89778}
+    Radius: 0.7367394
+  - LocalPosition: {x: 94.10455, y: 6.308001, z: 94.822655}
+    Radius: 0.7558248
+  - LocalPosition: {x: -96.80896, y: 6.332161, z: 84.35791}
+    Radius: 0.6078679
+  - LocalPosition: {x: -16.092775, y: 12.347911, z: -57.616505}
+    Radius: 0.8557442
+  - LocalPosition: {x: 143.42108, y: 6.287679, z: 6.4489956}
+    Radius: 0.79414815
+  - LocalPosition: {x: 40.96216, y: 12.454842, z: 54.253952}
+    Radius: 0.6231362
+  - LocalPosition: {x: -120.25922, y: 6.682775, z: 54.791992}
+    Radius: 0.83319247
+  - LocalPosition: {x: -7.8660884, y: 22.273775, z: 70.639084}
+    Radius: 0.63964427
+  - LocalPosition: {x: 134.2301, y: 6.376159, z: -50.50805}
+    Radius: 0.6160253
+  - LocalPosition: {x: 71.69412, y: 7.8840265, z: -100.28671}
+    Radius: 0.7198626
+  - LocalPosition: {x: 118.4292, y: 6.3927083, z: 54.368084}
+    Radius: 0.67877936
+  - LocalPosition: {x: -31.153078, y: 21.523643, z: 83.92775}
+    Radius: 0.62031955
+  - LocalPosition: {x: -128.8889, y: 6.3244424, z: 37.683765}
+    Radius: 0.64460856
+  - LocalPosition: {x: 104.31354, y: 18.665737, z: 30.079334}
+    Radius: 0.65351826
+  - LocalPosition: {x: 49.03952, y: 11.627239, z: -49.702694}
+    Radius: 0.58002234
+  - LocalPosition: {x: 110.27118, y: 6.2957535, z: 92.1661}
+    Radius: 0.84626466
+  - LocalPosition: {x: 144.04982, y: 6.3082085, z: -81.80132}
+    Radius: 0.6056093
+  - LocalPosition: {x: -70.919945, y: 15.026605, z: 60.38405}
+    Radius: 0.58867806
+  - LocalPosition: {x: 112.484924, y: 14.767431, z: -51.526936}
+    Radius: 0.8360172
+  - LocalPosition: {x: -137.45538, y: 4.0008254, z: -68.01954}
+    Radius: 0.7116012
+  - LocalPosition: {x: -64.412476, y: 6.291412, z: 101.142624}
+    Radius: 0.71864796
+  - LocalPosition: {x: -16.457977, y: 18.276716, z: 78.59236}
+    Radius: 0.68940437
+  - LocalPosition: {x: 127.74421, y: 6.3308077, z: -83.504715}
+    Radius: 0.6023672
+  - LocalPosition: {x: -81.88681, y: 13.792148, z: -20.073425}
+    Radius: 0.6538437
+  - LocalPosition: {x: -1.740448, y: 7.9184575, z: 21.518707}
+    Radius: 0.59477305
+  - LocalPosition: {x: -137.18854, y: 6.3083897, z: 86.12938}
+    Radius: 0.8560669
+  - LocalPosition: {x: 15.343629, y: 7.2619543, z: -27.35714}
+    Radius: 0.7305928
+  - LocalPosition: {x: 54.517883, y: 10.475293, z: 46.332607}
+    Radius: 0.6845956
+  - LocalPosition: {x: -137.46693, y: 5.3098316, z: -19.203644}
+    Radius: 0.711797
+  - LocalPosition: {x: 96.13398, y: 8.521351, z: 53.420166}
+    Radius: 0.9024574
+  - LocalPosition: {x: -48.108612, y: 9.003123, z: -44.23814}
+    Radius: 0.7739315
+  - LocalPosition: {x: 47.62967, y: 9.926076, z: -43.7924}
+    Radius: 0.7651944
+  - LocalPosition: {x: 127.93628, y: 6.302346, z: 106.60865}
+    Radius: 0.7340198
+  - LocalPosition: {x: -114.02099, y: 10.640265, z: 61.554024}
+    Radius: 0.8858281
+  - LocalPosition: {x: -137.16663, y: 5.7245693, z: -3.9598608}
+    Radius: 0.89609516
+  - LocalPosition: {x: 87.88697, y: 7.407795, z: -68.19454}
+    Radius: 0.7656749
+  - LocalPosition: {x: 136.66064, y: 6.3093543, z: -91.782364}
+    Radius: 0.7158684
+  - LocalPosition: {x: -120.07895, y: 5.971567, z: 19.920938}
+    Radius: 0.7033597
+  - LocalPosition: {x: 7.3491216, y: 20.281805, z: 61.793953}
+    Radius: 0.6086809
+  - LocalPosition: {x: 16.225464, y: 7.869732, z: 21.19219}
+    Radius: 0.75947213
+  - LocalPosition: {x: -121.78085, y: 7.1278687, z: -25.206057}
+    Radius: 0.7500136
+  - LocalPosition: {x: -46.948853, y: 9.461767, z: -50.083874}
+    Radius: 0.72045976
+  - LocalPosition: {x: 0.3776857, y: 22.539677, z: -81.726265}
+    Radius: 0.59714293
+  - LocalPosition: {x: 144.03882, y: 7.147171, z: -27.662352}
+    Radius: 0.7305747
+  - LocalPosition: {x: 7.5081487, y: 22.179783, z: 67.72754}
+    Radius: 0.89816827
+  - LocalPosition: {x: 119.33216, y: 6.3540897, z: -74.80246}
+    Radius: 0.6794148
+  - LocalPosition: {x: -95.67892, y: 15.534401, z: 13.287912}
+    Radius: 0.8800661
+  - LocalPosition: {x: 119.63965, y: 6.3164163, z: 106.907166}
+    Radius: 0.71579516
+  - LocalPosition: {x: 112.63561, y: 6.3013277, z: 78.69065}
+    Radius: 0.89837027
+  - LocalPosition: {x: -79.4675, y: 15.776394, z: -43.171276}
+    Radius: 0.7071382
+  - LocalPosition: {x: -120.32291, y: 6.298487, z: 92.93721}
+    Radius: 0.862975
+  - LocalPosition: {x: -33.357178, y: 8.6809435, z: -41.782955}
+    Radius: 0.7454644
+  - LocalPosition: {x: 94.944824, y: 6.3285966, z: 107.94898}
+    Radius: 0.89790803
+  - LocalPosition: {x: 15.751161, y: 24.718937, z: -83.478355}
+    Radius: 0.6354862
+  - LocalPosition: {x: 135.72102, y: 6.970135, z: -33.49448}
+    Radius: 0.64341587
+  - LocalPosition: {x: -55.975403, y: 6.602584, z: -98.330894}
+    Radius: 0.73384386
+  - LocalPosition: {x: -8.912782, y: 14.720592, z: -82.29862}
+    Radius: 0.5768528
+  - LocalPosition: {x: 144.9154, y: 6.6009555, z: -49.74335}
+    Radius: 0.5632076
+  - LocalPosition: {x: 110.99937, y: 17.584686, z: 37.626648}
+    Radius: 0.65763175
+  - LocalPosition: {x: -81.71951, y: 6.291412, z: 107.65756}
+    Radius: 0.57038456
+  - LocalPosition: {x: 143.06036, y: 6.3008657, z: 61.19211}
+    Radius: 0.66436917
+  - LocalPosition: {x: 64.53205, y: 8.0620165, z: -99.79617}
+    Radius: 0.90404695
+  - LocalPosition: {x: 95.61792, y: 6.303224, z: 68.112785}
+    Radius: 0.5978874
+  - LocalPosition: {x: -30.848694, y: 11.553828, z: 68.41333}
+    Radius: 0.5716769
+  - LocalPosition: {x: 112.64094, y: 10.3667, z: -57.980415}
+    Radius: 0.866113
+  - LocalPosition: {x: -128.96205, y: 6.1270714, z: -3.041655}
+    Radius: 0.76944536
+  - LocalPosition: {x: -136.4681, y: 5.1996374, z: -25.899445}
+    Radius: 0.8409206
+  - LocalPosition: {x: 40.066772, y: 14.446424, z: 70.25039}
+    Radius: 0.6887502
+  - LocalPosition: {x: -97.958374, y: 15.904037, z: 21.357756}
+    Radius: 0.6389077
+  - LocalPosition: {x: -40.79248, y: 9.123749, z: 59.959545}
+    Radius: 0.85525477
+  - LocalPosition: {x: -89.600334, y: 12.345548, z: 12.733156}
+    Radius: 0.73857015
+  - LocalPosition: {x: 112.333435, y: 6.3067546, z: 69.051506}
+    Radius: 0.83884686
+  - LocalPosition: {x: -57.399685, y: 6.2913985, z: 100.99164}
+    Radius: 0.58136207
+  - LocalPosition: {x: 111.951294, y: 6.294923, z: 85.39114}
+    Radius: 0.7123855
+  - LocalPosition: {x: -31.648651, y: 6.2844305, z: 106.80758}
+    Radius: 0.73821074
+  - LocalPosition: {x: 30.366272, y: 10.616789, z: 53.331997}
+    Radius: 0.7563295
+  - LocalPosition: {x: 120.82069, y: 6.4997263, z: -90.63808}
+    Radius: 0.72691613
+  - LocalPosition: {x: -71.00467, y: 11.003482, z: -51.782272}
+    Radius: 0.8107946
+  - LocalPosition: {x: 113.15024, y: 22.835037, z: 6.7626314}
+    Radius: 0.8439866
+  - LocalPosition: {x: -95.82537, y: 14.055444, z: -1.3521341}
+    Radius: 0.58293563
+  - LocalPosition: {x: -14.867309, y: 7.729, z: -27.183485}
+    Radius: 0.6357445
+  - LocalPosition: {x: -25.023745, y: 10.827616, z: -81.87737}
+    Radius: 0.8100081
+  - LocalPosition: {x: -14.97235, y: 7.9107122, z: 22.677662}
+    Radius: 0.649015
+  - LocalPosition: {x: -112.54495, y: 7.6878057, z: -67.77377}
+    Radius: 0.7067967
+  - LocalPosition: {x: 55.79718, y: 6.3891373, z: 102.046684}
+    Radius: 0.79622877
+  - LocalPosition: {x: -96.877686, y: 6.0375514, z: -89.26216}
+    Radius: 0.8605955
+  - LocalPosition: {x: 95.89344, y: 16.532797, z: 36.186386}
+    Radius: 0.86300164
+  - LocalPosition: {x: -74.03326, y: 6.2915998, z: 102.29299}
+    Radius: 0.66138184
+  - LocalPosition: {x: -121.14224, y: 7.128636, z: -35.632095}
+    Radius: 0.6636451
+  - LocalPosition: {x: 142.66756, y: 6.286561, z: 107.392876}
+    Radius: 0.8406877
+  - LocalPosition: {x: -97.73721, y: 23.952238, z: -26.404692}
+    Radius: 0.8070833
+  - LocalPosition: {x: -134.94768, y: 5.041938, z: -33.71265}
+    Radius: 0.86040497
+  - LocalPosition: {x: -121.95465, y: 6.9529066, z: -11.793064}
+    Radius: 0.7337727
+  - LocalPosition: {x: -136.16055, y: 3.862485, z: -74.82013}
+    Radius: 0.7761724
+  - LocalPosition: {x: -111.2051, y: 5.6762776, z: -90.323135}
+    Radius: 0.6443765
+  - LocalPosition: {x: -71.69849, y: 17.114471, z: -65.78519}
+    Radius: 0.8884059
+  - LocalPosition: {x: -7.3174434, y: 8.670978, z: 38.568195}
+    Radius: 0.62663245
+  - LocalPosition: {x: -119.30004, y: 7.17384, z: -59.86557}
+    Radius: 0.80697197
+  - LocalPosition: {x: 88.69989, y: 6.3010864, z: 84.06934}
+    Radius: 0.7987074
+  - LocalPosition: {x: 80.545105, y: 17.027473, z: 45.548504}
+    Radius: 0.7645152
+  - LocalPosition: {x: 104.212585, y: 6.2977366, z: 94.36877}
+    Radius: 0.85589993
+  - LocalPosition: {x: 73.094086, y: 6.360944, z: 101.65301}
+    Radius: 0.6154196
+  - LocalPosition: {x: -137.10248, y: 6.298668, z: 22.075644}
+    Radius: 0.7913458
+  - LocalPosition: {x: -127.07477, y: 6.2993445, z: 77.99334}
+    Radius: 0.87454295
+  - LocalPosition: {x: -104.95636, y: 20.305246, z: -20.19453}
+    Radius: 0.9049672
+  - LocalPosition: {x: -64.87914, y: 9.385482, z: 46.487408}
+    Radius: 0.6331151
+  - LocalPosition: {x: 0.40563968, y: 8.47284, z: 35.703403}
+    Radius: 0.5681952
+  - LocalPosition: {x: -63.934868, y: 6.665643, z: -89.64051}
+    Radius: 0.8588463
+  - LocalPosition: {x: -56.21658, y: 8.317713, z: 45.53005}
+    Radius: 0.71523064
+  - LocalPosition: {x: -81.0419, y: 16.786499, z: -33.48376}
+    Radius: 0.7231992
+  - LocalPosition: {x: 38.165283, y: 16.576345, z: 62.102043}
+    Radius: 0.5655489
+  - LocalPosition: {x: 38.144287, y: 13.760531, z: -82.83844}
+    Radius: 0.6147034
+  - LocalPosition: {x: 127.04157, y: 7.0057316, z: 4.715796}
+    Radius: 0.7363217
+  - LocalPosition: {x: -2.00061, y: 6.3536143, z: 106.6954}
+    Radius: 0.5756445
+  - LocalPosition: {x: -137.74304, y: 5.515748, z: -10.30847}
+    Radius: 0.7479245
+  - LocalPosition: {x: -32.762054, y: 8.32192, z: 46.20943}
+    Radius: 0.57888556
+  - LocalPosition: {x: 69.969, y: 17.95534, z: 62.479946}
+    Radius: 0.6302445
+  - LocalPosition: {x: 135.15479, y: 6.297915, z: 5.987677}
+    Radius: 0.63916755
+  - LocalPosition: {x: -8.908203, y: 10.638087, z: -51.672985}
+    Radius: 0.6541635
+  - LocalPosition: {x: 126.06422, y: 6.3683805, z: -91.0948}
+    Radius: 0.8118637
+  - LocalPosition: {x: 113.06555, y: 21.919827, z: -1.9866189}
+    Radius: 0.71693546
+  - LocalPosition: {x: 111.47443, y: 6.704302, z: -74.08915}
+    Radius: 0.6249939
+  - LocalPosition: {x: -65.98486, y: 13.984115, z: 86.23834}
+    Radius: 0.60584867
+  - LocalPosition: {x: -15.714844, y: 17.840282, z: 70.20488}
+    Radius: 0.85277325
+  - LocalPosition: {x: -103.951164, y: 11.91947, z: -50.56315}
+    Radius: 0.8666274
+  - LocalPosition: {x: -40.61331, y: 6.6939573, z: 100.3317}
+    Radius: 0.5743664
+  - LocalPosition: {x: 47.89441, y: 9.255644, z: 43.810966}
+    Radius: 0.8776272
+  - LocalPosition: {x: -17.706573, y: 16.102333, z: -65.553986}
+    Radius: 0.70478404
+  - LocalPosition: {x: 102.28238, y: 6.3597245, z: 59.723217}
+    Radius: 0.895899
+  - LocalPosition: {x: -8.566711, y: 7.7130275, z: -27.547562}
+    Radius: 0.7279897
+  - LocalPosition: {x: -16.225372, y: 6.4947815, z: 94.835976}
+    Radius: 0.5862229
+  - LocalPosition: {x: -112.75394, y: 8.165297, z: -57.544647}
+    Radius: 0.9074137
+  - LocalPosition: {x: 54.764893, y: 8.439035, z: -97.58552}
+    Radius: 0.57832736
+  - LocalPosition: {x: 126.32722, y: 19.04352, z: -27.446281}
+    Radius: 0.59449697
+  - LocalPosition: {x: -129.07643, y: 5.3296432, z: -50.554443}
+    Radius: 0.61636466
+  - LocalPosition: {x: -97.604546, y: 6.2998805, z: 100.56582}
+    Radius: 0.781662
+  - LocalPosition: {x: -65.99597, y: 16.306366, z: -66.171875}
+    Radius: 0.6343323
+  - LocalPosition: {x: -79.14843, y: 9.570058, z: 3.8101027}
+    Radius: 0.5673602
+  - LocalPosition: {x: -24.72751, y: 9.693806, z: 52.90333}
+    Radius: 0.58818847
+  - LocalPosition: {x: -73.68793, y: 6.6539454, z: -91.90074}
+    Radius: 0.73511934
+  - LocalPosition: {x: -1.7919922, y: 22.015467, z: -73.49005}
+    Radius: 0.8615165
+  - LocalPosition: {x: -72.76763, y: 6.2907553, z: 107.08955}
+    Radius: 0.81511325
+  - LocalPosition: {x: -65.094055, y: 6.4693084, z: -99.11904}
+    Radius: 0.6214829
+  - LocalPosition: {x: 41.13208, y: 18.178125, z: -65.75114}
+    Radius: 0.615744
+  - LocalPosition: {x: -16.26114, y: 10.682119, z: -51.87993}
+    Radius: 0.56333685
+  - LocalPosition: {x: -80.76513, y: 7.1092663, z: 76.38679}
+    Radius: 0.7624161
+  - LocalPosition: {x: -41.155, y: 6.817464, z: -92.08045}
+    Radius: 0.6564895
+  - LocalPosition: {x: 15.840212, y: 7.854396, z: 28.089209}
+    Radius: 0.6060756
+  - LocalPosition: {x: 1.0636595, y: 7.9786396, z: -35.94104}
+    Radius: 0.9017866
+  - LocalPosition: {x: 95.2063, y: 14.012135, z: -34.145264}
+    Radius: 0.7161746
+  - LocalPosition: {x: -25.433989, y: 15.17135, z: -66.57274}
+    Radius: 0.581975
+  - LocalPosition: {x: 142.73096, y: 6.2631183, z: -11.207791}
+    Radius: 0.5750257
+  - LocalPosition: {x: -48.56366, y: 6.575007, z: -91.898926}
+    Radius: 0.5773391
+  - LocalPosition: {x: -96.62521, y: 8.9766445, z: -59.936596}
+    Radius: 0.6492979
+  - LocalPosition: {x: 88.79785, y: 16.583002, z: -42.21352}
+    Radius: 0.60047305
+  - LocalPosition: {x: -56.1481, y: 9.0540695, z: -49.585827}
+    Radius: 0.7557209
+  - LocalPosition: {x: -65.973015, y: 12.463344, z: 62.278797}
+    Radius: 0.79434705
+  - LocalPosition: {x: 22.898865, y: 21.63605, z: -75.708405}
+    Radius: 0.7654684
+  - LocalPosition: {x: 32.328552, y: 9.067288, z: 45.23196}
+    Radius: 0.6020904
+  - LocalPosition: {x: -138.00879, y: 6.3186474, z: 78.3841}
+    Radius: 0.67645705
+  - LocalPosition: {x: 7.3112793, y: 11.81812, z: -51.526566}
+    Radius: 0.8542746
+  - LocalPosition: {x: -79.281395, y: 16.66486, z: -73.53403}
+    Radius: 0.5658295
+  - LocalPosition: {x: -120.279625, y: 7.225607, z: -43.25221}
+    Radius: 0.7913255
+  - LocalPosition: {x: -104.39153, y: 18.186228, z: -2.7054145}
+    Radius: 0.8108779
+  - LocalPosition: {x: 8.449219, y: 12.02756, z: 51.71075}
+    Radius: 0.66837966
+  - LocalPosition: {x: 135.53827, y: 6.296792, z: 54.43406}
+    Radius: 0.8791294
+  - LocalPosition: {x: -111.40057, y: 6.3006043, z: 86.30889}
+    Radius: 0.57166994
+  - LocalPosition: {x: 144.76312, y: 6.292082, z: 84.76031}
+    Radius: 0.75308967
+  - LocalPosition: {x: -104.47119, y: 21.779045, z: -41.873425}
+    Radius: 0.66817915
+  - LocalPosition: {x: -24.06897, y: 8.029107, z: 37.18787}
+    Radius: 0.89974797
+  - LocalPosition: {x: -96.89276, y: 18.933846, z: 37.285267}
+    Radius: 0.6835287
+  - LocalPosition: {x: -48.31842, y: 7.106888, z: -98.025055}
+    Radius: 0.88573253
+  - LocalPosition: {x: -23.799377, y: 7.875866, z: -91.2113}
+    Radius: 0.7805211
+  - LocalPosition: {x: 22.995789, y: 7.0089045, z: -27.087858}
+    Radius: 0.66894865
+  - LocalPosition: {x: 63.948063, y: 9.589116, z: -42.13991}
+    Radius: 0.5787376
+  - LocalPosition: {x: 63.506596, y: 8.025609, z: -90.11657}
+    Radius: 0.66689163
+  - LocalPosition: {x: 121.14795, y: 19.919044, z: 13.106654}
+    Radius: 0.7520952
+  - LocalPosition: {x: -128.59198, y: 6.297522, z: 106.57374}
+    Radius: 0.8594062
+  - LocalPosition: {x: -55.409058, y: 10.199945, z: 61.56091}
+    Radius: 0.7772793
+  - LocalPosition: {x: -137.82375, y: 3.247029, z: -100.07704}
+    Radius: 0.73889875
+  - LocalPosition: {x: -72.94341, y: 9.68138, z: 35.865143}
+    Radius: 0.57989246
+  - LocalPosition: {x: 25.062132, y: 9.691461, z: -42.611767}
+    Radius: 0.63369125
+  - LocalPosition: {x: 128.26367, y: 15.802406, z: -34.25449}
+    Radius: 0.79634404
+  - LocalPosition: {x: 33.061127, y: 7.0988073, z: 94.6035}
+    Radius: 0.8266535
+  - LocalPosition: {x: -104.5148, y: 6.293315, z: 107.85437}
+    Radius: 0.7535731
+  - LocalPosition: {x: 127.64398, y: 6.3005977, z: 68.059425}
+    Radius: 0.71203375
+  - LocalPosition: {x: -41.38687, y: 11.098869, z: -58.15752}
+    Radius: 0.70586926
+  - LocalPosition: {x: 134.07318, y: 6.2970533, z: 86.006165}
+    Radius: 0.56938946
+  - LocalPosition: {x: -121.30047, y: 4.061031, z: -99.06271}
+    Radius: 0.5672838
+  - LocalPosition: {x: -8.92041, y: 18.520988, z: -74.553375}
+    Radius: 0.7738342
+  - LocalPosition: {x: -105.47857, y: 6.3030562, z: 100.113655}
+    Radius: 0.6488002
+  - LocalPosition: {x: 23.416443, y: 6.3689303, z: 106.93653}
+    Radius: 0.9072312
+  - LocalPosition: {x: 78.94159, y: 9.237091, z: 60.516876}
+    Radius: 0.89199084
+  - LocalPosition: {x: 24.43399, y: 8.234165, z: 21.899101}
+    Radius: 0.5975011
+  - LocalPosition: {x: -112.9494, y: 6.5194373, z: 14.342152}
+    Radius: 0.7587545
+  - LocalPosition: {x: 120.44343, y: 6.9645143, z: -100.27376}
+    Radius: 0.73346794
+  - LocalPosition: {x: 102.1853, y: 19.142548, z: -43.262333}
+    Radius: 0.66076285
+  - LocalPosition: {x: 48.515625, y: 6.3890433, z: 99.802605}
+    Radius: 0.8101842
+  - LocalPosition: {x: 94.379974, y: 12.29417, z: -57.577473}
+    Radius: 0.72615546
+  - LocalPosition: {x: -136.5776, y: 6.300162, z: 92.49002}
+    Radius: 0.8793298
+  - LocalPosition: {x: -96.858086, y: 24.31345, z: -42.22586}
+    Radius: 0.63321793
+  - LocalPosition: {x: 71.62152, y: 6.362981, z: 106.97976}
+    Radius: 0.6259537
+  - LocalPosition: {x: -9.971436, y: 13.00837, z: 54.072872}
+    Radius: 0.750859
+  - LocalPosition: {x: 86.51611, y: 6.3042154, z: 76.45594}
+    Radius: 0.72693396
+  - LocalPosition: {x: 6.062164, y: 8.02637, z: 29.407677}
+    Radius: 0.7259354
+  - LocalPosition: {x: -97.11972, y: 15.21828, z: 30.32235}
+    Radius: 0.8194649
+  - LocalPosition: {x: -16.8732, y: 6.2778244, z: 102.41766}
+    Radius: 0.57208616
+  - LocalPosition: {x: -136.44098, y: 6.298296, z: 28.480082}
+    Radius: 0.78000474
+  - LocalPosition: {x: 103.0127, y: 12.571782, z: -57.48694}
+    Radius: 0.78399104
+  - LocalPosition: {x: -47.772217, y: 6.9989786, z: 93.3856}
+    Radius: 0.89065397
+  - LocalPosition: {x: -127.13476, y: 6.2653255, z: 13.487681}
+    Radius: 0.8468769
+  - LocalPosition: {x: -129.31561, y: 4.439309, z: -91.77771}
+    Radius: 0.59217846
+  - LocalPosition: {x: 136.73743, y: 12.548992, z: -26.078682}
+    Radius: 0.7325241
+  - LocalPosition: {x: 136.44098, y: 6.293623, z: 93.51555}
+    Radius: 0.8262603
+  - LocalPosition: {x: 55.36322, y: 9.566789, z: -43.070385}
+    Radius: 0.5605586
+  - LocalPosition: {x: -86.87329, y: 21.001177, z: -43.22402}
+    Radius: 0.87279385
+  - LocalPosition: {x: 47.47717, y: 20.052439, z: -65.738716}
+    Radius: 0.6852149
+  - LocalPosition: {x: 16.533386, y: 6.6723566, z: 100.9311}
+    Radius: 0.71060413
+  - LocalPosition: {x: 55.818542, y: 6.343752, z: 107.60272}
+    Radius: 0.619734
+  - LocalPosition: {x: -16.305481, y: 11.362612, z: 53.344566}
+    Radius: 0.889499
+  - LocalPosition: {x: -78.86199, y: 19.318354, z: -67.76733}
+    Radius: 0.67894465
+  - LocalPosition: {x: 24.608335, y: 11.357178, z: -50.504765}
+    Radius: 0.60996324
+  - LocalPosition: {x: -47.884003, y: 8.012421, z: 38.25795}
+    Radius: 0.663378
+  - LocalPosition: {x: -80.140045, y: 9.485933, z: -4.120978}
+    Radius: 0.5646766
+  - LocalPosition: {x: 127.509766, y: 6.2913046, z: 102.46334}
+    Radius: 0.8826417
+  - LocalPosition: {x: 38.00653, y: 6.45146, z: 94.17543}
+    Radius: 0.8521684
+  - LocalPosition: {x: 15.996888, y: 8.949175, z: 44.51419}
+    Radius: 0.8214321
+  - LocalPosition: {x: 31.98584, y: 6.7964063, z: -28.015709}
+    Radius: 0.59122896
+  - LocalPosition: {x: 38.599, y: 12.986676, z: -57.24697}
+    Radius: 0.884307
+  - LocalPosition: {x: 87.683266, y: 7.094908, z: -83.63639}
+    Radius: 0.71242344
+  - LocalPosition: {x: -81.2293, y: 10.147177, z: 20.510696}
+    Radius: 0.63985234
+  - LocalPosition: {x: -111.005066, y: 8.949577, z: 27.808874}
+    Radius: 0.6944437
+  - LocalPosition: {x: 39.007538, y: 9.812201, z: -91.04388}
+    Radius: 0.7366659
+  - LocalPosition: {x: -104.5415, y: 6.3089256, z: 84.27482}
+    Radius: 0.6998119
+  - LocalPosition: {x: 63.471134, y: 14.48992, z: -74.70233}
+    Radius: 0.6949537
+  - LocalPosition: {x: -15.065032, y: 9.284607, z: 44.97543}
+    Radius: 0.8764819
+  - LocalPosition: {x: 78.48643, y: 7.47052, z: -75.639015}
+    Radius: 0.634375
+  - LocalPosition: {x: -105.40094, y: 6.28965, z: -81.347466}
+    Radius: 0.8761499
+  - LocalPosition: {x: -129.18408, y: 6.055104, z: -10.412396}
+    Radius: 0.6574779
+  - LocalPosition: {x: -24.316772, y: 16.423615, z: 84.46875}
+    Radius: 0.8010554
+  - LocalPosition: {x: -79.799835, y: 11.373067, z: 36.135456}
+    Radius: 0.90796643
+  - LocalPosition: {x: -137.84805, y: 5.921622, z: 5.8543377}
+    Radius: 0.8529633
+  - LocalPosition: {x: 95.43214, y: 16.771643, z: -51.464855}
+    Radius: 0.62273943
+  - LocalPosition: {x: 96.57843, y: 6.5592284, z: -68.05547}
+    Radius: 0.674596
+  - LocalPosition: {x: -130.01233, y: 5.0290575, z: -82.598976}
+    Radius: 0.64883095
+  - LocalPosition: {x: 63.95624, y: 11.262655, z: -49.394768}
+    Radius: 0.67948586
+  - LocalPosition: {x: 24.16217, y: 8.509297, z: -36.101673}
+    Radius: 0.6048699
+  - LocalPosition: {x: 7.9288635, y: 18.449125, z: -65.373276}
+    Radius: 0.74485785
+  - LocalPosition: {x: -113.57, y: 6.303271, z: 101.23851}
+    Radius: 0.7100249
+  - LocalPosition: {x: -119.70437, y: 6.2946415, z: 107.57699}
+    Radius: 0.8975125
+  - LocalPosition: {x: 135.65906, y: 6.3542037, z: -73.227264}
+    Radius: 0.5913878
+  - LocalPosition: {x: -96.13788, y: 26.950035, z: -35.432804}
+    Radius: 0.6950682
+  - LocalPosition: {x: -1.8117065, y: 9.242612, z: -97.840675}
+    Radius: 0.7193506
+  - LocalPosition: {x: 1.1048584, y: 24.111118, z: 68.4736}
+    Radius: 0.69052404
+  - LocalPosition: {x: -7.8392944, y: 7.9432435, z: 28.921532}
+    Radius: 0.89164406
+  - LocalPosition: {x: -86.93621, y: 10.6380005, z: 27.967869}
+    Radius: 0.76269627
+  - LocalPosition: {x: -48.625065, y: 19.414043, z: 78.33819}
+    Radius: 0.6691877
+  - LocalPosition: {x: -48.62674, y: 14.882007, z: 69.9844}
+    Radius: 0.8274453
+  - LocalPosition: {x: -87.74695, y: 11.499348, z: -1.8065109}
+    Radius: 0.722178
+  - LocalPosition: {x: 63.800964, y: 10.756081, z: 46.498398}
+    Radius: 0.89051086
+  - LocalPosition: {x: -32.110718, y: 9.080226, z: 53.332455}
+    Radius: 0.82897305
+  - LocalPosition: {x: -127.137024, y: 6.3050933, z: 54.831234}
+    Radius: 0.7760443
+  - LocalPosition: {x: 102.58768, y: 6.334452, z: 107.75149}
+    Radius: 0.71777666
+  - LocalPosition: {x: 23.32321, y: 9.951117, z: -98.256935}
+    Radius: 0.84406376
+  - LocalPosition: {x: -119.22034, y: 5.936443, z: -81.50824}
+    Radius: 0.7719664
+  - LocalPosition: {x: -48.591675, y: 8.402172, z: 51.985733}
+    Radius: 0.5789038
+  - LocalPosition: {x: -7.9679255, y: 8.007061, z: -33.883167}
+    Radius: 0.5753339
+  - LocalPosition: {x: 8.094115, y: 10.073792, z: 85.69237}
+    Radius: 0.8096045
+  - LocalPosition: {x: 119.041145, y: 6.2939177, z: 92.55065}
+    Radius: 0.5652091
+  - LocalPosition: {x: -23.674927, y: 8.290243, z: -98.02578}
+    Radius: 0.691124
+  - LocalPosition: {x: 6.152649, y: 9.637425, z: -97.30854}
+    Radius: 0.6548555
+  - LocalPosition: {x: 87.282295, y: 6.3109894, z: 93.02855}
+    Radius: 0.64032316
+  - LocalPosition: {x: -87.84103, y: 5.6359305, z: -99.627815}
+    Radius: 0.72988683
+  - LocalPosition: {x: 102.258514, y: 6.2970533, z: 77.61376}
+    Radius: 0.81900644
+  - LocalPosition: {x: 62.123234, y: 6.3382177, z: 93.718414}
+    Radius: 0.8449831
+  - LocalPosition: {x: -22.959808, y: 6.249028, z: 101.438545}
+    Radius: 0.68035716
+  - LocalPosition: {x: -23.26874, y: 10.244132, z: -50.18578}
+    Radius: 0.80842197
+  - LocalPosition: {x: -25.448486, y: 8.798547, z: -41.878384}
+    Radius: 0.7138281
+  - LocalPosition: {x: -8.082398, y: 15.327458, z: -67.184746}
+    Radius: 0.65293366
+  - LocalPosition: {x: -63.965637, y: 8.957891, z: 91.96591}
+    Radius: 0.88118595
+  - LocalPosition: {x: -65.809875, y: 18.279127, z: -74.57093}
+    Radius: 0.85218036
+  - LocalPosition: {x: 128.4809, y: 10.309145, z: -11.394924}
+    Radius: 0.90047807
+  - LocalPosition: {x: 120.20167, y: 14.611754, z: -11.979268}
+    Radius: 0.90808654
+  - LocalPosition: {x: -104.26464, y: 15.909505, z: 35.761585}
+    Radius: 0.64919394
+  - LocalPosition: {x: 72.618355, y: 7.9939656, z: -75.63448}
+    Radius: 0.62848246
+  - LocalPosition: {x: -55.06036, y: 6.4789834, z: -92.296684}
+    Radius: 0.71716493
+  - LocalPosition: {x: 103.39511, y: 7.372004, z: -99.29183}
+    Radius: 0.8099814
+  - LocalPosition: {x: 144.5868, y: 6.271414, z: -2.7919075}
+    Radius: 0.84916043
+  - LocalPosition: {x: 142.22876, y: 6.3132167, z: 36.68712}
+    Radius: 0.8469282
+  - LocalPosition: {x: 88.743835, y: 13.642663, z: 35.92433}
+    Radius: 0.78530043
+  - LocalPosition: {x: 14.619934, y: 10.157354, z: 91.74848}
+    Radius: 0.7244723
+  - LocalPosition: {x: 79.6645, y: 15.200656, z: -66.686104}
+    Radius: 0.8570978
+  - LocalPosition: {x: 95.44099, y: 12.0827675, z: 27.794336}
+    Radius: 0.71246505
+  - LocalPosition: {x: 96.021484, y: 11.081193, z: 13.017696}
+    Radius: 0.657067
+  - LocalPosition: {x: 126.83594, y: 6.847882, z: -100.226814}
+    Radius: 0.8345567
+  - LocalPosition: {x: 78.94355, y: 11.726951, z: 37.024906}
+    Radius: 0.78502595
+  - LocalPosition: {x: 48.80249, y: 6.9108744, z: 77.58707}
+    Radius: 0.6130054
+  - LocalPosition: {x: -96.05157, y: 5.342996, z: -97.957565}
+    Radius: 0.69868785
+  - LocalPosition: {x: -23.97116, y: 7.374429, z: 93.84475}
+    Radius: 0.67724615
+  - LocalPosition: {x: 128.8064, y: 6.745185, z: -49.19827}
+    Radius: 0.7324423
+  - LocalPosition: {x: -7.800965, y: 6.325568, z: 107.509254}
+    Radius: 0.6369052
+  - LocalPosition: {x: -39.275757, y: 7.9692698, z: 36.254948}
+    Radius: 0.86713505
+  - LocalPosition: {x: -104.75629, y: 5.6662545, z: -91.01491}
+    Radius: 0.570931
+  - LocalPosition: {x: -95.3261, y: 6.2927117, z: 106.642044}
+    Radius: 0.75118214
+  - LocalPosition: {x: 128.66003, y: 6.376997, z: -68.0383}
+    Radius: 0.7932245
+  - LocalPosition: {x: 112.178894, y: 6.3325496, z: 107.273384}
+    Radius: 0.6517008
+  - LocalPosition: {x: -103.5855, y: 10.043328, z: 68.03042}
+    Radius: 0.6634034
+  - LocalPosition: {x: -17.157104, y: 8.309231, z: -89.24308}
+    Radius: 0.8980313
+  - LocalPosition: {x: -81.405846, y: 8.950676, z: 68.062675}
+    Radius: 0.7001679
+  - LocalPosition: {x: -7.6433716, y: 18.65776, z: 60.820568}
+    Radius: 0.56068516
+  - LocalPosition: {x: -57.954983, y: 8.20566, z: 38.31928}
+    Radius: 0.664292
+  - LocalPosition: {x: 128.57965, y: 6.2915998, z: 94.481514}
+    Radius: 0.56490314
+  - LocalPosition: {x: 16.818909, y: 13.554147, z: 61.650497}
+    Radius: 0.74931026
+  - LocalPosition: {x: 135.1477, y: 10.088976, z: -19.081514}
+    Radius: 0.8377409
+  - LocalPosition: {x: 118.68103, y: 25.14926, z: 22.33479}
+    Radius: 0.5795475
+  - LocalPosition: {x: -111.53155, y: 6.3168716, z: 94.22289}
+    Radius: 0.8534497
+  - LocalPosition: {x: -104.00942, y: 18.086994, z: 45.311035}
+    Radius: 0.7465496
+  - LocalPosition: {x: 6.9985957, y: 7.618823, z: -33.883984}
+    Radius: 0.7154541
+  - LocalPosition: {x: 79.92127, y: 7.9490156, z: -97.7571}
+    Radius: 0.71053594
+  - LocalPosition: {x: -87.16027, y: 6.1484756, z: -91.770424}
+    Radius: 0.779077
+  - LocalPosition: {x: 144.49342, y: 6.712449, z: -33.479137}
+    Radius: 0.78720427
+  - LocalPosition: {x: -89.98937, y: 21.315504, z: 44.675762}
+    Radius: 0.883449
+  - LocalPosition: {x: 104.42914, y: 6.312088, z: 101.38442}
+    Radius: 0.5711209
+  - LocalPosition: {x: -137.03497, y: 6.1287193, z: 13.495578}
+    Radius: 0.7626746
+  - LocalPosition: {x: 143.51758, y: 6.3064866, z: -92.00275}
+    Radius: 0.90656954
+  - LocalPosition: {x: 64.69223, y: 13.394313, z: -58.70597}
+    Radius: 0.7841664
+  - LocalPosition: {x: -95.25098, y: 7.7413177, z: -67.03574}
+    Radius: 0.70106024
+  - LocalPosition: {x: 110.00471, y: 18.907227, z: 14.584169}
+    Radius: 0.6949686
+  - LocalPosition: {x: 119.00001, y: 6.3261714, z: -82.879326}
+    Radius: 0.8347937
+  - LocalPosition: {x: -49.664093, y: 6.2842026, z: 106.97984}
+    Radius: 0.7208182
+  - LocalPosition: {x: 118.72059, y: 6.3067684, z: 68.552444}
+    Radius: 0.80790484
+  - LocalPosition: {x: -73.88137, y: 13.542985, z: -59.893623}
+    Radius: 0.8848531
+  - LocalPosition: {x: 8.97882, y: 7.3783054, z: -26.656487}
+    Radius: 0.6109613
+  - LocalPosition: {x: -113.28866, y: 5.5771856, z: -82.215034}
+    Radius: 0.5977237
+  - LocalPosition: {x: 65.056335, y: 6.3538284, z: 107.27355}
+    Radius: 0.85825187
+  - LocalPosition: {x: 14.901857, y: 9.565308, z: -99.945175}
+    Radius: 0.7221832
+  - LocalPosition: {x: -87.59015, y: 6.3284893, z: 84.57271}
+    Radius: 0.7266624
+  - LocalPosition: {x: -49.442474, y: 9.26507, z: 60.10557}
+    Radius: 0.7822011
+  - LocalPosition: {x: -121.47875, y: 6.3788056, z: 83.7624}
+    Radius: 0.61353445
+  - LocalPosition: {x: 142.30322, y: 6.355852, z: -66.40264}
+    Radius: 0.8722805
+  - LocalPosition: {x: 70.86948, y: 7.766999, z: -82.70147}
+    Radius: 0.64855134
+  - LocalPosition: {x: 96.51514, y: 11.999806, z: -11.359203}
+    Radius: 0.5971661
+  - LocalPosition: {x: 22.084259, y: 6.8163652, z: 102.078575}
+    Radius: 0.5797007
+  - LocalPosition: {x: -47.016357, y: 6.2876735, z: 100.45306}
+    Radius: 0.8939092
+  - LocalPosition: {x: -128.49176, y: 6.2436376, z: 5.122992}
+    Radius: 0.6500822
+  - LocalPosition: {x: -111.66669, y: 4.486892, z: -99.67727}
+    Radius: 0.86138517
+  - LocalPosition: {x: 128.15338, y: 9.056741, z: 14.425388}
+    Radius: 0.59474695
+  - LocalPosition: {x: -62.932674, y: 8.375601, z: -83.30565}
+    Radius: 0.63394105
+  - LocalPosition: {x: 16.936953, y: 7.8713536, z: -34.397793}
+    Radius: 0.8061835
+  - LocalPosition: {x: -129.25247, y: 5.3394985, z: -67.99601}
+    Radius: 0.6505981
+  - LocalPosition: {x: -24.520569, y: 8.589067, z: 46.35329}
+    Radius: 0.7370676
+  - LocalPosition: {x: 1.053955, y: 16.867352, z: -66.10367}
+    Radius: 0.62431204
+  - LocalPosition: {x: 71.724525, y: 6.3241343, z: 92.32529}
+    Radius: 0.8304162
+  - LocalPosition: {x: -112.26177, y: 11.631105, z: -33.103348}
+    Radius: 0.6369709
+  - LocalPosition: {x: 102.71699, y: 16.27808, z: -12.210851}
+    Radius: 0.5979097
+  - LocalPosition: {x: -88.55286, y: 11.066398, z: 22.395164}
+    Radius: 0.78281647
+  - LocalPosition: {x: -65.849266, y: 10.317248, z: 51.795826}
+    Radius: 0.6241709
+  - LocalPosition: {x: 119.70587, y: 6.309917, z: 61.34322}
+    Radius: 0.7150908
+  - LocalPosition: {x: 143.74005, y: 6.2940516, z: 75.924126}
+    Radius: 0.8689477
+  - LocalPosition: {x: 14.500032, y: 8.281185, z: 37.455677}
+    Radius: 0.6221255
+  - LocalPosition: {x: 120.72852, y: 6.3186135, z: 46.054848}
+    Radius: 0.71144384
+  - LocalPosition: {x: -135.50385, y: 6.3336215, z: 54.890366}
+    Radius: 0.9052415
+  - LocalPosition: {x: -129.01451, y: 6.2524652, z: 30.593967}
+    Radius: 0.6739675
+  - LocalPosition: {x: 8.12149, y: 6.403636, z: 100.83764}
+    Radius: 0.5818318
+  - LocalPosition: {x: -128.71198, y: 5.347753, z: -74.40331}
+    Radius: 0.6449411
+  - LocalPosition: {x: 0.24215697, y: 7.5538735, z: -26.909393}
+    Radius: 0.5644582
+  - LocalPosition: {x: 88.82269, y: 7.754986, z: -98.05469}
+    Radius: 0.58717346
+  - LocalPosition: {x: -127.386444, y: 5.576331, z: -25.355848}
+    Radius: 0.6291723
+  - LocalPosition: {x: 24.985352, y: 8.114842, z: 37.43741}
+    Radius: 0.6429922
+  - LocalPosition: {x: -24.905977, y: 12.701467, z: 68.02589}
+    Radius: 0.7186159
+  - LocalPosition: {x: -112.54168, y: 8.324326, z: 69.80135}
+    Radius: 0.7739592
+  - LocalPosition: {x: 54.55664, y: 8.812868, z: 37.684406}
+    Radius: 0.6501124
+  - LocalPosition: {x: -41.559784, y: 8.169323, z: 45.03384}
+    Radius: 0.88938284
+  - LocalPosition: {x: 54.168518, y: 12.073917, z: -52.178154}
+    Radius: 0.828963
+  - LocalPosition: {x: -112.88547, y: 17.877733, z: -12.241454}
+    Radius: 0.8466697
+  - LocalPosition: {x: -32.800415, y: 17.950657, z: -73.8103}
+    Radius: 0.6458007
+  - LocalPosition: {x: -119.262024, y: 5.9006915, z: 4.589049}
+    Radius: 0.651183
+  - LocalPosition: {x: -55.145786, y: 16.285141, z: -68.118324}
+    Radius: 0.564914
+  - LocalPosition: {x: -120.10769, y: 7.1416135, z: 61.209698}
+    Radius: 0.73675984
+  - LocalPosition: {x: -104.7959, y: 17.860113, z: 52.786236}
+    Radius: 0.5967287
+  - LocalPosition: {x: -70.95403, y: 17.402105, z: -73.10573}
+    Radius: 0.8739682
+  - LocalPosition: {x: 134.77905, y: 6.3373065, z: -83.63012}
+    Radius: 0.89032376
+  - LocalPosition: {x: 119.86096, y: 17.609715, z: 6.7831388}
+    Radius: 0.84289336
+  - LocalPosition: {x: 136.65466, y: 6.292631, z: 107.318504}
+    Radius: 0.8250323
+  - LocalPosition: {x: -79.570854, y: 5.9930906, z: -100.29332}
+    Radius: 0.71678525
+  - LocalPosition: {x: 141.94708, y: 6.4011836, z: -58.794758}
+    Radius: 0.6091294
+  - LocalPosition: {x: -129.72054, y: 6.2987285, z: 83.73567}
+    Radius: 0.68113333
+  - LocalPosition: {x: 47.949646, y: 6.342854, z: 86.23962}
+    Radius: 0.88420016
+  - LocalPosition: {x: 143.88, y: 6.3258414, z: 13.455936}
+    Radius: 0.8247349
+  - LocalPosition: {x: 95.18702, y: 6.5252934, z: -75.375015}
+    Radius: 0.7729689
+  - LocalPosition: {x: -81.67102, y: 15.256593, z: -51.557774}
+    Radius: 0.85930955
+  - LocalPosition: {x: 7.8363647, y: 18.541222, z: 78.23678}
+    Radius: 0.76042026
+  - LocalPosition: {x: 39.03705, y: 9.658745, z: -42.594994}
+    Radius: 0.57525927
+  - LocalPosition: {x: -30.856504, y: 11.846696, z: -58.189888}
+    Radius: 0.82564014
+  - LocalPosition: {x: 137.08728, y: 6.694812, z: 28.904713}
+    Radius: 0.7879948
+  - LocalPosition: {x: 49.054443, y: 8.780397, z: 38.329044}
+    Radius: 0.7486697
+  - LocalPosition: {x: -97.24404, y: 6.315009, z: 92.71693}
+    Radius: 0.78048813
+  - LocalPosition: {x: -57.148922, y: 11.262294, z: -59.355476}
+    Radius: 0.61312723
+  - LocalPosition: {x: -88.83727, y: 15.610356, z: -19.01271}
+    Radius: 0.5754518
+  - LocalPosition: {x: -96.084496, y: 16.353346, z: 5.2008634}
+    Radius: 0.6888651
+  - LocalPosition: {x: -137.89825, y: 6.29767, z: 107.959526}
+    Radius: 0.86176276
+  - LocalPosition: {x: -80.24371, y: 17.445925, z: 59.783905}
+    Radius: 0.89669514
+  - LocalPosition: {x: 15.17456, y: 15.019569, z: -58.9325}
+    Radius: 0.682935
+  - LocalPosition: {x: -103.430016, y: 6.5354505, z: -74.7888}
+    Radius: 0.725103
+  - LocalPosition: {x: -49.67334, y: 15.420554, z: -76.254074}
+    Radius: 0.66916674
+  - LocalPosition: {x: 143.11096, y: 6.306634, z: 52.170654}
+    Radius: 0.78054094
+  - LocalPosition: {x: 104.476166, y: 14.421602, z: 12.697659}
+    Radius: 0.86691636
+  - LocalPosition: {x: -31.28708, y: 15.506876, z: -66.698326}
+    Radius: 0.5772947
+  - LocalPosition: {x: 49.08258, y: 10.953058, z: -82.83206}
+    Radius: 0.6919304
+  - LocalPosition: {x: 144.68349, y: 6.3006177, z: 70.55993}
+    Radius: 0.7764451
+  - LocalPosition: {x: -121.045586, y: 6.7654123, z: 67.98798}
+    Radius: 0.63653344
+  - LocalPosition: {x: -79.26342, y: 15.111901, z: -59.13904}
+    Radius: 0.5849363
+  - LocalPosition: {x: -105.705505, y: 4.838987, z: -98.60689}
+    Radius: 0.80762684
+  - LocalPosition: {x: 15.02945, y: 22.193926, z: -73.14576}
+    Radius: 0.8060434
+  - LocalPosition: {x: 38.264343, y: 6.4093976, z: 100.76971}
+    Radius: 0.70662487
+  - LocalPosition: {x: -81.93616, y: 10.372496, z: 14.542978}
+    Radius: 0.7302854
+  - LocalPosition: {x: -89.11063, y: 6.3090057, z: 94.46644}
+    Radius: 0.66590387
+  - LocalPosition: {x: -57.562683, y: 7.0150585, z: 93.91947}
+    Radius: 0.7523328
+  - LocalPosition: {x: 32.936096, y: 11.428887, z: -49.965866}
+    Radius: 0.5748789
+  - LocalPosition: {x: 31.755552, y: 8.399764, z: 38.5602}
+    Radius: 0.8583952
+  - LocalPosition: {x: -119.18951, y: 6.5714087, z: -75.712654}
+    Radius: 0.61393374
+  - LocalPosition: {x: -96.09064, y: 7.339288, z: 68.83129}
+    Radius: 0.6859777
+  - LocalPosition: {x: 136.91168, y: 6.3577414, z: -42.879005}
+    Radius: 0.78595924
+  - LocalPosition: {x: 119.89868, y: 6.302594, z: 76.81509}
+    Radius: 0.8775218
+  - LocalPosition: {x: 119.21112, y: 22.038826, z: -26.307947}
+    Radius: 0.689435
+  - LocalPosition: {x: 69.965454, y: 17.388124, z: 54.170242}
+    Radius: 0.69299465
+  - LocalPosition: {x: 24.985779, y: 22.25848, z: 84.83458}
+    Radius: 0.8290156
+  - LocalPosition: {x: -87.56515, y: 18.460201, z: -26.237259}
+    Radius: 0.6124911
+  - LocalPosition: {x: 142.97131, y: 6.7048416, z: 22.289864}
+    Radius: 0.90240306
+  - LocalPosition: {x: 135.7279, y: 6.2964334, z: 37.961918}
+    Radius: 0.82630247
+  - LocalPosition: {x: 105.12278, y: 15.801526, z: -26.075977}
+    Radius: 0.7649195
+  - LocalPosition: {x: 95.310455, y: 11.627897, z: 5.016844}
+    Radius: 0.67797315
+  - LocalPosition: {x: 134.23462, y: 7.2154946, z: -10.559207}
+    Radius: 0.5887101
+  - LocalPosition: {x: 48.27057, y: 15.323472, z: 68.141365}
+    Radius: 0.6160074
+  - LocalPosition: {x: 14.090973, y: 13.08144, z: -92.02636}
+    Radius: 0.60036117
+  - LocalPosition: {x: 126.802734, y: 6.3965273, z: -58.7704}
+    Radius: 0.83704454
+  - LocalPosition: {x: -87.56664, y: 19.37761, z: 54.749886}
+    Radius: 0.81133467
+  - LocalPosition: {x: 120.25355, y: 7.0559883, z: -58.50836}
+    Radius: 0.61149144
+  - LocalPosition: {x: 95.50018, y: 11.100371, z: -18.95208}
+    Radius: 0.88499236
+  - LocalPosition: {x: -129.50406, y: 5.172781, z: -41.693954}
+    Radius: 0.5638047
+  - LocalPosition: {x: 88.37482, y: 7.319262, z: -90.32528}
+    Radius: 0.9038293
+  - LocalPosition: {x: 30.186157, y: 6.3418355, z: 107.73267}
+    Radius: 0.679235
+  - LocalPosition: {x: -105.222404, y: 18.374186, z: 4.855443}
+    Radius: 0.8322647
+  - LocalPosition: {x: -79.81832, y: 7.0602026, z: -82.86104}
+    Radius: 0.78485817
+  - LocalPosition: {x: 0.26370242, y: 10.714735, z: -52.152576}
+    Radius: 0.77439445
+  - LocalPosition: {x: 8.581604, y: 7.130163, z: 93.604}
+    Radius: 0.59431666
+  - LocalPosition: {x: -104.935814, y: 17.390358, z: 29.876242}
+    Radius: 0.65273637
+  - LocalPosition: {x: 102.28165, y: 6.6090894, z: -81.520096}
+    Radius: 0.89526224
+  - LocalPosition: {x: -1.4014893, y: 15.135987, z: 54.733078}
+    Radius: 0.8601142
+  - LocalPosition: {x: -73.80121, y: 13.010792, z: -42.84078}
+    Radius: 0.80899453
+  - LocalPosition: {x: 143.78271, y: 6.8876457, z: -17.2195}
+    Radius: 0.6852601
+  - LocalPosition: {x: 16.33429, y: 11.486982, z: -50.934467}
+    Radius: 0.818414
+  - LocalPosition: {x: -55.70892, y: 15.7871475, z: 70.38248}
+    Radius: 0.8613006
+  - LocalPosition: {x: -136.30035, y: 3.8127246, z: -83.66253}
+    Radius: 0.8180851
+  - LocalPosition: {x: -89.93155, y: 12.474766, z: 3.9716864}
+    Radius: 0.78039044
+  - LocalPosition: {x: 95.18751, y: 6.3006177, z: 77.257744}
+    Radius: 0.88592887
+  - LocalPosition: {x: 23.6008, y: 18.550308, z: -68.04843}
+    Radius: 0.8704274
+  - LocalPosition: {x: 7.6299434, y: 24.24509, z: -82.97809}
+    Radius: 0.90322125
+  - LocalPosition: {x: 104.07349, y: 16.031185, z: -18.139175}
+    Radius: 0.8730816
+  - LocalPosition: {x: 126.15906, y: 6.5128717, z: 38.801258}
+    Radius: 0.6360869
+  - LocalPosition: {x: 78.16987, y: 6.3054147, z: 85.57482}
+    Radius: 0.6422729
+  - LocalPosition: {x: 23.809814, y: 8.835042, z: 46.770172}
+    Radius: 0.87375313
+  - LocalPosition: {x: -138.03185, y: 4.4869056, z: -49.54724}
+    Radius: 0.741766
+  - LocalPosition: {x: -47.169006, y: 8.155608, z: 46.44014}
+    Radius: 0.8265998
+  - LocalPosition: {x: 144.64807, y: 6.643584, z: -42.95314}
+    Radius: 0.83480865
+  - LocalPosition: {x: 88.51145, y: 14.912732, z: -57.320942}
+    Radius: 0.7606316
+  - LocalPosition: {x: -25.306488, y: 16.769104, z: -73.13789}
+    Radius: 0.58631366
+  - LocalPosition: {x: -121.74808, y: 6.2500334, z: 36.488876}
+    Radius: 0.7871718
+  - LocalPosition: {x: 80.494995, y: 16.83821, z: -49.49214}
+    Radius: 0.61372
+  - LocalPosition: {x: -87.26941, y: 6.2939982, z: 102.07792}
+    Radius: 0.70315766
+  - LocalPosition: {x: -9.2341, y: 8.884179, z: -97.48614}
+    Radius: 0.7504176
+  - LocalPosition: {x: 88.95413, y: 6.7011395, z: -75.24884}
+    Radius: 0.6389239
+  - LocalPosition: {x: 30.334898, y: 23.504057, z: 76.79549}
+    Radius: 0.83601606
+  - LocalPosition: {x: -70.86554, y: 7.1747313, z: 92.57054}
+    Radius: 0.6909135
+  - LocalPosition: {x: 96.14545, y: 6.310815, z: 62.191063}
+    Radius: 0.5825059
+  - LocalPosition: {x: -41.012756, y: 6.2846985, z: 107.36621}
+    Radius: 0.9051632
+  - LocalPosition: {x: -71.45096, y: 14.375987, z: 78.61327}
+    Radius: 0.85078496
+  - LocalPosition: {x: 118.686584, y: 7.8655715, z: 37.217033}
+    Radius: 0.7612735
+  - LocalPosition: {x: -137.40839, y: 4.2628193, z: -58.582066}
+    Radius: 0.69071954
+  - LocalPosition: {x: -41.733948, y: 7.5447283, z: -98.9637}
+    Radius: 0.5652357
+  - LocalPosition: {x: -105.70694, y: 16.167788, z: 12.189722}
+    Radius: 0.85400116
+  - LocalPosition: {x: -89.88329, y: 6.292055, z: 107.93937}
+    Radius: 0.89299554
+  - LocalPosition: {x: -121.760216, y: 6.307358, z: 100.551865}
+    Radius: 0.8888445
+  - LocalPosition: {x: 54.132812, y: 6.335082, z: 83.82924}
+    Radius: 0.649816
+  - LocalPosition: {x: -111.30132, y: 14.305665, z: -19.418623}
+    Radius: 0.8569288
+  - LocalPosition: {x: 56.657227, y: 6.596949, z: 77.94889}
+    Radius: 0.8006795
+  - LocalPosition: {x: -95.02468, y: 6.316798, z: 78.40334}
+    Radius: 0.8350235
+  - LocalPosition: {x: -32.93976, y: 6.823708, z: 101.201614}
+    Radius: 0.67732567
+  - LocalPosition: {x: -119.589905, y: 6.3532524, z: 29.468102}
+    Radius: 0.87543625
+  - LocalPosition: {x: -113.16937, y: 12.243968, z: -27.319925}
+    Radius: 0.81915706
+  - LocalPosition: {x: -49.915955, y: 10.389875, z: -57.799564}
+    Radius: 0.64187706
+  - LocalPosition: {x: 126.58374, y: 6.302393, z: 62.62936}
+    Radius: 0.6377899
+  - LocalPosition: {x: 103.82929, y: 17.160053, z: -3.1390443}
+    Radius: 0.83964986
+  - LocalPosition: {x: 111.80194, y: 20.272388, z: -28.04465}
+    Radius: 0.82262176
+  - LocalPosition: {x: 63.731632, y: 9.485857, z: 36.76737}
+    Radius: 0.70223004
+  - LocalPosition: {x: -49.764984, y: 13.595385, z: 84.272}
+    Radius: 0.8441369
+  - LocalPosition: {x: 32.354553, y: 14.835201, z: 62.82953}
+    Radius: 0.76498353
+  - LocalPosition: {x: -89.065544, y: 12.114754, z: -11.5486965}
+    Radius: 0.63259536
+  - LocalPosition: {x: 62.99796, y: 18.065231, z: 60.347084}
+    Radius: 0.813187
+  - LocalPosition: {x: 31.37024, y: 8.140467, z: 30.14553}
+    Radius: 0.76354736
+  - LocalPosition: {x: 16.147188, y: 26.202242, z: 76.945816}
+    Radius: 0.7406806
+  - LocalPosition: {x: -39.406006, y: 16.641075, z: -68.26691}
+    Radius: 0.85739845
+  - LocalPosition: {x: 78.17517, y: 7.2732873, z: -81.998}
+    Radius: 0.7873406
+  - LocalPosition: {x: 111.8072, y: 7.226562, z: -99.13789}
+    Radius: 0.73742557
+  - LocalPosition: {x: -9.16983, y: 8.794742, z: -41.111004}
+    Radius: 0.72675747
+  - LocalPosition: {x: 54.27063, y: 6.341273, z: 91.933914}
+    Radius: 0.7305525
+  - LocalPosition: {x: 30.649113, y: 13.910462, z: -60.08032}
+    Radius: 0.7210323
+  - LocalPosition: {x: 55.40039, y: 18.196491, z: 61.41969}
+    Radius: 0.8853689
+  - LocalPosition: {x: 16.77002, y: 20.254549, z: 69.37794}
+    Radius: 0.570778
+  - LocalPosition: {x: 32.931396, y: 19.774607, z: -75.84769}
+    Radius: 0.81461394
+  - LocalPosition: {x: 119.5589, y: 23.041128, z: -34.25356}
+    Radius: 0.77229244
+  - LocalPosition: {x: 128.5907, y: 7.275582, z: -2.6941593}
+    Radius: 0.60561574
+  - LocalPosition: {x: -80.30002, y: 6.3068085, z: 94.266594}
+    Radius: 0.75699335
+  - LocalPosition: {x: 38.85077, y: 8.680193, z: -98.26736}
+    Radius: 0.7857388
+  - LocalPosition: {x: 8.671111, y: 23.982533, z: -73.8792}
+    Radius: 0.60831726
+  - LocalPosition: {x: 120.49164, y: 6.299023, z: 83.92979}
+    Radius: 0.5849464
+  - LocalPosition: {x: 39.553986, y: 9.219766, z: 45.943314}
+    Radius: 0.58700013
+  - LocalPosition: {x: 56.886417, y: 9.453821, z: -83.0391}
+    Radius: 0.6895802
+  - LocalPosition: {x: 31.1254, y: 16.912716, z: -67.13456}
+    Radius: 0.7630016
+  - LocalPosition: {x: 104.90402, y: 7.5745897, z: -66.11356}
+    Radius: 0.8259829
+  - LocalPosition: {x: -17.71869, y: 10.622262, z: 84.399414}
+    Radius: 0.57479066
+  - LocalPosition: {x: 22.961853, y: 13.957858, z: -91.6493}
+    Radius: 0.7304348
+  - LocalPosition: {x: 23.686096, y: 26.431246, z: 75.93484}
+    Radius: 0.85404426
+  - LocalPosition: {x: -121.480804, y: 7.617152, z: -2.3178706}
+    Radius: 0.8839394
+  - LocalPosition: {x: 143.97192, y: 6.2885847, z: 92.438965}
+    Radius: 0.8628404
+  - LocalPosition: {x: -86.98516, y: 21.485703, z: -34.564365}
+    Radius: 0.65089834
+  - LocalPosition: {x: -120.52599, y: 6.837242, z: -67.284805}
+    Radius: 0.6599067
+  - LocalPosition: {x: 16.266846, y: 20.154419, z: -67.97423}
+    Radius: 0.86313874
+  - LocalPosition: {x: 48.60565, y: 9.203277, z: -89.26231}
+    Radius: 0.7603958
+  - LocalPosition: {x: 126.80103, y: 6.305609, z: 44.6367}
+    Radius: 0.8994332
+  - LocalPosition: {x: 65.11671, y: 6.315706, z: 84.58428}
+    Radius: 0.88009614
+  - LocalPosition: {x: -136.8805, y: 4.6958194, z: -43.60475}
+    Radius: 0.88708264
+  - LocalPosition: {x: -17.87503, y: 6.27619, z: 106.665436}
+    Radius: 0.9091316
+  - LocalPosition: {x: 69.966095, y: 15.872183, z: -67.829475}
+    Radius: 0.8819659
+  - LocalPosition: {x: -135.27698, y: 3.981181, z: -91.50267}
+    Radius: 0.84221834
+  - LocalPosition: {x: -136.74005, y: 6.3310623, z: 61.571285}
+    Radius: 0.6558894
+  - LocalPosition: {x: 86.48908, y: 6.363155, z: 106.93336}
+    Radius: 0.62604696
+  - LocalPosition: {x: -126.85034, y: 6.338137, z: 93.97544}
+    Radius: 0.64343894
+  - LocalPosition: {x: -55.217804, y: 7.8658295, z: -83.424995}
+    Radius: 0.60867953
+  - LocalPosition: {x: -56.428764, y: 8.944003, z: 53.533283}
+    Radius: 0.63581955
+  - LocalPosition: {x: -15.425873, y: 16.45791, z: -73.51273}
+    Radius: 0.7841476
+  - LocalPosition: {x: 103.96018, y: 6.3072977, z: 68.63086}
+    Radius: 0.590433
+  - LocalPosition: {x: 87.10303, y: 6.3022995, z: 70.53386}
+    Radius: 0.88466567
+  - LocalPosition: {x: -113.83346, y: 14.728021, z: -1.4635613}
+    Radius: 0.5683278
+  - LocalPosition: {x: -1.0126038, y: 6.522667, z: 92.22413}
+    Radius: 0.7633254
+  - LocalPosition: {x: -9.683838, y: 12.423654, z: -59.501606}
+    Radius: 0.6129862
+  - LocalPosition: {x: 119.2561, y: 6.5842056, z: -67.66067}
+    Radius: 0.8631128
+  - LocalPosition: {x: 112.169014, y: 6.8652277, z: 53.787476}
+    Radius: 0.6569385
+  - LocalPosition: {x: 143.48633, y: 6.3112235, z: 46.840637}
+    Radius: 0.6143571
+  - LocalPosition: {x: -16.078888, y: 13.655215, z: 60.090652}
+    Radius: 0.7335856
+  - LocalPosition: {x: -81.27093, y: 17.152836, z: 46.64416}
+    Radius: 0.785201
+  - LocalPosition: {x: -103.39324, y: 16.093067, z: 60.400814}
+    Radius: 0.71249324
+  - LocalPosition: {x: -31.137577, y: 19.310762, z: 77.16684}
+    Radius: 0.8399688
+  - LocalPosition: {x: -15.949494, y: 8.589556, z: -99.47075}
+    Radius: 0.5852924
+  - LocalPosition: {x: 39.286102, y: 12.176707, z: 76.34728}
+    Radius: 0.74794227
+  - LocalPosition: {x: -127.74584, y: 6.3058033, z: 102.311295}
+    Radius: 0.7582928
+  - LocalPosition: {x: -79.12383, y: 6.2950163, z: 100.2882}
+    Radius: 0.89985234
+  - LocalPosition: {x: -8.338745, y: 9.262055, z: -90.05139}
+    Radius: 0.87098557
+  - LocalPosition: {x: 32.06015, y: 6.426174, z: 101.4515}
+    Radius: 0.6503285
+  - LocalPosition: {x: 137.07239, y: 6.29508, z: -2.097488}
+    Radius: 0.880587
+  - LocalPosition: {x: 46.92206, y: 13.887569, z: 54.502605}
+    Radius: 0.5783722
+  - LocalPosition: {x: 120.965454, y: 17.530462, z: -19.301369}
+    Radius: 0.7557515
+  - LocalPosition: {x: -136.75635, y: 6.345561, z: 46.855927}
+    Radius: 0.8428761
+  - LocalPosition: {x: 103.88431, y: 13.61383, z: 46.154583}
+    Radius: 0.8966409
+  - LocalPosition: {x: 96.1424, y: 17.874392, z: 46.20317}
+    Radius: 0.84844047
+  - LocalPosition: {x: 72.780334, y: 11.452411, z: -43.323875}
+    Radius: 0.86795187
+  - LocalPosition: {x: -39.98871, y: 13.076797, z: 69.0232}
+    Radius: 0.87274593
+  - LocalPosition: {x: -47.320312, y: 16.869059, z: -67.09242}
+    Radius: 0.617435
+  - LocalPosition: {x: 136.46692, y: 6.295921, z: 61.271393}
+    Radius: 0.7271848
+  - LocalPosition: {x: -73.08831, y: 8.687496, z: 84.875534}
+    Radius: 0.7842472
+  - LocalPosition: {x: 63.26013, y: 15.317797, z: 54.216045}
+    Radius: 0.87864536
+  - LocalPosition: {x: -63.619255, y: 10.090951, z: -43.989826}
+    Radius: 0.65931946
+  - LocalPosition: {x: -8.148927, y: 7.0278015, z: 86.791534}
+    Radius: 0.68512696
+  - LocalPosition: {x: -80.35546, y: 6.47964, z: -91.70729}
+    Radius: 0.7663176
+  - LocalPosition: {x: 49.013184, y: 15.477717, z: -60.139675}
+    Radius: 0.73934776
+  - LocalPosition: {x: -73.105156, y: 16.160213, z: 67.82774}
+    Radius: 0.8106576
+  - LocalPosition: {x: 32.948822, y: 8.663725, z: -99.73595}
+    Radius: 0.8572931
+  - LocalPosition: {x: 126.94898, y: 6.3014283, z: 78.62738}
+    Radius: 0.6199177
+  - LocalPosition: {x: -135.82083, y: 6.3514233, z: 36.852177}
+    Radius: 0.74762875
+  - LocalPosition: {x: 118.2671, y: 6.2992373, z: 102.11101}
+    Radius: 0.6504694
+  - LocalPosition: {x: -104.914246, y: 6.314835, z: 94.093}
+    Radius: 0.64811987
+  - LocalPosition: {x: 22.506712, y: 10.778692, z: 94.188644}
+    Radius: 0.65489215
+  - LocalPosition: {x: -79.26342, y: 17.475517, z: 54.314888}
+    Radius: 0.68097854
+  - LocalPosition: {x: -96.263, y: 15.235268, z: 59.922256}
+    Radius: 0.57181764
+  - LocalPosition: {x: 94.76251, y: 17.956451, z: -41.862717}
+    Radius: 0.81739086
+  - LocalPosition: {x: -16.431396, y: 8.194491, z: 36.502396}
+    Radius: 0.6175621
+  - LocalPosition: {x: -128.5686, y: 6.3063593, z: 59.826763}
+    Radius: 0.6375661
+  - LocalPosition: {x: 8.350586, y: 6.3667994, z: 107.043}
+    Radius: 0.786843
+  grassCount: 390
+  meshBaked: 1
+  meshAssetFolder: Assets/Data/Environment/BakedForests/Instances_94e29ae402dd47739d3ac2f17dacd3ea
 --- !u!1001 &2060734942
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -730,55 +2543,55 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalScale.x
-      value: 40.000015
+      value: 11.818182
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalScale.y
-      value: 40
+      value: 11.818184
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalScale.z
-      value: 40
+      value: 11.818182
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.1017456
+      value: -47.718323
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 48.400005
+      value: 12.012157
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 72.42887
+      value: -1.3202744
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.52762365
+      value: 0.5123383
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.47094777
+      value: -0.48338515
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.53408235
+      value: 0.5166579
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.46322525
+      value: 0.48673704
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -82.643
+      value: -86.626
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 96.309
+      value: 91.162
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -6.381
+      value: -0.722
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ed7ba581585f2b4097f6bf6568dde63, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -812,7 +2625,6 @@ GameObject:
   - component: {fileID: 2117366671}
   - component: {fileID: 2117366670}
   - component: {fileID: 2117366669}
-  - component: {fileID: 2117366672}
   m_Layer: 0
   m_Name: Cong Thanh Battle Demo
   m_TagString: Untagged
@@ -834,6 +2646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilBattlePerformanceMonitor
   scanSceneRendererCounts: 0
   focusCpuBottlenecks: 1
+  benchmarkDurationSeconds: 60
 --- !u!114 &2117366670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,10 +2659,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c08873b11b471c877e83c2cb3f98f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilAutoBattleDemo
+  allowDifferentAlliedTypesToPassThrough: 1
   terrain: {fileID: 0}
   terrainMap: {fileID: 11400000, guid: c5a824b2bd5696a419f560be0c4cc159, type: 2}
   pathService: {fileID: 1731357156}
-  instancedRenderer: {fileID: 0}
   blueUnitTemplate: {fileID: 5433705014315375280, guid: e1eac32434370cd42bec060dd3d810e3, type: 3}
   redUnitTemplate: {fileID: 2819137553769558285, guid: e48e71dcca159ea43a212a292d8bdb80, type: 3}
   blueUnitVariants:
@@ -876,6 +2689,7 @@ MonoBehaviour:
   - {fileID: 8213173033440352744, guid: bae70b080da3319479cc343bf1e47aaa, type: 3}
   - {fileID: 2266480297876915128, guid: 6b78c443a96d56d4e806fa93c6d73eb1, type: 3}
   - {fileID: 2749619747641695281, guid: 57a47273515792d438d57dd4e5c4ec9e, type: 3}
+  - {fileID: 2692780606596965600, guid: 7f2cef056e2b7af4990825ea39c6111f, type: 3}
   redUnitsByType:
   - {fileID: 2819137553769558285, guid: e48e71dcca159ea43a212a292d8bdb80, type: 3}
   - {fileID: 3594677941541393755, guid: a2ae5cac47dd3ae4cbfda27b7911803d, type: 3}
@@ -884,28 +2698,188 @@ MonoBehaviour:
   - {fileID: 7499120017799365749, guid: 65722277994267c478717f8f3a118864, type: 3}
   - {fileID: 5409185216448347608, guid: 541c29d39f6806e499359def484bcfe7, type: 3}
   - {fileID: 8854561764355617410, guid: 8f84489ffc7b85b44a040e6523139b6d, type: 3}
+  - {fileID: 1664643354770027472, guid: c7b5f9a17bfaea1478885df28fe90b0e, type: 3}
+  lobbyUnitStats:
+  - MaxHealth: 0
+    Damage: 0
+    Range: 0
+    AttackSpeed: 0
+    MoveSpeed: 0
+    Armor: 0
+    SecondaryArmor: 0
+    AreaRadius: 0
+    AreaEdgeEffectiveness: 0
+    SecondaryDamage: 0
+    SalvoSize: 0
+    SalvoDelay: 0
+    Windup: 0
+    TargetCategoryMask: 0
+    OnlyTargetCategoryMask: 0
+    AvoidTargetCategoryMask: 0
+    TargetPriority: 0
+  - MaxHealth: 0
+    Damage: 0
+    Range: 0
+    AttackSpeed: 0
+    MoveSpeed: 0
+    Armor: 0
+    SecondaryArmor: 0
+    AreaRadius: 0
+    AreaEdgeEffectiveness: 0
+    SecondaryDamage: 0
+    SalvoSize: 0
+    SalvoDelay: 0
+    Windup: 0
+    TargetCategoryMask: 0
+    OnlyTargetCategoryMask: 0
+    AvoidTargetCategoryMask: 0
+    TargetPriority: 0
+  - MaxHealth: 0
+    Damage: 0
+    Range: 0
+    AttackSpeed: 0
+    MoveSpeed: 0
+    Armor: 0
+    SecondaryArmor: 0
+    AreaRadius: 0
+    AreaEdgeEffectiveness: 0
+    SecondaryDamage: 0
+    SalvoSize: 0
+    SalvoDelay: 0
+    Windup: 0
+    TargetCategoryMask: 0
+    OnlyTargetCategoryMask: 0
+    AvoidTargetCategoryMask: 0
+    TargetPriority: 0
+  - MaxHealth: 0
+    Damage: 0
+    Range: 0
+    AttackSpeed: 0
+    MoveSpeed: 0
+    Armor: 0
+    SecondaryArmor: 0
+    AreaRadius: 0
+    AreaEdgeEffectiveness: 0
+    SecondaryDamage: 0
+    SalvoSize: 0
+    SalvoDelay: 0
+    Windup: 0
+    TargetCategoryMask: 0
+    OnlyTargetCategoryMask: 0
+    AvoidTargetCategoryMask: 0
+    TargetPriority: 0
+  - MaxHealth: 0
+    Damage: 0
+    Range: 0
+    AttackSpeed: 0
+    MoveSpeed: 0
+    Armor: 0
+    SecondaryArmor: 0
+    AreaRadius: 0
+    AreaEdgeEffectiveness: 0
+    SecondaryDamage: 0
+    SalvoSize: 0
+    SalvoDelay: 0
+    Windup: 0
+    TargetCategoryMask: 0
+    OnlyTargetCategoryMask: 0
+    AvoidTargetCategoryMask: 0
+    TargetPriority: 0
+  - MaxHealth: 0
+    Damage: 0
+    Range: 0
+    AttackSpeed: 0
+    MoveSpeed: 0
+    Armor: 0
+    SecondaryArmor: 0
+    AreaRadius: 0
+    AreaEdgeEffectiveness: 0
+    SecondaryDamage: 0
+    SalvoSize: 0
+    SalvoDelay: 0
+    Windup: 0
+    TargetCategoryMask: 0
+    OnlyTargetCategoryMask: 0
+    AvoidTargetCategoryMask: 0
+    TargetPriority: 0
+  - MaxHealth: 0
+    Damage: 0
+    Range: 0
+    AttackSpeed: 0
+    MoveSpeed: 0
+    Armor: 0
+    SecondaryArmor: 0
+    AreaRadius: 0
+    AreaEdgeEffectiveness: 0
+    SecondaryDamage: 0
+    SalvoSize: 0
+    SalvoDelay: 0
+    Windup: 0
+    TargetCategoryMask: 0
+    OnlyTargetCategoryMask: 0
+    AvoidTargetCategoryMask: 0
+    TargetPriority: 0
+  castleHealth: 100000000
+  lobbyBackgroundImage: {fileID: 2800000, guid: 01ca0939362477a4fbae632ff0acad6a, type: 3}
+  lobbyTitleImage: {fileID: 2800000, guid: 5410c0ab2354c1f4b8ba6a19f09aa9a8, type: 3}
+  battleRedHealthFrameImage: {fileID: 2800000, guid: aa9ee6a7cac1db249add4cb7d513f340, type: 3}
+  battleBlueHealthFrameImage: {fileID: 2800000, guid: 497d9ebf5e7793c4bb5c7d7bb9f1083b, type: 3}
+  lobbyDurationImages:
+  - {fileID: 2800000, guid: a9ec79525d3f9644abe921db64f2c7d0, type: 3}
+  - {fileID: 2800000, guid: 7e6cb027c8ac0ad4c9881413e8570184, type: 3}
+  - {fileID: 2800000, guid: 7944fb2c9b70a35408c5e1317afff015, type: 3}
+  - {fileID: 2800000, guid: af5e106fc7dd78b4fa6e3f6c0613a2b5, type: 3}
+  lobbyStartButtonImage: {fileID: 2800000, guid: 2aeed8543d17caa46bce24d24d5f0348, type: 3}
+  lobbySettingsButtonImage: {fileID: 2800000, guid: be737447e21ffa147a20b5bac154ab00, type: 3}
+  lobbySettingsButtonHorizontalOffset: 200
+  lobbyBackButtonImage: {fileID: 2800000, guid: afad89dcd9c2b7e49bcef306207e8751, type: 3}
+  lobbyUnitImages:
+  - {fileID: 2800000, guid: 190f59c97db4b5743b6a6dd9c3cc4625, type: 3}
+  - {fileID: 2800000, guid: 0f972f6c30f8d7c4cb74d6b06ab12559, type: 3}
+  - {fileID: 2800000, guid: 02cd78a1403f9c0478003f746f7a3611, type: 3}
+  - {fileID: 2800000, guid: 7c2864fdc54cd714eb3ee6e0dd83e967, type: 3}
+  - {fileID: 2800000, guid: 6d1461b4579fce049ab1dc183a678e73, type: 3}
+  - {fileID: 2800000, guid: 44b2d2c7527f29e4cacaf7d9a9f63bfe, type: 3}
+  - {fileID: 2800000, guid: 9589a0d4f8e98a942a9e996471ba0375, type: 3}
+  - {fileID: 2800000, guid: 139243eb73db8944695a43391938fdef, type: 3}
   maxNewUnitsPerFrame: 4
-  poolPrewarmUnitsPerFrame: 20
+  spawnQueueRateFrames: 15
+  maxSpawnsPerFrame: 40
   unitsPerVariantAtStart: 50
+  prepareArmyBeforeCombat: 1
+  preparedArmyTotal: 8000
   blueSpawnTarget: {fileID: 117111418}
   redSpawnTarget: {fileID: 322280034}
   battleCenter: {x: 3.8349304, y: 32.32308, z: 2.0326347}
   teamStartDistance: 461.31116
   spawnSpacing: 1.8
-  spawnColumns: 20
-  departuresPerTeamPerTick: 16
+  spawnColumns: 40
   attackRange: 1.5
   archerAttackRange: 36
   siegeAttackRange: 54
   attackInterval: 0.65
   attackDamage: 20
   retargetDistance: 2
-  combatUpdatesPerSecond: 10
   detectionRange: 24
   targetSearchInterval: 0.5
-  maxCombatUpdatesPerFrame: 512
   maxTargetSearchesPerFrame: 128
-  maxTargetCandidatesPerSearch: 128
+  useGpuBoneInstancing: 1
+  useRecoilJobChaining: 1
+  suspendAnimatorsForProfiling: 1
+  prewarmSoldierPools: 1
+  prewarmPerTypePerTeam: 1000
+  prewarmMaxCreatesPerFrame: 16
+  prewarmFrameBudgetMs: 4
+  prewarmMaxSeconds: 60
+  prewarmMemoryBudgetMb: 1024
+  fillSpawnFrontage: 0
+  spawnFrontageFraction: 0.25
+  spawnLaneGap: 0.02
+  soldiersPerSpawnRow: 20
+  spawnExitDistance: 25
+  spawnRearSearchDistance: 20
+  spawnWorkBudgetMilliseconds: 2
+  siegeImpactPrefab: {fileID: 3578031762403071458, guid: 179a65dba7aebb347b1d00888b90141a, type: 3}
 --- !u!4 &2117366671
 Transform:
   m_ObjectHideFlags: 0
@@ -923,20 +2897,6 @@ Transform:
   - {fileID: 322280034}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2117366672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2117366668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741ce83144484d5dad8072129f72a10b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RecoilPathfinding.RecoilBattleMinimap
-  battle: {fileID: 2117366670}
-  castleIcon: {fileID: 2800000, guid: 80fb6a66aea1476bbb4acdfd439b3e0e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

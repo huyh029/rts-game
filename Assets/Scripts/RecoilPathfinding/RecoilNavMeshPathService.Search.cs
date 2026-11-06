@@ -22,7 +22,7 @@ namespace RecoilPathfinding
         private const int MaxSearchCorridor = 4096;
         private const int MaxSearchPoints = 256;
         private const int MaxSearchLanes = 8;
-        private static readonly ProfilerMarker SearchMarker = new("RecoilPathfinding.PathSearch");
+        private static readonly RecoilCpuPhases.Marker SearchMarker = new("RecoilPathfinding.PathSearch");
 
         [Tooltip("Goals requested at least this many times in one batch share a flow field; rarer goals use a per-request A* search.")]
         [SerializeField, Min(1)] private int sharedFieldMinRequests = 4;

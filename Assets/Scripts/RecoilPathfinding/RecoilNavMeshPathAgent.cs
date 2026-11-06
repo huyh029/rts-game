@@ -18,6 +18,8 @@ namespace RecoilPathfinding
         [SerializeField, Min(0.01f)] private float waypointTolerance = 0.25f;
         [SerializeField, Min(0f)] private float avoidanceRadius = 1.2f;
         [SerializeField, Min(0f)] private float avoidanceStrength = 1f;
+        [SerializeField, Tooltip("Recoil MoveDef avoidMobilesOnPath: steer around mobile units; when off, mobile units are left to body collision resolution.")]
+        private bool avoidMobilesOnPath = true;
         [SerializeField, Min(0.05f)] private float bodyRadius = 0.5f;
         [SerializeField, Min(0.01f)] private float mass = 1f;
         [SerializeField] private bool pushResistant = false;
@@ -39,7 +41,8 @@ namespace RecoilPathfinding
                 ? configured.Stats.MoveSpeed : maxSpeed,
             Acceleration = acceleration, Deceleration = deceleration, TurnSpeedDegrees = turnSpeedDegrees,
             WaypointTolerance = waypointTolerance, AvoidanceRadius = avoidanceRadius,
-            AvoidanceStrength = avoidanceStrength, VerticalOffset = navMeshVerticalOffset, AreaMask = areaMask,
+            AvoidanceStrength = avoidanceStrength, DisableMobileAvoidance = (byte)(avoidMobilesOnPath ? 0 : 1),
+            VerticalOffset = navMeshVerticalOffset, AreaMask = areaMask,
             BodyRadius = bodyRadius, Mass = mass, PushResistant = (byte)(pushResistant ? 1 : 0)
         };
 

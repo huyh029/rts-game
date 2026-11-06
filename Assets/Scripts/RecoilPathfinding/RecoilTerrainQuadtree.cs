@@ -15,6 +15,7 @@ namespace RecoilPathfinding
             public int WalkableCellCount;
             public int[] CellLeaves;
             public int[] LeafTriangleStarts;
+            public int[] Areas;
         }
 
         public static Graph Build(int columns, int rows, Vector3 origin, Vector2 size,
@@ -69,7 +70,7 @@ namespace RecoilPathfinding
                 }
                 starts[_leaves.Count] = _indices.Count / 3;
                 return new Graph { Vertices = _vertices.ToArray(), Indices = _indices.ToArray(),
-                    LeafCount = _leaves.Count, WalkableCellCount = _prefix[_rows * _columns - 1],
+                    Areas = new int[_indices.Count / 3], LeafCount = _leaves.Count, WalkableCellCount = _prefix[_rows * _columns - 1],
                     CellLeaves = _owners, LeafTriangleStarts = starts };
             }
 

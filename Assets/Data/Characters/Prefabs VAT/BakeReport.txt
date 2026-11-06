@@ -1,0 +1,72 @@
+VAT preview: LOD0, 30 FPS, Idle/Run/Attack/Death.
+Positions stored in prefab-root local space. Output retains original prefab root scale.
+Preview materials are unlit; these are separate render-only prefabs, not battle replacements.
+BO_BINH_blue/BODY_linh.001_LOD2: vertices=4859, texture=4096x718, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.11, 0.60, -0.34), Extents: (0.67, 0.87, 1.37)
+BO_BINH_blue/khien tron.001_LOD2: vertices=197, texture=256x359, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.40, 0.51, -0.23), Extents: (0.66, 0.81, 1.30)
+BO_BINH_blue/kiem.001_LOD2: vertices=78, texture=128x359, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.39, 0.75, -0.25), Extents: (1.07, 1.03, 1.95)
+BO_BINH_blue: shared Idle foot pivot=(-1.19, -0.02, 0.05), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.69, 1.61, 1.05), Idle world height=1,6135
+BO_BINH_red/BODY_linh_LOD2: vertices=4859, texture=4096x718, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.11, 0.60, -0.34), Extents: (0.67, 0.87, 1.37)
+BO_BINH_red/khien tron_LOD2: vertices=197, texture=256x359, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-0.18, 0.51, -0.23), Extents: (0.66, 0.81, 1.30)
+BO_BINH_red/kiem_LOD2: vertices=78, texture=128x359, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-0.17, 0.75, -0.25), Extents: (1.07, 1.03, 1.95)
+BO_BINH_red: shared Idle foot pivot=(0.03, -0.02, 0.05), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.69, 1.61, 1.05), Idle world height=1,6135
+CUNG_KY_blue/body_cungky_blue_LOD2: vertices=4033, texture=4096x479, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-0.45, 0.56, -0.01), Extents: (0.99, 0.85, 0.67)
+CUNG_KY_blue/cung_xanh: unweighted mesh, baked as rigid attachment with its animated transform.
+CUNG_KY_blue/cung_xanh: vertices=648, texture=1024x479, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-0.35, 0.77, -0.05), Extents: (1.25, 0.93, 0.90)
+CUNG_KY_blue: shared Idle foot pivot=(-0.06, -0.02, 0.14), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.73, 1.29, 1.13), Idle world height=1,2863
+CUNG_KY_red/body_cungky_red_LOD2: vertices=4033, texture=4096x479, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.60, 0.56, -0.01), Extents: (0.99, 0.85, 0.67)
+CUNG_KY_red/cung_do: unweighted mesh, baked as rigid attachment with its animated transform.
+CUNG_KY_red/cung_do: vertices=2604, texture=4096x479, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.49, 0.77, -0.05), Extents: (1.25, 0.93, 0.90)
+CUNG_KY_red: shared Idle foot pivot=(-1.21, -0.02, 0.14), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.73, 1.29, 1.13), Idle world height=1,2863
+DAN_BINH_blue/Cylinder.001_LOD2: vertices=140, texture=256x419, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-4.35, 0.81, 0.84), Extents: (1.13, 0.93, 1.28)
+DAN_BINH_blue/Cylinder.009_LOD2: vertices=2543, texture=4096x419, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-4.06, 0.71, 0.47), Extents: (0.77, 0.90, 1.23)
+DAN_BINH_blue: shared Idle foot pivot=(-4.02, -0.01, 0.04), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.68, 1.55, 1.02), Idle world height=1,5452
+DAN_BINH_red/Cylinder.001_LOD2.001: vertices=140, texture=256x419, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-5.50, 0.81, 0.84), Extents: (1.12, 0.93, 1.28)
+DAN_BINH_red/Cylinder.009_LOD2.001: vertices=2543, texture=4096x419, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-5.21, 0.71, 0.47), Extents: (0.77, 0.90, 1.23)
+DAN_BINH_red: shared Idle foot pivot=(-5.17, -0.01, 0.04), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.68, 1.55, 1.02), Idle world height=1,5452
+GIAO_BINH_blue/BODY_linh.001_LOD2: vertices=4859, texture=4096x742, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.23, 0.74, 0.45), Extents: (0.77, 0.92, 1.20)
+GIAO_BINH_blue/khien dai.001_LOD2: vertices=165, texture=256x371, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.58, 0.42, 0.28), Extents: (0.63, 1.15, 1.18)
+GIAO_BINH_blue/giao.001_LOD2: vertices=130, texture=256x371, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-0.93, 0.74, 0.97), Extents: (1.01, 1.30, 1.68)
+GIAO_BINH_blue: shared Idle foot pivot=(-1.13, 0.04, 0.20), rootScale=(1.00, 1.00, 1.00), Idle local size=(1.24, 1.56, 1.70), Idle world height=1,5554
+GIAO_BINH_red/BODY_linh_LOD2: vertices=4859, texture=4096x742, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.12, 0.74, 0.45), Extents: (0.77, 0.92, 1.20)
+GIAO_BINH_red/khien dai_LOD2: vertices=165, texture=256x371, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-0.22, 0.42, 0.28), Extents: (0.63, 1.15, 1.18)
+GIAO_BINH_red/giao_LOD2: vertices=130, texture=256x371, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.43, 0.74, 0.97), Extents: (1.01, 1.30, 1.68)
+GIAO_BINH_red: shared Idle foot pivot=(0.22, 0.04, 0.20), rootScale=(1.00, 1.00, 1.00), Idle local size=(1.24, 1.56, 1.70), Idle world height=1,5554
+KY_BINH_blue/character.002_LOD2: vertices=566, texture=1024x475, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (1.55, 1.50, 1.21), Extents: (1.83, 1.73, 1.79)
+KY_BINH_blue/character.003_LOD2: vertices=7902, texture=4096x950, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (2.14, 1.11, 1.05), Extents: (1.45, 1.35, 0.82)
+KY_BINH_blue/Horse.001_LOD2: vertices=2576, texture=4096x475, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (1.74, 1.00, 0.93), Extents: (1.05, 1.16, 1.53)
+KY_BINH_blue: shared Idle foot pivot=(1.50, -0.03, 1.17), rootScale=(1.00, 1.00, 1.00), Idle local size=(1.08, 2.34, 2.30), Idle world height=2,336
+KY_BINH_red/character.001_LOD2: vertices=566, texture=1024x475, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.15, 1.50, 1.21), Extents: (1.83, 1.73, 1.79)
+KY_BINH_red/character_LOD2: vertices=7902, texture=4096x950, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.74, 1.11, 1.05), Extents: (1.45, 1.35, 0.82)
+KY_BINH_red/Horse.004_LOD2: vertices=2576, texture=4096x475, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.34, 1.00, 0.93), Extents: (1.05, 1.16, 1.53)
+KY_BINH_red: shared Idle foot pivot=(0.09, -0.03, 1.17), rootScale=(1.00, 1.00, 1.00), Idle local size=(1.08, 2.34, 2.30), Idle world height=2,336
+maybanda_v02_blue: restored authored FBX child transforms for arm pivots.
+maybanda_v02_blue/Visual: Idle uses the prefab rest pose (no motion).
+maybanda_v02_blue/Visual: Run uses the prefab rest pose (no motion).
+maybanda_v02_blue/Visual: Death uses the prefab rest pose (no motion).
+maybanda_v02_blue/Catapulte_Low.004_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.56, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_blue/xanh duohg_LOD2: vertices=603, texture=1024x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 1.60, -0.30), Extents: (2.23, 1.67, 3.91)
+maybanda_v02_blue/Catapulte_Low.003_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.56, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_blue: shared Idle foot pivot=(0.00, -0.20, -0.13), rootScale=(1.00, 1.00, 1.00), Idle local size=(4.37, 3.13, 7.36), Idle world height=3,1294
+maybanda_v02_red: restored authored FBX child transforms for arm pivots.
+maybanda_v02_red/Visual: Idle uses the prefab rest pose (no motion).
+maybanda_v02_red/Visual: Run uses the prefab rest pose (no motion).
+maybanda_v02_red/Visual: Death uses the prefab rest pose (no motion).
+maybanda_v02_red/Catapulte_Low.003_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.56, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_red/do_LOD2: vertices=603, texture=1024x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 1.60, -0.30), Extents: (2.23, 1.67, 3.91)
+maybanda_v02_red/Catapulte_Low.004_LOD2: vertices=62, texture=64x116, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.00, 2.56, -1.91), Extents: (0.97, 2.81, 2.25)
+maybanda_v02_red: shared Idle foot pivot=(0.00, -0.20, -0.13), rootScale=(1.00, 1.00, 1.00), Idle local size=(4.37, 3.13, 7.36), Idle world height=3,1294
+QUAN_SU_blue/gaicatluong.002_LOD2: vertices=172, texture=256x362, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.36, 0.89, -0.33), Extents: (0.65, 0.88, 1.56)
+QUAN_SU_blue/gaicatluong.001_LOD2: vertices=2801, texture=4096x362, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.14, 0.69, -0.26), Extents: (0.76, 1.05, 1.53)
+QUAN_SU_blue: shared Idle foot pivot=(0.05, 0.00, -0.02), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.96, 1.41, 1.18), Idle world height=1,4058
+QUAN_SU_red/gaicatluong.002_LOD2.001: vertices=172, texture=256x362, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.15, 0.89, -0.33), Extents: (0.65, 0.88, 1.56)
+QUAN_SU_red/gaicatluong.001_LOD2.001: vertices=2801, texture=4096x362, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (-1.37, 0.69, -0.26), Extents: (0.76, 1.05, 1.53)
+QUAN_SU_red: shared Idle foot pivot=(-1.45, 0.00, -0.02), rootScale=(1.00, 1.00, 1.00), Idle local size=(0.96, 1.41, 1.18), Idle world height=1,4058
+VOI_blue/ElephantLP_LOD2: vertices=1169, texture=2048x415, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.52, 0.85, -0.02), Extents: (1.73, 1.41, 2.35)
+VOI_blue: shared Idle foot pivot=(0.00, -0.03, 0.07), rootScale=(1.00, 1.00, 1.00), Idle local size=(1.46, 2.12, 3.33), Idle world height=2,1168
+VOI_red/ElephantLP.001_LOD2: vertices=1169, texture=2048x355, rootScale=(1.00, 1.00, 1.00), skin=bindpose-to-prefab-root, bounds=Center: (0.52, 0.85, -0.02), Extents: (1.73, 1.41, 2.35)
+VOI_red: shared Idle foot pivot=(0.00, 0.00, 0.09), rootScale=(1.00, 1.00, 1.00), Idle local size=(1.46, 2.09, 3.34), Idle world height=2,0903
+System.InvalidOperationException: This cannot be used during play mode, please use SceneManager.CreateScene() instead.
+  at (wrapper managed-to-native) UnityEditor.SceneManagement.EditorSceneManager.NewScene_Injected(UnityEditor.SceneManagement.NewSceneSetup,UnityEditor.SceneManagement.NewSceneMode,UnityEngine.SceneManagement.Scene&)
+  at UnityEditor.SceneManagement.EditorSceneManager.NewScene (UnityEditor.SceneManagement.NewSceneSetup setup, UnityEditor.SceneManagement.NewSceneMode mode) [0x00000] in <8c0bcab5a3cf47549b7148fa2785366a>:0 
+  at RecoilPathfindingEditor.RecoilVatBaker.CreatePreview (System.Collections.Generic.List`1[T] prefabs) [0x00039] in D:\unity3d\rts-game\Assets\Editor\RecoilPathfinding\RecoilVatBaker.cs:505 
+  at RecoilPathfindingEditor.RecoilVatBaker.BakeAll () [0x0014b] in D:\unity3d\rts-game\Assets\Editor\RecoilPathfinding\RecoilVatBaker.cs:197 

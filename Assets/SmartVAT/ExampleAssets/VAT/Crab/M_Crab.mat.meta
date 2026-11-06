@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 361dd9eb1eb14694188b1cb0481d9e13
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/VAT/Crab/M_Crab.mat
+  uploadId: 919962

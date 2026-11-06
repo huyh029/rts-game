@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b2b19da3d24b4964f8d0fdd76a466a77
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/FBX/Crab/CrabIdle.anim
+  uploadId: 919962

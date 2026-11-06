@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1a4173f0cf66eff43808d803886f7bad
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/FBX/Bat/BatTimeline.playable
+  uploadId: 919962

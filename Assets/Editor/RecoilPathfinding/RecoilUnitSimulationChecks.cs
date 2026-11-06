@@ -41,14 +41,6 @@ namespace RecoilPathfindingEditor
             RecoilUnitPresentationSync.ValidateRotationSmoothing();
             Debug.Log("Presentation sync checks passed: incremental view registration/removal/reuse without full map rebuilds, shared-entity views, chunk poses, scale and inactive/destroyed entities.");
         }
-#if SKGAMES_ANIMATED_IMPOSTOR
-        [MenuItem("Tools/Recoil Pathfinding/Validate Unit Animations")]
-        public static void ValidateUnitAnimations()
-        {
-            RecoilUnitPresentationSync.ValidateAnimations();
-            Debug.Log("Unit animation checks passed: child impostor discovery, idle/run/attack mapping from ECS and pooled view reuse.");
-        }
-#endif
 
         [MenuItem("Tools/Recoil Pathfinding/Validate Path Service Scheduling")]
         public static void ValidatePathServiceScheduling()
@@ -106,10 +98,48 @@ namespace RecoilPathfindingEditor
         public static void ValidateCombatTargeting()
         {
             RecoilBattleCombatValidation.Run();
+            ValidateCombatIntegration();
+            Debug.Log("Combat targeting checks passed: ECS target/order/navigation resolve, strategic advance, contact stop, staged departures and pending paths, damage aggregation/chunk application/death events, bulk lifecycle capture, roster cache, contact damage and cooldown, close acquisition and incremental grid.");
+        }
+
+        public static void ValidateCombatIntegration()
+        {
             ValidateRosterCache();
             ValidateSceneTemplates();
             ValidateAdvanceWithoutTarget();
-            Debug.Log("Combat targeting checks passed: ECS target/order/navigation resolve, strategic advance, contact stop, staged departures and pending paths, damage aggregation/chunk application/death events, bulk lifecycle capture, roster cache, contact damage and cooldown, close acquisition and incremental grid.");
+            ValidateStopMovementIdempotence();
+            Debug.Log("Combat integration checks passed: stale roster wrappers are rejected, scene templates resolve, units advance without a target, and stopped movement versions stay stable.");
+        }
+
+        private static void ValidateStopMovementIdempotence()
+        {
+            using var world = new World("Recoil stop movement idempotence checks");
+            var manager = world.EntityManager;
+            var entity = manager.CreateEntity();
+            var simulation = new RecoilUnitSimulation(world, entity, null, Vector3.zero,
+                Quaternion.identity, new RecoilUnitMovementSettings());
+            var navigation = manager.GetComponentData<RecoilUnitNavigation>(entity);
+            navigation.HasDestination = 1;
+            navigation.PathPending = 1;
+            manager.SetComponentData(entity, navigation);
+            var pose = manager.GetComponentData<RecoilUnitPose>(entity);
+            pose.Speed = 1f;
+            pose.Velocity = Vector3.right;
+            manager.SetComponentData(entity, pose);
+            manager.GetBuffer<RecoilUnitWaypoint>(entity).Add(
+                new RecoilUnitWaypoint { Position = Vector3.forward });
+
+            simulation.StopMovement();
+            navigation = manager.GetComponentData<RecoilUnitNavigation>(entity);
+            var movementVersion = navigation.MovementVersion;
+            var requestVersion = navigation.RequestVersion;
+            simulation.StopMovement();
+            var stoppedPose = manager.GetComponentData<RecoilUnitPose>(entity);
+            Require(manager.GetComponentData<RecoilUnitNavigation>(entity).MovementVersion == movementVersion &&
+                manager.GetComponentData<RecoilUnitNavigation>(entity).RequestVersion == requestVersion &&
+                manager.GetBuffer<RecoilUnitWaypoint>(entity).Length == 0 && stoppedPose.Speed == 0f &&
+                math.lengthsq(stoppedPose.Velocity) == 0f,
+                "Managed stop calls must cancel a path once and keep versions stable while already stopped.");
         }
 
         private static void ValidateRosterCache()
@@ -128,31 +158,85 @@ namespace RecoilPathfindingEditor
             var soldierType = type.GetNestedType("Soldier", BindingFlags.NonPublic);
             var team = (IList)type.GetField("_blueTeam", flags).GetValue(battle);
             var indices = (IDictionary)type.GetField("_combatIndicesByEntity", flags).GetValue(battle);
-            void Add(Entity entity)
+            object Add(Entity entity, bool markRosterDirty = true)
             {
                 var soldier = Activator.CreateInstance(soldierType, true);
                 soldierType.GetField("Entity").SetValue(soldier, entity);
                 team.Add(soldier);
-                type.GetField("_combatRosterDirty", flags).SetValue(battle, true);
+                if (markRosterDirty)
+                    type.GetField("_combatRosterDirty", flags).SetValue(battle, true);
+                return soldier;
             }
             void Refresh() => type.GetMethod("RefreshCombatRoster", flags).Invoke(battle, null);
             try
             {
                 type.GetField("_world", flags).SetValue(battle, world);
                 type.GetField("_entityManager", flags).SetValue(battle, manager);
-                Add(first); Refresh();
+            Add(first); Refresh();
                 var builds = battle.CombatRosterBuildCount;
                 Refresh();
                 Require(battle.CombatRosterBuildCount == builds && indices.Count == 1,
                     "An unchanged army must reuse its entity-index mapping.");
-                Add(second); Refresh();
-                Require(indices.Count == 2 && battle.CombatRosterBuildCount == builds + 1,
-                    "Spawning must invalidate and rebuild the roster.");
+                manager.AddComponentData(second, new RecoilUnitMovementSettings { BodyRadius = .7f });
+                var secondSoldier = Add(second, false);
+                soldierType.GetField("Simulation").SetValue(secondSoldier,
+                    new RecoilUnitSimulation(world, second, null, Vector3.zero,
+                        Quaternion.identity, new RecoilUnitMovementSettings { BodyRadius = .7f }));
+                var appended = (bool)type.GetMethod("TryAppendCombatSoldierToRoster", flags)
+                    .Invoke(battle, new[] { secondSoldier });
+                Require(appended && indices.Count == 2 && battle.CombatRosterBuildCount == builds,
+                    "A spawned combat unit must append to the cached roster without rebuilding existing mappings.");
+                var snapshots = type.GetField("_combatSnapshots", flags).GetValue(battle);
+                var snapshotType = snapshots.GetType().GetGenericArguments()[0];
+                var snapshotItem = snapshots.GetType().GetProperty("Item");
+                var secondSlot = (int)soldierType.GetField("CombatSlot").GetValue(secondSoldier);
+                var snapshot = Activator.CreateInstance(snapshotType);
+                snapshotType.GetField("Entity").SetValue(snapshot, second);
+                snapshotType.GetField("Position").SetValue(snapshot, new float3(4f, 0f, 5f));
+                snapshotType.GetField("Health").SetValue(snapshot, 100);
+                snapshotType.GetField("Active").SetValue(snapshot, (byte)1);
+                snapshotItem.SetValue(snapshots, snapshot, new object[] { secondSlot });
+                var positionArguments = new object[] { secondSoldier, default(Vector3) };
+                var gotPosition = (bool)type.GetMethod("TryGetPresentationPosition", flags)
+                    .Invoke(battle, positionArguments);
+                Require(gotPosition && (Vector3)positionArguments[1] == new Vector3(4f, 0f, 5f),
+                    "Presentation must read a valid cached combat slot without a dictionary lookup.");
+                soldierType.GetField("CombatSlot").SetValue(secondSoldier, 0);
+                positionArguments[1] = default(Vector3);
+                gotPosition = (bool)type.GetMethod("TryGetPresentationPosition", flags)
+                    .Invoke(battle, positionArguments);
+                Require(gotPosition && (Vector3)positionArguments[1] == new Vector3(4f, 0f, 5f),
+                    "A stale presentation slot must fall back to the entity mapping instead of reading another unit's snapshot.");
                 manager.SetComponentData(first, new RecoilBattleEcsState());
                 type.GetMethod("RemoveDestroyedSoldiers", flags).Invoke(battle, new object[] { team });
+                type.GetField("_combatRosterDirty", flags).SetValue(battle, true);
                 Refresh();
                 Require(indices.Count == 1 && !indices.Contains(first) && indices.Contains(second),
                     "Death compaction must remove old mappings without losing surviving units.");
+                var staleEntity = manager.CreateEntity(typeof(RecoilBattleEcsState));
+                manager.SetComponentData(staleEntity, new RecoilBattleEcsState { Active = 1, Health = 100 });
+                var staleSimulation = new RecoilUnitSimulation(world, staleEntity, null, Vector3.zero,
+                    Quaternion.identity, new RecoilUnitMovementSettings { BodyRadius = .5f });
+                Add(staleEntity);
+                var staleSoldier = team[team.Count - 1];
+                soldierType.GetField("Simulation").SetValue(staleSoldier, staleSimulation);
+                manager.RemoveComponent<RecoilUnitMovementSettings>(staleEntity);
+                Refresh();
+                Require(indices.Count == 1 && !indices.Contains(staleEntity),
+                    "Roster rebuild must skip an existing entity whose movement settings were removed.");
+                manager.DestroyEntity(staleEntity);
+                Require(!staleSimulation.TryGetSettings(out _),
+                    "A stale simulation wrapper must safely reject settings reads after its entity is destroyed.");
+                Require(staleSimulation.Settings.Equals(default(RecoilUnitMovementSettings)),
+                    "The compatibility settings accessor must not throw when its entity has already been destroyed.");
+                type.GetField("_combatRosterDirty", flags).SetValue(battle, true);
+                Refresh();
+                Require(!indices.Contains(staleEntity) && (bool)soldierType.GetField("Retired").GetValue(staleSoldier),
+                    "A roster rebuild must safely skip a stale simulation wrapper instead of throwing while reading its settings.");
+                type.GetMethod("RemoveDestroyedSoldiers", flags).Invoke(battle, new object[] { team });
+                Refresh();
+                Require(team.Count == 1 && indices.Contains(second),
+                    "Stale simulation wrappers must be compacted before later roster reads.");
                 type.GetMethod("DisposeCombatBuffers", flags).Invoke(battle, null);
                 Refresh();
                 Require(indices.Contains(second), "Recreating native buffers must rebuild cached native mappings.");
@@ -243,9 +327,9 @@ namespace RecoilPathfindingEditor
                 type.GetField("redSpawnTarget", flags).SetValue(battle, redSpawn);
                 var ownSoldier = MakeSoldier(own, ownSimulation);
                 type.GetMethod("UpdateNavigationBridge", flags).Invoke(battle, new[] { ownSoldier, null });
-                Require(manager.GetComponentData<RecoilUnitOrder>(own).Kind == RecoilUnitOrderKind.Stop && !ownSimulation.HasPath,
-                    "Waiting soldiers must not start marching before their departure is released.");
-                soldierType.GetField("DepartureReleased").SetValue(ownSoldier, true);
+                Require(manager.GetComponentData<RecoilUnitOrder>(own).Kind == RecoilUnitOrderKind.Move &&
+                    manager.GetComponentData<RecoilUnitNavigation>(own).HasDestination != 0 && !ownSimulation.HasPath,
+                    "A unit must receive its movement destination immediately without waiting for a departure queue.");
                 ((IList)type.GetField("_redTeam", flags).GetValue(battle)).Add(MakeSoldier(enemy, enemySimulation));
                 type.GetMethod("UpdateNavigationBridge", flags).Invoke(battle, new[] { ownSoldier, null });
                 var order = manager.GetComponentData<RecoilUnitOrder>(own);
@@ -260,28 +344,9 @@ namespace RecoilPathfindingEditor
                     math.distance(order.Destination, stoppingSlot) < 0.01f,
                     "An empty opposing army must not cancel movement to its spawn target.");
                 var redSoldier = MakeSoldier(enemy, enemySimulation);
-                soldierType.GetField("DepartureReleased").SetValue(redSoldier, true);
                 type.GetMethod("UpdateNavigationBridge", flags).Invoke(battle, new[] { redSoldier, null });
                 Require(manager.GetComponentData<RecoilUnitOrder>(enemy).Destination.x < 0f,
                     "Red units must advance to the blue spawn target.");
-                var retired = MakeSoldier(own, ownSimulation);
-                soldierType.GetField("Retired").SetValue(retired, true);
-                soldierType.GetField("DepartureReleased").SetValue(ownSoldier, false);
-                soldierType.GetField("DepartureReleased").SetValue(redSoldier, false);
-                var queue = type.GetField("_blueDepartures", flags).GetValue(battle);
-                var enqueue = queue.GetType().GetMethod("Enqueue");
-                enqueue.Invoke(queue, new[] { retired });
-                enqueue.Invoke(queue, new[] { ownSoldier });
-                enqueue.Invoke(queue, new[] { redSoldier });
-                type.GetField("departuresPerTeamPerTick", flags).SetValue(battle, 1);
-                type.GetMethod("ReleaseDepartures", flags).Invoke(battle, new[] { queue });
-                Require((bool)soldierType.GetField("DepartureReleased").GetValue(ownSoldier) &&
-                    !(bool)soldierType.GetField("DepartureReleased").GetValue(redSoldier) &&
-                    !(bool)soldierType.GetField("DepartureReleased").GetValue(retired),
-                    "Departure budget must release one live soldier and skip retired pooled references.");
-                type.GetMethod("ReleaseDepartures", flags).Invoke(battle, new[] { queue });
-                Require((bool)soldierType.GetField("DepartureReleased").GetValue(redSoldier),
-                    "Later ticks must release the remaining queued soldiers.");
             }
             finally { UnityEngine.Object.DestroyImmediate(owner); }
         }
@@ -314,6 +379,21 @@ namespace RecoilPathfindingEditor
             };
             // No view, Terrain or NavMesh is needed to own and read simulation state.
             var unit = new RecoilUnitSimulation(world, entity, null, Vector3.zero, Quaternion.identity, settings);
+            Require(math.all(unit.Pose.PreviousPosition == float3.zero),
+                "A newly created unit must initialize its previous pose to its spawn position.");
+            var initialVersion = unit.MovementVersion;
+            var applySurfaceMovement = typeof(RecoilUnitSimulation).GetMethod("ApplySurfaceMovement",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Require(applySurfaceMovement != null,
+                "The ECS movement bridge required to verify previous-pose updates must remain available.");
+            applySurfaceMovement.Invoke(unit, new object[] { new float3(1f, 0f, 0f),
+                quaternion.identity, 1f, 0, initialVersion, 1f / RecoilScale.GameSpeed });
+            Require(math.all(unit.Pose.PreviousPosition == float3.zero) && unit.Pose.Position.x == 1f,
+                "Movement must retain the position from the start of the fixed tick.");
+            applySurfaceMovement.Invoke(unit, new object[] { new float3(1f, 0f, 0f),
+                quaternion.identity, 0f, 0, initialVersion, 1f / RecoilScale.GameSpeed });
+            Require(unit.Pose.PreviousPosition.x == 1f && unit.Pose.Position.x == 1f,
+                "A stationary fixed tick must refresh the previous pose and avoid stale sweeps.");
             var pose = unit.Pose;
             pose.Position = new float3(10f, 1f, 2f);
             pose.Velocity = new float3(2f, 0f, 0f);

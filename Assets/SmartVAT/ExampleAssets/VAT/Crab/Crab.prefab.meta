@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8b2ef583540229e4f94b88aebddeeee8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381410
+  packageName: Smart VAT Free
+  packageVersion: 1.0
+  assetPath: Assets/SmartVAT/ExampleAssets/VAT/Crab/Crab.prefab
+  uploadId: 919962

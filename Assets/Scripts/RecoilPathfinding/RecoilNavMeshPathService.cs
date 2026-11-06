@@ -20,16 +20,16 @@ namespace RecoilPathfinding
     [DefaultExecutionOrder(-100)]
     public sealed partial class RecoilNavMeshPathService : MonoBehaviour
     {
-        private static readonly ProfilerMarker CrowdMovementMarker =
-            new ProfilerMarker("RecoilPathfinding.CrowdMovement");
-        private static readonly ProfilerMarker ChunkApplyMarker =
-            new ProfilerMarker("RecoilPathfinding.ApplyMovementChunks");
-        private static readonly ProfilerMarker ChunkPrepareMarker =
-            new ProfilerMarker("RecoilPathfinding.PrepareMovementChunks");
-        private static readonly ProfilerMarker ProjectionMarker = new("RecoilPathfinding.Projection");
-        private static readonly ProfilerMarker FieldMarker = new("RecoilPathfinding.FieldMaintenance");
-        private static readonly ProfilerMarker DeliveryMarker = new("RecoilPathfinding.PathDelivery");
-        private static readonly ProfilerMarker StuckMarker = new("RecoilPathfinding.StuckDetection");
+        private static readonly RecoilCpuPhases.Marker CrowdMovementMarker =
+            new RecoilCpuPhases.Marker("RecoilPathfinding.CrowdMovement");
+        private static readonly RecoilCpuPhases.Marker ChunkApplyMarker =
+            new RecoilCpuPhases.Marker("RecoilPathfinding.ApplyMovementChunks");
+        private static readonly RecoilCpuPhases.Marker ChunkPrepareMarker =
+            new RecoilCpuPhases.Marker("RecoilPathfinding.PrepareMovementChunks");
+        private static readonly RecoilCpuPhases.Marker ProjectionMarker = new("RecoilPathfinding.Projection");
+        private static readonly RecoilCpuPhases.Marker FieldMarker = new("RecoilPathfinding.FieldMaintenance");
+        private static readonly RecoilCpuPhases.Marker DeliveryMarker = new("RecoilPathfinding.PathDelivery");
+        private static readonly RecoilCpuPhases.Marker StuckMarker = new("RecoilPathfinding.StuckDetection");
         public float LastProjectionMilliseconds { get; private set; }
         public float LastPathDeliveryMilliseconds { get; private set; }
 
@@ -39,6 +39,7 @@ namespace RecoilPathfinding
         private RecoilTerrainMapData _activeTerrainMap;
         private RecoilTerrainHeightField _terrainHeightField;
         public bool UsingTerrainMap => _activeTerrainMap != null;
+        internal RecoilTerrainMapData ActiveTerrainMap => _activeTerrainMap;
         internal RecoilTerrainHeightField TerrainHeightField => _terrainHeightField;
         public int TerrainLeafCount { get; private set; }
         public string SurfaceBackend => UsingTerrainMap ? "Terrain quadtree" : "NavMesh triangles";
@@ -61,7 +62,6 @@ namespace RecoilPathfinding
         public int SharedCorridorHits { get; private set; }
         public int SharedCorridorSuffixHits { get; private set; }
         [SerializeField, Min(0.1f)] private float crowdCellSize = 2.5f;
-        [SerializeField, Min(1)] private int maxAvoidanceNeighbors = 8;
         [Tooltip("Recoil groundUnitCollisionAvoidanceUpdateRate: full avoidance scans once every N ticks per unit.")]
         [SerializeField, Range(1, 15)] private int avoidanceUpdateRate = 3;
         [Tooltip("Recoil allowUnitCollisionOverlap (default on): bodies are pushed apart to their radius-weighted sum.")]
@@ -110,6 +110,13 @@ namespace RecoilPathfinding
         private NativeArray<int2> _crowdPreviousCells;
         private NativeArray<byte> _crowdPreviousActive;
         private NativeArray<int> _crowdGridMetadata;
+        private NativeParallelHashSet<int2> _crowdChangedCells;
+        private NativeList<int> _crowdGridSurvivors;
+        private NativeArray<byte> _crowdChangedIndices;
+        private JobHandle _crowdGridHandle;
+        private JobHandle _crowdSimulationHandle;
+        public int LastCrowdGridChangedCells { get; private set; }
+        public int LastCrowdGridScannedEntries { get; private set; }
         public int LastCrowdGridMutations { get; private set; }
         private JobHandle _crowdMovementHandle;
         private int _crowdCapacity;
@@ -226,7 +233,7 @@ namespace RecoilPathfinding
 
             public void Find(ProjectionInput input, out int bestTriangle, out float3 bestPosition)
             {
-                if (TerrainHeights.TryGetTriangleRange(input.Position.xz, out var first, out var end))
+                if (TerrainHeights.TryGetTriangleRange(input.Position.xz, input.AreaMask, out var first, out var end))
                 {
                     for (var i = first; i < end; i++)
                     {
@@ -520,9 +527,11 @@ namespace RecoilPathfinding
         {
             private readonly VertexKey _a;
             private readonly VertexKey _b;
+            private readonly int _area;
 
-            public EdgeKey(VertexKey a, VertexKey b)
+            public EdgeKey(VertexKey a, VertexKey b, int area)
             {
+                _area = area;
                 if (a.CompareTo(b) <= 0)
                 {
                     _a = a;
@@ -535,7 +544,7 @@ namespace RecoilPathfinding
                 }
             }
 
-            public bool Equals(EdgeKey other) => _a.Equals(other._a) && _b.Equals(other._b);
+            public bool Equals(EdgeKey other) => _area == other._area && _a.Equals(other._a) && _b.Equals(other._b);
 
             public override bool Equals(object obj) => obj is EdgeKey other && Equals(other);
 
@@ -543,7 +552,7 @@ namespace RecoilPathfinding
             {
                 unchecked
                 {
-                    return (_a.GetHashCode() * 397) ^ _b.GetHashCode();
+                    return ((_a.GetHashCode() * 397) ^ _b.GetHashCode()) * 397 ^ _area;
                 }
             }
         }
@@ -585,6 +594,11 @@ namespace RecoilPathfinding
             }
         }
 
+        private static bool CanAlliesPassThrough(CrowdMovementInput first, CrowdMovementInput second) =>
+            first.HasTeam != 0 && second.HasTeam != 0 && first.Team == second.Team &&
+            first.AllyPassThroughGroup > 0 && second.AllyPassThroughGroup > 0 &&
+            first.AllyPassThroughGroup != second.AllyPassThroughGroup;
+
         private struct CrowdMovementInput
         {
             public byte Inactive;
@@ -592,6 +606,7 @@ namespace RecoilPathfinding
             public byte AssemblyMovement;
             public int Team;
             public byte HasTeam;
+            public int AllyPassThroughGroup;
             public float3 Velocity;
             public float3 PreviousAvoidanceDirection;
             public int MovementVersion;
@@ -615,6 +630,7 @@ namespace RecoilPathfinding
             public float TurnSpeedDegrees;
             public float AvoidanceStrength;
             public float AvoidanceRadius;
+            public byte DisableMobileAvoidance;
             public float DeltaTime;
             public float WaypointTolerance;
             public int InstanceId;
@@ -691,7 +707,9 @@ namespace RecoilPathfinding
                         Rotation = pose.Rotation, CurrentSpeed = pose.Speed,
                         MaxSpeed = config.MaxSpeed, Acceleration = config.Acceleration, Deceleration = config.Deceleration,
                         TurnSpeedDegrees = config.TurnSpeedDegrees, AvoidanceStrength = config.AvoidanceStrength,
-                        AvoidanceRadius = config.AvoidanceRadius, DeltaTime = DeltaTime,
+                        AvoidanceRadius = config.AvoidanceRadius, DisableMobileAvoidance = config.DisableMobileAvoidance,
+                        AllyPassThroughGroup = config.AllyPassThroughGroup,
+                        DeltaTime = DeltaTime,
                         WaypointTolerance = config.WaypointTolerance,
                         Goal = navigation.Destination, HasGoal = navigation.HasDestination,
                         AvoidingUnits = navigation.AvoidingUnits, AllowEnemyPushing = config.AllowEnemyPushing,
@@ -705,6 +723,9 @@ namespace RecoilPathfinding
         [BurstCompile]
         private struct UpdateCrowdGridJob : IJob
         {
+            public NativeParallelHashSet<int2> ChangedCells;
+            public NativeList<int> Survivors;
+            public NativeArray<byte> ChangedIndices;
             [ReadOnly] public NativeArray<CrowdMovementInput> Inputs;
             public NativeParallelMultiHashMap<int2, int> Cells;
             public NativeArray<int2> PreviousCells;
@@ -716,21 +737,50 @@ namespace RecoilPathfinding
 
             public void Execute()
             {
+                ChangedCells.Clear();
                 var mutations = 0;
                 var maxRadius = 0f;
-                for (var i = 0; i < math.max(Count, Metadata[0]); i++)
+                var length = math.max(Count, Metadata[0]);
+                for (var i = 0; i < length; i++)
                 {
                     var active = i < Count && Inputs[i].Inactive == 0;
                     if (active) maxRadius = math.max(maxRadius, Inputs[i].BodyRadius);
                     var next = active ? (int2)math.floor(Inputs[i].Position.xz / CellSize) : int2.zero;
                     var wasActive = PreviousActive[i] != 0;
+                    ChangedIndices[i] = 0;
                     if (active && wasActive && math.all(next == PreviousCells[i])) continue;
-                    if (wasActive) { Cells.Remove(PreviousCells[i], i); mutations++; }
+                    ChangedIndices[i] = 1;
+                    if (wasActive) { ChangedCells.Add(PreviousCells[i]); mutations++; }
+                }
+                var scanned = 0;
+                foreach (var key in ChangedCells)
+                {
+                    Survivors.Clear();
+                    if (Cells.TryGetFirstValue(key, out var value, out var iterator))
+                    {
+                        do
+                        {
+                            scanned++;
+                            if (ChangedIndices[value] == 0) Survivors.AddNoResize(value);
+                        } while (Cells.TryGetNextValue(out value, ref iterator));
+                    }
+                    Cells.Remove(key);
+                    for (var j = Survivors.Length - 1; j >= 0; j--) Cells.Add(key, Survivors[j]);
+                }
+                // Preserve the old head-insertion sequence: contact resolution and
+                // capped neighbour searches must see exactly the same candidates.
+                for (var i = 0; i < length; i++)
+                {
+                    if (ChangedIndices[i] == 0) continue;
+                    var active = i < Count && Inputs[i].Inactive == 0;
+                    var next = active ? (int2)math.floor(Inputs[i].Position.xz / CellSize) : int2.zero;
                     if (active) { Cells.Add(next, i); PreviousCells[i] = next; mutations++; }
                     PreviousActive[i] = (byte)(active ? 1 : 0);
                 }
                 Metadata[0] = Count;
                 Metadata[1] = mutations;
+                Metadata[2] = ChangedCells.Count();
+                Metadata[3] = scanned;
                 if (MaxBodyRadius.IsCreated) MaxBodyRadius[0] = maxRadius;
             }
         }
@@ -809,13 +859,27 @@ namespace RecoilPathfinding
                     var navigation = navigations[i];
                     navigation.AvoidanceDirection = output.AvoidanceDirection;
                     navigation.AvoidingUnits = output.AvoidingUnits;
-                    if (output.SurfaceProjected == 0 || navigation.Active == 0 ||
-                        navigation.MovementVersion != input.MovementVersion) continue;
                     var pose = poses[i];
+                    var previousPosition = pose.Position;
+                    if (output.SurfaceProjected == 0 || navigation.Active == 0 ||
+                        navigation.MovementVersion != input.MovementVersion)
+                    {
+                        // Even a held or stale movement result must not leave a multi-tick-old
+                        // previous pose for projectile collision sweeps.
+                        if (math.any(pose.PreviousPosition != previousPosition))
+                        {
+                            pose.PreviousPosition = previousPosition;
+                            poses[i] = pose;
+                        }
+                        navigations[i] = navigation;
+                        continue;
+                    }
                     var velocity = input.DeltaTime > 0f ? (output.CandidatePosition - pose.Position) / input.DeltaTime : float3.zero;
-                    if (math.any(pose.Position != output.CandidatePosition) || math.any(pose.Velocity != velocity) ||
+                    if (math.any(pose.Position != output.CandidatePosition) ||
+                        math.any(pose.PreviousPosition != previousPosition) || math.any(pose.Velocity != velocity) ||
                         math.any(pose.Rotation.value != output.Rotation.value) || pose.Speed != output.Speed)
                     {
+                        pose.PreviousPosition = previousPosition;
                         pose.Position = output.CandidatePosition; pose.Velocity = velocity;
                         pose.Rotation = output.Rotation; pose.Speed = output.Speed;
                         poses[i] = pose;
@@ -969,14 +1033,14 @@ namespace RecoilPathfinding
 
                 // Positional contact resolution is independent of steering and applies to idle units too.
                 var plannedDistance = math.distance(input.Position, candidatePosition);
-                var correction = ResolveContacts(index, input, candidatePosition);
+                var correction = ResolveContacts(index, input, candidatePosition, out var contactBlocked);
                 candidatePosition += correction;
                 var contactDistance = math.distance(input.Position, candidatePosition);
                 var triangleIndex = input.SurfaceTriangle;
                 var projected = (byte)0;
                 var crossedPortal = (byte)0;
                 var terrainRecovery = (byte)0;
-                var blocked = (byte)0;
+                var blocked = contactBlocked;
                 if (input.HasPath == 0 && math.lengthsq(correction) < 0.00000001f)
                 {
                     // Idle units remain obstacles, but need no surface query or rotation update.
@@ -1077,7 +1141,7 @@ namespace RecoilPathfinding
 
             private int FindStartingTriangle(float3 start, int mask)
             {
-                if (TerrainHeights.TryGetTriangleRange(start.xz, out var first, out var end))
+                if (TerrainHeights.TryGetTriangleRange(start.xz, mask, out var first, out var end))
                     for (var i = first; i < end; i++)
                         if (ContainsSurface(i, start, mask, out _)) return i;
                 return -1;
@@ -1237,64 +1301,172 @@ namespace RecoilPathfinding
             }
             // GroundMoveType::HandleUnitCollisions for circular footprints. Every unit resolves its own
             // side of each contact from the same snapshot, as Recoil does per collider.
-            public float3 ResolveContacts(int index, CrowdMovementInput input, float3 candidate)
+            public float3 ResolveContacts(int index, CrowdMovementInput input, float3 candidate) =>
+                ResolveContacts(index, input, candidate, out _);
+
+            public float3 ResolveContacts(int index, CrowdMovementInput input, float3 candidate,
+                out byte blocked)
             {
+                blocked = 0;
                 if (input.AssemblyMovement != 0 || input.BodyRadius <= 0f) return float3.zero;
-                var cell = (int2)math.floor(candidate.xz / CellSize);
+                var start = input.Position;
                 var maxRadius = BodyRadiusLimit.IsCreated ? BodyRadiusLimit[0] : MaxBodyRadius;
-                var extent = (int)math.ceil((input.BodyRadius + maxRadius) / CellSize);
+                var queryRadius = input.BodyRadius + maxRadius;
+                // Query the complete swept AABB, not just the destination cell. Looking only
+                // around the endpoint lets a fast unit tunnel through a neighbor between ticks.
+                var minCell = (int2)math.floor((math.min(start.xz, candidate.xz) - queryRadius) / CellSize);
+                var maxCell = (int2)math.floor((math.max(start.xz, candidate.xz) + queryRadius) / CellSize);
                 var correction = float3.zero;
-                var checks = 0;
-                for (var x = cell.x - extent; x <= cell.x + extent; x++)
-                for (var z = cell.y - extent; z <= cell.y + extent; z++)
+                var earliestHit = 1f;
+                var movement = candidate - start;
+                var movementSq = math.lengthsq(movement.xz);
+                for (var x = minCell.x; x <= maxCell.x; x++)
+                for (var z = minCell.y; z <= maxCell.y; z++)
                 {
                     if (!AgentsByCell.TryGetFirstValue(new int2(x, z), out var otherIndex, out var iterator)) continue;
                     do
                     {
                         if (otherIndex == index) continue;
                         var other = Inputs[otherIndex];
-                        checks++;
+                        if (CanAlliesPassThrough(input, other)) continue;
                         if (other.AssemblyMovement != 0 || other.Inactive != 0) continue;
-                        var offset = candidate - other.Position;
-                        var sameLevel = math.abs(offset.y) <= math.max(1f, input.BodyRadius + other.BodyRadius);
-                        offset.y = 0f;
+                        var startOffset = start - other.Position;
+                        var sameLevel = math.abs(startOffset.y) <= math.max(1f, input.BodyRadius + other.BodyRadius);
+                        startOffset.y = 0f;
                         var radiusSum = input.BodyRadius + other.BodyRadius;
-                        var distance = math.length(offset);
-                        if (sameLevel && other.BodyRadius > 0f && distance < radiusSum)
+                        if (AllowUnitCollisionOverlap != 0)
                         {
-                            if (distance < 0.0001f)
-                            {
-                                // Coincident centers have no separation direction; pick a stable one.
-                                var angle = ((input.InstanceId ^ other.InstanceId) & 1023) * (2f * math.PI / 1024f);
-                                offset = new float3(math.cos(angle), 0f, math.sin(angle)) * 0.0001f;
-                                if (input.InstanceId > other.InstanceId) offset = -offset;
-                            }
-                            var share = ContactShare(input, other, math.normalize(offset));
-                            // Neither party may be pushed: the collidee is a static obstacle for us.
-                            if (share >= 1f) correction += math.normalize(offset) * (radiusSum - math.length(offset));
-                            else if (share > 0f) correction += PushVector(input, other, offset, AllowUnitCollisionOverlap != 0);
+                            var radiusTotal = math.max(0.0001f, radiusSum);
+                            radiusSum = input.BodyRadius * (input.BodyRadius / radiusTotal) +
+                                        other.BodyRadius * (other.BodyRadius / radiusTotal);
                         }
-                        // Bound work in dense spawn piles, rather than turning contacts into an all-pairs scan.
-                        if (checks >= 64) return ClampCorrection(correction, input);
+                        if (!sameLevel || other.BodyRadius <= 0f) continue;
+
+                        var endOffset = candidate - other.Position;
+                        endOffset.y = 0f;
+                        var endDistance = math.length(endOffset);
+                        var canPushCollider = CanPushCollider(input, other);
+                        var canPushCollidee = CanPushCollider(other, input);
+                        var startDistance = math.length(startOffset.xz);
+                        if (!canPushCollider && !canPushCollidee && startDistance < radiusSum)
+                        {
+                            // Recoil routes a mutually non-pushable pair through static-object
+                            // collision handling, which first moves an already intersecting body
+                            // out of the obstacle. Resolve only existing penetration here; the
+                            // swept test below still blocks new penetration at the contact radius.
+                            var separation = startOffset;
+                            if (startDistance < 0.0001f)
+                            {
+                                var angle = ((input.InstanceId ^ other.InstanceId) & 1023) * (2f * math.PI / 1024f);
+                                separation = new float3(math.cos(angle), 0f, math.sin(angle));
+                                if (input.InstanceId > other.InstanceId) separation = -separation;
+                            }
+                            correction += math.normalizesafe(separation, new float3(1f, 0f, 0f)) *
+                                (radiusSum - startDistance + 0.0001f);
+                        }
+                        if (endDistance < radiusSum)
+                        {
+                            // Keep coincident bodies deterministic before applying the same
+                            // radius policy used by the Recoil push kernel below.
+                            if (endDistance < 0.0001f)
+                            {
+                                var angle = ((input.InstanceId ^ other.InstanceId) & 1023) * (2f * math.PI / 1024f);
+                                endOffset = new float3(math.cos(angle), 0f, math.sin(angle));
+                                if (input.InstanceId > other.InstanceId) endOffset = -endOffset;
+                            }
+                            var normal = math.normalizesafe(endOffset, new float3(1f, 0f, 0f));
+                            var share = ContactShare(input, other, normal);
+                            // ContactShare returns zero when this unit is the immovable side
+                            // (for example, a push-resistant ally). Preserve that rule instead
+                            // of applying the generic minimum response to a unit that must stay.
+                            if (share > 0f)
+                                correction += PushVector(input, other, endOffset,
+                                    AllowUnitCollisionOverlap != 0);
+                        }
+
+                        // A stopped attacker has no movement candidate of its own, so resolving
+                        // only its endpoint would leave it frozen while allies walk into it.
+                        // Recoil resolves contacts from each collider; predict the ally's short
+                        // current-velocity step and give the idle body its mass-weighted share.
+                        if (input.HasPath == 0 && input.HasGoal == 0 && input.HasTeam != 0 &&
+                            other.HasPath != 0 && other.HasTeam != 0 && input.Team == other.Team &&
+                            CanPushCollider(input, other))
+                        {
+                            var incomingStep = other.Velocity * input.DeltaTime;
+                            incomingStep.y = 0f;
+                            var incomingDistance = math.length(incomingStep);
+                            if (incomingDistance > 0.0001f && math.dot(startOffset.xz, incomingStep.xz) > 0f)
+                            {
+                                var predictedOffset = candidate - (other.Position + incomingStep);
+                                predictedOffset.y = 0f;
+                                var predictedDistance = math.length(predictedOffset.xz);
+                                if (predictedDistance < radiusSum && startDistance >= radiusSum - 0.0001f)
+                                {
+                                    var penetration = radiusSum - predictedDistance;
+                                    var pushDirection = math.normalizesafe(predictedOffset,
+                                        math.normalizesafe(startOffset, new float3(1f, 0f, 0f)));
+                                    var share = ContactShare(input, other, pushDirection);
+                                    correction += pushDirection * (math.min(penetration, incomingDistance) * share);
+                                }
+                            }
+                        }
+
+                        // Continuous circle sweep prevents two units from crossing through one
+                        // another even when both endpoints are outside the contact radius.
+                        if (movementSq > 0.000001f)
+                        {
+                            var relative = startOffset.xz;
+                            var a = movementSq;
+                            var b = 2f * math.dot(relative, movement.xz);
+                            var c = math.lengthsq(relative) - radiusSum * radiusSum;
+                            var discriminant = b * b - 4f * a * c;
+                            if (c <= 0f)
+                            {
+                                // When bodies already overlap, do not let the next step carry one
+                                // through the other. It may move again once its motion separates.
+                                if (math.dot(relative, movement.xz) < 0f)
+                                    earliestHit = 0f;
+                            }
+                            else if (discriminant >= 0f)
+                            {
+                                var hitTime = (-b - math.sqrt(discriminant)) / (2f * a);
+                                if (hitTime >= 0f && hitTime < earliestHit)
+                                    earliestHit = hitTime;
+                            }
+                        }
                     } while (AgentsByCell.TryGetNextValue(out otherIndex, ref iterator));
                 }
+
+                if (earliestHit < 1f)
+                {
+                    var safeTime = math.max(0f, earliestHit - 0.001f / math.max(0.001f, math.sqrt(movementSq)));
+                    var sweptCandidate = start + movement * safeTime;
+                    correction += sweptCandidate - candidate;
+                    blocked = 1;
+                }
+                // Recoil's HandleStaticObjectCollision schedules a deferred repath when contact
+                // deflects or stops the requested motion. Feed the same signal to stuck detection;
+                // that system applies RepathDelayTicks and RepathMaxRateTicks before requesting it.
+                if (movementSq > 0.000001f && math.dot(correction.xz, movement.xz) < -0.000001f)
+                    blocked = 1;
                 return ClampCorrection(correction, input);
             }
 
             // HandleUnitCollisions push rules. By default (allowPushingEnemyUnits = false, blockEnemyPushing
-            // = true) enemies cannot push each other. 1: neither party can be pushed, so the collidee is a
-            // static obstacle (HandleStaticObjectCollision). 0: the collider cannot be pushed and stays.
-            // Otherwise the collider's momentum mass scale, clamp(1 - r1) of CalculatePushVector: a unit
-            // moving or turned sideways to the contact resists more than one facing it.
+            // = true) neither enemy is the moving side of a push; Recoil treats the pair as a static
+            // obstacle and prevents penetration. Return a positive share only when this collider can
+            // receive Recoil's CalculatePushVector response.
             public static float ContactShare(CrowdMovementInput input, CrowdMovementInput other, float3 direction)
             {
-                var enemy = input.HasTeam != 0 && other.HasTeam != 0 && input.Team != other.Team;
-                var pushCollider = input.PushResistant == 0 && (!enemy || input.AllowEnemyPushing != 0);
-                var pushCollidee = other.PushResistant == 0 && (!enemy || other.AllowEnemyPushing != 0);
-                if (!pushCollider && !pushCollidee) return 1f;
-                if (!pushCollider) return 0f;
+                if (!CanPushCollider(input, other)) return 0f;
                 RelativeMomenta(input, other, direction, out var r1, out _);
                 return math.clamp(1f - r1, 0.01f, 0.99f);
+            }
+
+            private static bool CanPushCollider(CrowdMovementInput collider, CrowdMovementInput collidee)
+            {
+                var enemy = collider.HasTeam != 0 && collidee.HasTeam != 0 && collider.Team != collidee.Team;
+                return collider.PushResistant == 0 && (!enemy || collider.AllowEnemyPushing != 0);
             }
 
             // Port of CGroundMoveType::CalculatePushVector, evaluated in elmos. With
@@ -1319,15 +1491,18 @@ namespace RecoilPathfinding
                 var massScale = math.clamp(1f - r1, 0.01f, 0.99f) * (allowOverlap ? 1f / colliderRelRadius : 1f);
                 var front = math.rotate(math.normalizesafe(collider.Rotation, quaternion.identity), new float3(0f, 0f, 1f));
                 var right = new float3(front.z, 0f, -front.x);
-                var slideSign = math.sign(math.dot(separationVector, right));
+                var slideSign = RecoilSign(math.dot(separationVector, right));
                 var push = sepDirection * sepResponse * massScale;
                 var slide = right * slideSign * (1f / penDistance) * r2;
                 return RecoilScale.FromElmos(1f) * (push + slide);
             }
 
+            // Recoil SpringMath::Sign deliberately maps zero to -1; math.sign maps it to 0.
+            private static float RecoilSign(float value) => value > 0f ? 1f : -1f;
+
             // Weighted momenta of CalculatePushVector. Speeds are in elmos per frame with Recoil's
-            // 1 elmo/frame minimum; the "+1" of the denominator is dropped because our masses are
-            // not in Recoil's mass scale (hundreds), where it is negligible.
+            // 1 elmo/frame minimum. Preserve Recoil's +1 denominator term: project unit masses are
+            // derived from occupied-circle area and can be small, so the term is not negligible.
             private static void RelativeMomenta(CrowdMovementInput collider, CrowdMovementInput collidee, float3 direction,
                 out float r1, out float r2)
             {
@@ -1337,8 +1512,9 @@ namespace RecoilPathfinding
                 var c2 = 1f + (1f - math.abs(math.dot(collideeFront, direction))) * 5f;
                 var s1 = math.max(0.01f, collider.Mass) * math.max(1f, RecoilScale.ToElmosPerFrame(collider.CurrentSpeed)) * c1;
                 var s2 = math.max(0.01f, collidee.Mass) * math.max(1f, RecoilScale.ToElmosPerFrame(collidee.CurrentSpeed)) * c2;
-                r1 = s1 / (s1 + s2);
-                r2 = s2 / (s1 + s2);
+                var total = s1 + s2 + 1f;
+                r1 = s1 / total;
+                r2 = s2 / total;
             }
 
             // modInfo.maxCollisionPushMultiplier: the summed push is capped at maxSpeed per frame once
@@ -1428,20 +1604,25 @@ namespace RecoilPathfinding
                 // Recoil compares against the final goal, so units past the next corner still count.
                 var goalDistanceSq = math.distancesq(input.Position.xz, (input.HasGoal != 0 ? input.Goal : input.Waypoint).xz);
                 var avoidance = float3.zero;
-                for (var x = cell.x - extent; x <= cell.x + extent && found < MaxNeighbors; x++)
-                for (var z = cell.y - extent; z <= cell.y + extent && found < MaxNeighbors; z++)
+                for (var x = cell.x - extent; x <= cell.x + extent &&
+                     (MaxNeighbors <= 0 || found < MaxNeighbors); x++)
+                for (var z = cell.y - extent; z <= cell.y + extent &&
+                     (MaxNeighbors <= 0 || found < MaxNeighbors); z++)
                 {
                     if (!AgentsByCell.TryGetFirstValue(new int2(x, z), out var otherIndex, out var iterator)) continue;
                     do
                     {
                         if (otherIndex == index) continue;
                         var other = Inputs[otherIndex];
+                        if (CanAlliesPassThrough(input, other)) continue;
                         if (other.Inactive != 0 || other.AssemblyMovement != 0 || other.BodyRadius <= 0f ||
                             math.abs(other.Position.y - input.Position.y) > math.max(1f, input.BodyRadius + other.BodyRadius) ||
                             math.distancesq(other.Position.xz, input.Position.xz) > radius * radius) continue;
-                        // Idle, pushable allies are handled by physical collision, not steering.
-                        if (other.PushResistant == 0 && other.CurrentSpeed <= .01f &&
-                            input.HasTeam != 0 && other.HasTeam != 0 && input.Team == other.Team) continue;
+                        // Recoil MoveDef::avoidMobilesOnPath defaults to true. When disabled,
+                        // mobile units are handled by physical collision instead of steering.
+                        if (other.PushResistant == 0 && (input.DisableMobileAvoidance != 0 ||
+                            (other.CurrentSpeed <= .01f && input.HasTeam != 0 && other.HasTeam != 0 &&
+                             input.Team == other.Team))) continue;
                         // pos + speed: one simulation frame ahead.
                         var offset = input.Position + input.Velocity / RecoilScale.GameSpeed -
                             other.Position - other.Velocity / RecoilScale.GameSpeed;
@@ -1453,20 +1634,19 @@ namespace RecoilPathfinding
                         if (math.dot(forward, -offset / distance) < -.5f) continue;
                         var otherForward = math.normalizesafe(math.rotate(other.Rotation, new float3(0f, 0f, 1f)), forward);
                         var cosine = math.clamp(math.dot(forward, otherForward), -1f, 1f);
-                        var sign = -math.sign(math.dot(other.Position - input.Position, right));
+                        var sign = -RecoilSign(math.dot(other.Position - input.Position, right));
                         var otherRight = new float3(otherForward.z, 0f, -otherForward.x);
-                        var otherSign = -math.sign(math.dot(input.Position - other.Position, otherRight));
+                        var otherSign = -RecoilSign(math.dot(input.Position - other.Position, otherRight));
                         if (cosine < 0f) sign = math.max(sign, otherSign);
-                        if (sign == 0f) sign = 1f;
                         var massScale = math.max(.01f, other.Mass) /
                             (math.max(.01f, input.Mass) + math.max(.01f, other.Mass));
                         var response = (1f - cosine) + .1f;
                         var falloff = 1f - math.min(1f, distance / math.max(.001f, 5f * sum));
                         avoidance += right * (sign * response * falloff * massScale);
                         found++;
-                        if (found >= MaxNeighbors) break;
+                        if (MaxNeighbors > 0 && found >= MaxNeighbors) break;
                     } while (AgentsByCell.TryGetNextValue(out otherIndex, ref iterator));
-                    if (found >= MaxNeighbors) break;
+                    if (MaxNeighbors > 0 && found >= MaxNeighbors) break;
                 }
                 if (found == 0) return float3.zero;
                 var direction = math.normalizesafe((desired + avoidance * input.AvoidanceStrength * assemblyResponse) * .5f, desired);
@@ -2035,12 +2215,16 @@ namespace RecoilPathfinding
             using var cells = new NativeParallelMultiHashMap<int2, int>(3, Allocator.TempJob);
             using var previous = new NativeArray<int2>(3, Allocator.TempJob);
             using var active = new NativeArray<byte>(3, Allocator.TempJob);
-            using var metadata = new NativeArray<int>(2, Allocator.TempJob);
+            using var metadata = new NativeArray<int>(4, Allocator.TempJob);
+            using var changedCells = new NativeParallelHashSet<int2>(3, Allocator.TempJob);
+            using var survivors = new NativeList<int>(3, Allocator.TempJob);
+            using var changedIndices = new NativeArray<byte>(3, Allocator.TempJob);
             using var radius = new NativeArray<float>(1, Allocator.TempJob);
             inputs[0] = new CrowdMovementInput { Position = new float3(1f, 0f, 1f), HasPath = 0, BodyRadius = 0.5f };
             inputs[1] = new CrowdMovementInput { Position = new float3(8f, 0f, 1f), HasPath = 1, BodyRadius = 1.5f };
             var job = new UpdateCrowdGridJob
-            { Inputs = inputs, Cells = cells, PreviousCells = previous, PreviousActive = active,
+            { ChangedCells = changedCells, Survivors = survivors, ChangedIndices = changedIndices,
+                Inputs = inputs, Cells = cells, PreviousCells = previous, PreviousActive = active,
                 Metadata = metadata, Count = 2, CellSize = 2.5f, MaxBodyRadius = radius };
             job.Schedule().Complete();
             if (cells.Count() != 2 || metadata[1] != 2)
@@ -2187,12 +2371,12 @@ namespace RecoilPathfinding
             if (avoiding != 0)
                 throw new InvalidOperationException("A full scan without avoidees must clear the avoiding state.");
 
-            // Contacts: enemies block each other by default; allies split by momentum.
+            // Contacts: enemies that block pushing are static obstacles; allies split by momentum.
             var a = new CrowdMovementInput { Mass = 1f, HasTeam = 1, Team = 0, Rotation = quaternion.identity };
             var b = a; b.Team = 1;
             var east = new float3(1f, 0f, 0f);
-            if (SimulateCrowdMovementJob.ContactShare(a, b, east) != 1f)
-                throw new InvalidOperationException("Blocking enemies must resolve overlap like a static obstacle.");
+            if (SimulateCrowdMovementJob.ContactShare(a, b, east) != 0f)
+                throw new InvalidOperationException("A blocking enemy must not receive a push correction.");
             b.AllowEnemyPushing = 1;
             if (SimulateCrowdMovementJob.ContactShare(a, b, east) != 0f)
                 throw new InvalidOperationException("A blocking unit must not yield to an enemy that can be pushed.");
@@ -2210,8 +2394,8 @@ namespace RecoilPathfinding
             if (!(SimulateCrowdMovementJob.ContactShare(a, b, east) < sideways))
                 throw new InvalidOperationException("A moving unit must carry more momentum than an idle ally.");
             a.CurrentSpeed = 0f; a.PushResistant = 1; b.PushResistant = 1;
-            if (SimulateCrowdMovementJob.ContactShare(a, b, east) != 1f)
-                throw new InvalidOperationException("Two push-resistant units must resolve like static obstacles, not deadlock.");
+            if (SimulateCrowdMovementJob.ContactShare(a, b, east) != 0f)
+                throw new InvalidOperationException("Two push-resistant units must not push either side during static-obstacle resolution.");
             a.PushResistant = 0;
             var blockedShare = SimulateCrowdMovementJob.ContactShare(a, b, east);
             if (blockedShare <= 0f || blockedShare >= 1f)
@@ -2383,6 +2567,17 @@ namespace RecoilPathfinding
             var inactive = inputs[2]; inactive.Inactive = 1; inputs[2] = inactive;
             if (math.lengthsq(job.CalculateSeparation(0, unit)) <= .000001f)
                 throw new InvalidOperationException("Enemy bodies must cause directional avoidance even when stationary.");
+            other.Team = unit.Team;
+            if (math.lengthsq(job.CalculateSeparation(0, unit)) != 0f)
+                throw new InvalidOperationException("An idle pushable ally must be handled by body contact instead of steering.");
+            other.CurrentSpeed = 1f; inputs[1] = other;
+            if (math.lengthsq(job.CalculateSeparation(0, unit)) <= .000001f)
+                throw new InvalidOperationException("A moving ally must remain an avoidance candidate.");
+            other.CurrentSpeed = 0f; other.Team = 2; inputs[1] = other;
+            unit.DisableMobileAvoidance = 1;
+            if (math.lengthsq(job.CalculateSeparation(0, unit)) != 0f)
+                throw new InvalidOperationException("Disabling avoidMobilesOnPath must leave mobile avoidance to body contacts.");
+            unit.DisableMobileAvoidance = 0;
             unit.CombatApproach = 1;
             if (math.lengthsq(job.CalculateSeparation(0, unit)) <= .000001f)
                 throw new InvalidOperationException("Attack approach must not disable avoidance.");
@@ -2425,6 +2620,36 @@ namespace RecoilPathfinding
             cells.Add(new int2(0, 0), 1);
             var job = new SimulateCrowdMovementJob
             { Inputs = inputs, AgentsByCell = cells, CellSize = 2.5f, MaxBodyRadius = 0.5f };
+            var passFirst = inputs[0];
+            var passSecond = inputs[1];
+            passFirst.HasTeam = passSecond.HasTeam = 1;
+            passFirst.Team = passSecond.Team = 0;
+            passFirst.AllyPassThroughGroup = 1;
+            passSecond.AllyPassThroughGroup = 2;
+            inputs[1] = passSecond;
+            if (math.lengthsq(job.ResolveContacts(0, passFirst, passFirst.Position)) > 0.000001f)
+                throw new InvalidOperationException("Different allied troop types must pass through each other.");
+            passSecond.AllyPassThroughGroup = 1;
+            inputs[1] = passSecond;
+            if (math.lengthsq(job.ResolveContacts(0, passFirst, passFirst.Position)) <= 0.000001f)
+                throw new InvalidOperationException("Same-type allies must retain body contacts.");
+            passSecond.AllyPassThroughGroup = 2;
+            passSecond.Team = 1;
+            inputs[1] = passSecond;
+            if (math.lengthsq(job.ResolveContacts(0, passFirst, passFirst.Position)) <= 0.000001f)
+                throw new InvalidOperationException("Enemy troop types must retain body contacts.");
+            inputs[1] = new CrowdMovementInput
+            { Position = new float3(1.9f, 1f, 1f), BodyRadius = 0.5f, Mass = 3f, DeltaTime = 1f, InstanceId = 2 };
+            var lightMass = inputs[0];
+            lightMass.Mass = 0.25f;
+            lightMass.HasTeam = 1;
+            lightMass.Team = 0;
+            var heavierMass = lightMass;
+            heavierMass.Mass = 0.5f;
+            var lightShare = SimulateCrowdMovementJob.ContactShare(lightMass, heavierMass,
+                new float3(1f, 0f, 0f));
+            if (math.abs(lightShare - 8f / 11f) > 0.0001f)
+                throw new InvalidOperationException("Body contact momentum must preserve Recoil's +1 denominator for small occupied-circle masses.");
             var light = job.ResolveContacts(0, inputs[0], inputs[0].Position);
             var heavy = job.ResolveContacts(1, inputs[1], inputs[1].Position);
             if (light.x >= 0f || heavy.x <= 0f || math.length(light) <= math.length(heavy))
@@ -2437,8 +2662,16 @@ namespace RecoilPathfinding
             {
                 job.AllowUnitCollisionOverlap = overlap;
                 var pair = start;
+                var targetDistance = overlap == 0
+                    ? pair.Item1.BodyRadius + pair.Item2.BodyRadius
+                    : pair.Item1.BodyRadius * pair.Item1.BodyRadius /
+                      (pair.Item1.BodyRadius + pair.Item2.BodyRadius) +
+                      pair.Item2.BodyRadius * pair.Item2.BodyRadius /
+                      (pair.Item1.BodyRadius + pair.Item2.BodyRadius);
+                var maximumDistance = math.max(targetDistance,
+                    math.distance(pair.Item1.Position.xz, pair.Item2.Position.xz)) + RecoilScale.FromElmos(4f);
                 var frames = 0;
-                for (; frames < 120 && math.distance(pair.Item1.Position.xz, pair.Item2.Position.xz) < 1f - .0001f; frames++)
+                for (; frames < 120 && math.distance(pair.Item1.Position.xz, pair.Item2.Position.xz) < targetDistance - .0001f; frames++)
                 {
                     inputs[0] = pair.Item1; inputs[1] = pair.Item2;
                     var first = job.ResolveContacts(0, pair.Item1, pair.Item1.Position);
@@ -2448,8 +2681,9 @@ namespace RecoilPathfinding
                     pair.Item1.Position += first; pair.Item2.Position += second;
                 }
                 var separated = math.distance(pair.Item1.Position.xz, pair.Item2.Position.xz);
-                if (frames >= 120 || separated > 1f + RecoilScale.FromElmos(4f))
-                    throw new InvalidOperationException($"A simple pair must separate to its combined body radius (overlap={overlap}, {separated} after {frames} frames).");
+                if (frames >= 120 || separated < targetDistance - .0001f ||
+                    separated > maximumDistance)
+                    throw new InvalidOperationException($"A simple pair must separate to its Recoil contact radius (overlap={overlap}, {separated} vs {targetDistance} after {frames} frames).");
             }
             job.AllowUnitCollisionOverlap = 0;
             inputs[0] = new CrowdMovementInput
@@ -2461,12 +2695,85 @@ namespace RecoilPathfinding
             inputs[1] = other;
             if (math.lengthsq(job.ResolveContacts(1, other, other.Position)) != 0f)
                 throw new InvalidOperationException("Push-resistant units must stay in place.");
+            light = job.ResolveContacts(0, inputs[0], inputs[0].Position);
+            if (light.x >= 0f || math.lengthsq(light) == 0f)
+                throw new InvalidOperationException("A movable unit must yield away from a push-resistant ally.");
+
+            // A moving ally must also displace an idle attacker from the receiver side of the
+            // contact. Previously only the moving unit's candidate was corrected, leaving the
+            // stopped unit pinned in place indefinitely.
+            var idleAttacker = new CrowdMovementInput
+            {
+                Position = new float3(1f, 1f, 1f), BodyRadius = .5f, Mass = 1f,
+                HasTeam = 1, Team = 0, DeltaTime = 1f, InstanceId = 3
+            };
+            var advancingAlly = new CrowdMovementInput
+            {
+                Position = new float3(0f, 1f, 1f), BodyRadius = .5f, Mass = 1f,
+                HasTeam = 1, Team = 0, DeltaTime = 1f, InstanceId = 4,
+                HasPath = 1, CurrentSpeed = .5f, Velocity = new float3(.5f, 0f, 0f)
+            };
+            inputs[0] = idleAttacker;
+            inputs[1] = advancingAlly;
+            var pushedAttacker = job.ResolveContacts(0, idleAttacker, idleAttacker.Position);
+            if (pushedAttacker.x <= 0.0001f || math.abs(pushedAttacker.z) > .0001f)
+                throw new InvalidOperationException("A moving ally must push an idle attacker by its mass-weighted share.");
+
             other.PushResistant = 0; other.Mass = 1f; other.Position = inputs[0].Position;
             inputs[1] = other;
             light = job.ResolveContacts(0, inputs[0], inputs[0].Position);
             heavy = job.ResolveContacts(1, other, other.Position);
             if (math.lengthsq(light) == 0f || math.lengthsq(light + heavy) > 0.00001f)
                 throw new InvalidOperationException("Coincident units must receive opposite, finite corrections.");
+
+            // Recoil Sign(0) == -1. A collision exactly in front of an agent must retain
+            // the deterministic side-slide instead of dropping that component to zero.
+            var alignedPush = SimulateCrowdMovementJob.PushVector(inputs[0], inputs[1],
+                new float3(0f, 0f, .8f), false);
+            if (alignedPush.x >= -0.000001f)
+                throw new InvalidOperationException("Axis-aligned Recoil contacts must preserve the deterministic side-slide sign.");
+
+            // Recoil's default enemy-push rule treats the opposing unit as a static obstacle:
+            // clamp this unit at the contact radius instead of applying a push impulse.
+            var blocker = inputs[0];
+            blocker.Position = new float3(1f, 1f, 1f);
+            blocker.HasTeam = 1; blocker.Team = 0;
+            var enemy = inputs[1];
+            enemy.Position = new float3(2.5f, 1f, 1f);
+            enemy.HasTeam = 1; enemy.Team = 1;
+            inputs[0] = blocker; inputs[1] = enemy;
+            var blockedCorrection = job.ResolveContacts(0, blocker, new float3(3f, 1f, 1f), out var contactBlocked);
+            if (contactBlocked == 0 || math.abs((3f + blockedCorrection.x) - 1.5f) > 0.01f ||
+                math.abs(blockedCorrection.z) > 0.001f)
+                throw new InvalidOperationException("A non-pushable enemy must stop the moving unit at the body contact radius.");
+            var tunnelingCorrection = job.ResolveContacts(0, blocker, new float3(4f, 1f, 1f),
+                out var tunnelingBlocked);
+            if (tunnelingBlocked == 0 || math.abs((4f + tunnelingCorrection.x) - 1.5f) > 0.01f ||
+                math.abs(tunnelingCorrection.z) > 0.001f)
+                throw new InvalidOperationException("Swept body contact must stop a fast unit that would cross an enemy and finish beyond it in one tick.");
+            var blockedNavigation = new RecoilUnitNavigation
+            { Active = 1, HasDestination = 1, Destination = new float3(8f, 1f, 1f), WaypointIndex = 1 };
+            var blockedSample = new RecoilStuckSample
+            {
+                PreviousPosition = blocker.Position,
+                Position = new float3(3f + blockedCorrection.x, 1f, 1f),
+                PreviousRotation = blocker.Rotation, Rotation = blocker.Rotation,
+                Waypoint = new float3(8f, 1f, 1f), HasPath = 1, MovementApplied = 1,
+                Blocked = contactBlocked, Speed = 1f, TurnSpeedDegrees = 180f,
+                WaypointTolerance = .1f, DeltaTime = 1f / RecoilScale.GameSpeed
+            };
+            RecoilStuckDetection.Step(ref blockedNavigation, blockedSample, 1);
+            if (blockedNavigation.WantRepath == 0)
+                throw new InvalidOperationException("A blocked enemy contact must feed the deferred repath state.");
+            blocker.Position = new float3(1f, 1f, 1f);
+            enemy.Position = new float3(1.9f, 1f, 1f);
+            inputs[0] = blocker; inputs[1] = enemy;
+            var firstUnstuck = job.ResolveContacts(0, blocker, blocker.Position);
+            var secondUnstuck = job.ResolveContacts(1, enemy, enemy.Position);
+            var unstuckDistance = math.distance((blocker.Position + firstUnstuck).xz,
+                (enemy.Position + secondUnstuck).xz);
+            if (firstUnstuck.x >= 0f || secondUnstuck.x <= 0f || unstuckDistance < 1f)
+                throw new InvalidOperationException("An already-overlapping mutually blocked pair must depenetrate to its contact radius.");
         }
 
         public static void ValidateAssemblyResponse()
@@ -2691,6 +2998,92 @@ namespace RecoilPathfinding
             finally { service.DisposeNativeResources(); DestroyImmediate(root); }
         }
 
+        private static byte[] CastleWalkability(byte[] baseCells, RecoilTerrainMapData map, RecoilCastleTeam blockedTeam)
+        {
+            var result = (byte[])baseCells.Clone();
+            for (var i = 0; i < map.CastleBlockCount; i++)
+            {
+                var castle = map.GetCastleBlock(i);
+                if (castle.Team != blockedTeam) continue;
+                var bounds = castle.WorldBounds;
+                var cellSize = map.CellSize;
+                for (var z = 0; z < map.Rows - 1; z++)
+                for (var x = 0; x < map.Columns - 1; x++)
+                {
+                    var minX = map.WorldOrigin.x + x * cellSize.x;
+                    var minZ = map.WorldOrigin.z + z * cellSize.y;
+                    if (minX < bounds.max.x && minX + cellSize.x > bounds.min.x &&
+                        minZ < bounds.max.z && minZ + cellSize.y > bounds.min.z)
+                        result[z * (map.Columns - 1) + x] = 0;
+                }
+            }
+            return result;
+        }
+
+        public static void ValidateCastleWalkability()
+        {
+            var map = ScriptableObject.CreateInstance<RecoilTerrainMapData>();
+            try
+            {
+                var heights = new float[25];
+                var baseCells = new byte[16];
+                Array.Fill(baseCells, (byte)1);
+                map.SetBakedData(Vector3.zero, new Vector2(4f, 4f), 5, 5, 45f, heights, baseCells);
+                map.SetCastleBlocks(new[]
+                {
+                    new RecoilCastleBlockData(RecoilCastleTeam.Blue,
+                        new Bounds(new Vector3(.5f, .5f, .5f), Vector3.one)),
+                    new RecoilCastleBlockData(RecoilCastleTeam.Red,
+                        new Bounds(new Vector3(3.5f, .5f, 3.5f), Vector3.one))
+                });
+
+                var blueCells = CastleWalkability(baseCells, map, RecoilCastleTeam.Red);
+                var redCells = CastleWalkability(baseCells, map, RecoilCastleTeam.Blue);
+                var blueGraph = RecoilTerrainQuadtree.Build(5, 5, Vector3.zero, new Vector2(4f, 4f),
+                    heights, blueCells, .15f, 32, false);
+                var redGraph = RecoilTerrainQuadtree.Build(5, 5, Vector3.zero, new Vector2(4f, 4f),
+                    heights, redCells, .15f, 32, false);
+                if (!map.IsWalkableForTeam(0, 0, RecoilCastleTeam.Blue) ||
+                    map.IsWalkableForTeam(0, 0, RecoilCastleTeam.Red) ||
+                    map.IsWalkableForTeam(3, 3, RecoilCastleTeam.Blue) ||
+                    !map.IsWalkableForTeam(3, 3, RecoilCastleTeam.Red) ||
+                    blueCells[0] == 0 || redCells[0] != 0 || blueCells[15] != 0 || redCells[15] == 0 ||
+                    blueCells[1] == 0 || redCells[1] == 0)
+                    throw new InvalidOperationException("Team walkability and castle graph cells must allow the home castle and block the enemy castle.");
+                if (blueGraph.CellLeaves[0] < 0 || blueGraph.CellLeaves[15] >= 0 ||
+                    redGraph.CellLeaves[0] >= 0 || redGraph.CellLeaves[15] < 0)
+                    throw new InvalidOperationException("Team-specific castle walkability must reach the baked quadtree graphs.");
+
+                var terrainWithBlockedHomeCell = (byte[])baseCells.Clone();
+                terrainWithBlockedHomeCell[0] = 0;
+                var blueWithHole = CastleWalkability(terrainWithBlockedHomeCell, map, RecoilCastleTeam.Red);
+                if (blueWithHole[0] != 0 || map.IsWalkableForTeam(0, 0, RecoilCastleTeam.Blue))
+                    throw new InvalidOperationException("A friendly castle must not turn a baked terrain hole or steep cell into walkable ground.");
+            }
+            finally
+            {
+                if (map != null) DestroyImmediate(map);
+            }
+        }
+
+        private static RecoilTerrainQuadtree.Graph CombineTeamGraphs(
+            RecoilTerrainQuadtree.Graph blue, RecoilTerrainQuadtree.Graph red)
+        {
+            var vertices = new Vector3[blue.Vertices.Length + red.Vertices.Length];
+            Array.Copy(blue.Vertices, 0, vertices, 0, blue.Vertices.Length);
+            Array.Copy(red.Vertices, 0, vertices, blue.Vertices.Length, red.Vertices.Length);
+            var indices = new int[blue.Indices.Length + red.Indices.Length];
+            Array.Copy(blue.Indices, 0, indices, 0, blue.Indices.Length);
+            for (var i = 0; i < red.Indices.Length; i++)
+                indices[blue.Indices.Length + i] = red.Indices[i] + blue.Vertices.Length;
+            var areas = new int[indices.Length / 3];
+            Array.Fill(areas, 1, blue.Indices.Length / 3, red.Indices.Length / 3);
+            return new RecoilTerrainQuadtree.Graph
+            { Vertices = vertices, Indices = indices, Areas = areas,
+                LeafCount = blue.LeafCount + red.LeafCount,
+                WalkableCellCount = blue.WalkableCellCount + red.WalkableCellCount };
+        }
+
         private void Start()
         {
             InitializeGraph();
@@ -2706,13 +3099,13 @@ namespace RecoilPathfinding
             if (!_initialized)
                 return;
             LastCancelledPaths = 0;
-            var projectionStart = System.Diagnostics.Stopwatch.GetTimestamp();
+            var projectionStart = RecoilCpuPhases.Timestamp();
             using (ProjectionMarker.Auto())
             {
                 CompleteProjectionJob();
                 ScheduleProjectionJob();
             }
-            LastProjectionMilliseconds = (float)((System.Diagnostics.Stopwatch.GetTimestamp() - projectionStart) *
+            LastProjectionMilliseconds = (float)((RecoilCpuPhases.Timestamp() - projectionStart) *
                 (1000.0 / System.Diagnostics.Stopwatch.Frequency));
             CompleteSearchBatch();
             CompleteFieldDeliveries();
@@ -2828,12 +3221,19 @@ namespace RecoilPathfinding
             _crowdMaxBodyRadius = default;
             _movementRosterDirty = true;
             if (_crowdPreviousCells.IsCreated) _crowdPreviousCells.Dispose();
+            if (_crowdChangedCells.IsCreated) _crowdChangedCells.Dispose();
+            if (_crowdGridSurvivors.IsCreated) _crowdGridSurvivors.Dispose();
+            if (_crowdChangedIndices.IsCreated) _crowdChangedIndices.Dispose();
             if (_crowdPreviousActive.IsCreated) _crowdPreviousActive.Dispose();
             if (_crowdGridMetadata.IsCreated) _crowdGridMetadata.Dispose();
             _crowdPreviousCells = default;
+            _crowdChangedCells = default;
+            _crowdGridSurvivors = default;
+            _crowdChangedIndices = default;
             _crowdPreviousActive = default;
             _crowdGridMetadata = default;
             LastCrowdGridMutations = 0;
+            LastCrowdGridChangedCells = LastCrowdGridScannedEntries = 0;
             if (_crowdEntityIndices.IsCreated) _crowdEntityIndices.Dispose();
             _crowdEntityIndices = default;
             if (_crowdMovementInputs.IsCreated)
@@ -2862,7 +3262,10 @@ namespace RecoilPathfinding
             _crowdMaxBodyRadius = new NativeArray<float>(1, Allocator.Persistent);
             _crowdPreviousCells = new NativeArray<int2>(_crowdCapacity, Allocator.Persistent);
             _crowdPreviousActive = new NativeArray<byte>(_crowdCapacity, Allocator.Persistent);
-            _crowdGridMetadata = new NativeArray<int>(2, Allocator.Persistent);
+            _crowdGridMetadata = new NativeArray<int>(4, Allocator.Persistent);
+            _crowdChangedCells = new NativeParallelHashSet<int2>(_crowdCapacity, Allocator.Persistent);
+            _crowdGridSurvivors = new NativeList<int>(_crowdCapacity, Allocator.Persistent);
+            _crowdChangedIndices = new NativeArray<byte>(_crowdCapacity, Allocator.Persistent);
             _crowdEntityIndices = new NativeParallelHashMap<Entity, int>(_crowdCapacity, Allocator.Persistent);
             var options = NativeArrayOptions.UninitializedMemory;
             _crowdMovementInputs = new NativeArray<CrowdMovementInput>(_crowdCapacity, Allocator.Persistent, options);
@@ -3053,8 +3456,10 @@ namespace RecoilPathfinding
                 var goalTriangle = _projectionResults[i * 2 + 1];
                 if (startTriangle < 0 || goalTriangle < 0)
                 {
+                    var missing = startTriangle < 0 && goalTriangle < 0 ? "start and destination" :
+                        startTriangle < 0 ? "start" : "destination";
                     request.Callback(RecoilPathResult.Failure(
-                        "Could not find a NavMesh triangle for the projected start or destination."));
+                        $"Could not find a NavMesh triangle for the projected {missing}."));
                     continue;
                 }
                 var start = (Vector3)_projectedPositions[i * 2];
@@ -3107,7 +3512,6 @@ namespace RecoilPathfinding
             _terrainHeightField.Dispose();
             maxCachedFields = Mathf.Max(1, maxCachedFields);
             crowdCellSize = Mathf.Max(0.1f, crowdCellSize);
-            maxAvoidanceNeighbors = Mathf.Max(1, maxAvoidanceNeighbors);
             crowdSimulationRate = Mathf.Max(1f, crowdSimulationRate);
             var settings = useProjectTerrainMap ? Resources.Load<RecoilTerrainBackendSettings>("RecoilTerrainBackend") : null;
             _activeTerrainMap = terrainMap != null ? terrainMap : settings != null ? settings.terrainMap : null;
@@ -3123,20 +3527,36 @@ namespace RecoilPathfinding
                 var cells = new byte[(_activeTerrainMap.Columns - 1) * (_activeTerrainMap.Rows - 1)];
                 _activeTerrainMap.CopyHeightsTo(heights);
                 _activeTerrainMap.CopyWalkabilityTo(cells);
-                var graph = RecoilTerrainQuadtree.Build(_activeTerrainMap.Columns, _activeTerrainMap.Rows,
-                    _activeTerrainMap.WorldOrigin, _activeTerrainMap.WorldSize, heights, cells,
-                    0.15f, settings != null ? settings.maxLeafCells : 32, false);
+                var maxLeafCells = settings != null ? settings.maxLeafCells : 32;
+                var blueCells = CastleWalkability(cells, _activeTerrainMap, RecoilCastleTeam.Red);
+                var redCells = CastleWalkability(cells, _activeTerrainMap, RecoilCastleTeam.Blue);
+                var blueGraph = RecoilTerrainQuadtree.Build(_activeTerrainMap.Columns, _activeTerrainMap.Rows,
+                    _activeTerrainMap.WorldOrigin, _activeTerrainMap.WorldSize, heights, blueCells,
+                    0.15f, maxLeafCells, false);
+                var redGraph = RecoilTerrainQuadtree.Build(_activeTerrainMap.Columns, _activeTerrainMap.Rows,
+                    _activeTerrainMap.WorldOrigin, _activeTerrainMap.WorldSize, heights, redCells,
+                    0.15f, maxLeafCells, false);
+                var graph = CombineTeamGraphs(blueGraph, redGraph);
+                var redTriangleOffset = blueGraph.Indices.Length / 3;
+                var redTriangleStarts = (int[])redGraph.LeafTriangleStarts.Clone();
+                for (var i = 0; i < redTriangleStarts.Length; i++)
+                    redTriangleStarts[i] += redTriangleOffset;
                 _terrainHeightField = new RecoilTerrainHeightField
                 {
                     Heights = new NativeArray<float>(heights, Allocator.Persistent),
-                    CellLeaves = new NativeArray<int>(graph.CellLeaves, Allocator.Persistent),
-                    LeafTriangleStarts = new NativeArray<int>(graph.LeafTriangleStarts, Allocator.Persistent),
+                    CellLeaves = new NativeArray<int>(blueGraph.CellLeaves, Allocator.Persistent),
+                    LeafTriangleStarts = new NativeArray<int>(blueGraph.LeafTriangleStarts, Allocator.Persistent),
+                    BlueCellLeaves = new NativeArray<int>(blueGraph.CellLeaves, Allocator.Persistent),
+                    BlueLeafTriangleStarts = new NativeArray<int>(blueGraph.LeafTriangleStarts, Allocator.Persistent),
+                    RedCellLeaves = new NativeArray<int>(redGraph.CellLeaves, Allocator.Persistent),
+                    RedLeafTriangleStarts = new NativeArray<int>(redTriangleStarts, Allocator.Persistent),
                     Columns = _activeTerrainMap.Columns, Rows = _activeTerrainMap.Rows,
                     Origin = _activeTerrainMap.WorldOrigin,
                     Size = new float2(_activeTerrainMap.WorldSize.x, _activeTerrainMap.WorldSize.y)
                 };
                 TerrainLeafCount = graph.LeafCount;
-                triangulation = new NavMeshTriangulation { vertices = graph.Vertices, indices = graph.Indices };
+                triangulation = new NavMeshTriangulation
+                { vertices = graph.Vertices, indices = graph.Indices, areas = graph.Areas };
             }
             else
             {
@@ -3243,11 +3663,11 @@ namespace RecoilPathfinding
 
         private void UpdateCrowdMovement()
         {
-            var start = System.Diagnostics.Stopwatch.GetTimestamp();
+            var start = RecoilCpuPhases.Timestamp();
             try { UpdateCrowdMovementCore(); }
             finally
             {
-                LastMovementScheduleMilliseconds = (float)((System.Diagnostics.Stopwatch.GetTimestamp() - start) *
+                LastMovementScheduleMilliseconds = (float)((RecoilCpuPhases.Timestamp() - start) *
                     (1000.0 / System.Diagnostics.Stopwatch.Frequency));
             }
         }
@@ -3342,6 +3762,8 @@ namespace RecoilPathfinding
                         MaxSpeed = settings.MaxSpeed, Acceleration = settings.Acceleration, Deceleration = settings.Deceleration,
                         TurnSpeedDegrees = settings.TurnSpeedDegrees,
                         AvoidanceStrength = settings.AvoidanceStrength, AvoidanceRadius = settings.AvoidanceRadius,
+                        DisableMobileAvoidance = settings.DisableMobileAvoidance,
+                        AllyPassThroughGroup = settings.AllyPassThroughGroup,
                         DeltaTime = deltaTime, WaypointTolerance = settings.WaypointTolerance,
                         Goal = navigation.Destination, HasGoal = navigation.HasDestination,
                         AvoidingUnits = navigation.AvoidingUnits, AllowEnemyPushing = settings.AllowEnemyPushing,
@@ -3351,10 +3773,13 @@ namespace RecoilPathfinding
             }
             var gridUpdate = new UpdateCrowdGridJob
             {
+                ChangedCells = _crowdChangedCells, Survivors = _crowdGridSurvivors,
+                ChangedIndices = _crowdChangedIndices,
                 Inputs = _crowdMovementInputs, Cells = _crowdAgentsByCell, PreviousCells = _crowdPreviousCells,
                 PreviousActive = _crowdPreviousActive, Metadata = _crowdGridMetadata,
                 Count = _pendingCrowdAgents.Count, CellSize = crowdCellSize, MaxBodyRadius = _crowdMaxBodyRadius
             }.Schedule(preparation);
+            _crowdGridHandle = gridUpdate;
             _crowdMovementHandle = new SimulateCrowdMovementJob
             {
                 TerrainHeights = _terrainHeightField,
@@ -3366,12 +3791,16 @@ namespace RecoilPathfinding
                 Inputs = _crowdMovementInputs,
                 Outputs = _crowdMovementOutputs,
                 CellSize = crowdCellSize,
-                MaxNeighbors = maxAvoidanceNeighbors,
+                // Recoil's QuadField scan has no fixed neighbor cap. Zero means scan every
+                // candidate in the speed-scaled local query; the cap remains available only
+                // to small isolated validation fixtures.
+                MaxNeighbors = 0,
                 AvoidanceUpdateRate = avoidanceUpdateRate,
                 Tick = _movementTick,
                 AllowUnitCollisionOverlap = (byte)(allowUnitCollisionOverlap ? 1 : 0),
                 MaxCollisionPushMultiplier = maxCollisionPushMultiplier
             }.Schedule(_pendingCrowdAgents.Count, 64, gridUpdate);
+            _crowdSimulationHandle = _crowdMovementHandle;
             _crowdMovementHandle = new CollectCrowdResultsJob
             {
                 Inputs = _crowdMovementInputs, Outputs = _crowdMovementOutputs,
@@ -3379,19 +3808,22 @@ namespace RecoilPathfinding
             }.Schedule(_crowdMovementHandle);
             _movementTick++;
             _crowdMovementPending = true;
-            // Release chunk/buffer access before other systems issue ECS commands or render reads.
-            // Grid and native-only movement remain scheduled as one dependency chain.
-            preparation.Complete();
+            // The fixed simulation clock completes this whole chain immediately after this
+            // method returns, so keep preparation, grid update, movement and result collection
+            // queued together instead of inserting a main-thread barrier between them. The
+            // standalone LateUpdate mode can continue into presentation/other ECS readers, so
+            // release chunk/buffer access before returning there.
+            if (!_clockDriven) preparation.Complete();
         }
 
         private void CompletePendingCrowdMovement(bool applyResults)
         {
             if (!_crowdMovementPending) return;
-            var start = System.Diagnostics.Stopwatch.GetTimestamp();
+            var start = RecoilCpuPhases.Timestamp();
             try { CompletePendingCrowdMovementCore(applyResults); }
             finally
             {
-                LastMovementApplyMilliseconds = math.max(0f, (float)((System.Diagnostics.Stopwatch.GetTimestamp() - start) *
+                LastMovementApplyMilliseconds = math.max(0f, (float)((RecoilCpuPhases.Timestamp() - start) *
                     (1000.0 / System.Diagnostics.Stopwatch.Frequency)) - LastMovementWaitMilliseconds);
             }
         }
@@ -3401,11 +3833,18 @@ namespace RecoilPathfinding
             if (!_crowdMovementPending)
                 return;
 
-            var waitStart = System.Diagnostics.Stopwatch.GetTimestamp();
-            using (RecoilCpuPhases.Measure(RecoilCpuPhase.WaitMovement)) _crowdMovementHandle.Complete();
-            LastMovementWaitMilliseconds = (float)((System.Diagnostics.Stopwatch.GetTimestamp() - waitStart) *
+            var waitStart = RecoilCpuPhases.Timestamp();
+            using (RecoilCpuPhases.Measure(RecoilCpuPhase.WaitMovement))
+            {
+                using (RecoilCpuPhases.Measure(RecoilCpuPhase.WaitMovementGrid)) _crowdGridHandle.Complete();
+                using (RecoilCpuPhases.Measure(RecoilCpuPhase.WaitMovementSimulation)) _crowdSimulationHandle.Complete();
+                using (RecoilCpuPhases.Measure(RecoilCpuPhase.WaitMovementCollect)) _crowdMovementHandle.Complete();
+            }
+            LastMovementWaitMilliseconds = (float)((RecoilCpuPhases.Timestamp() - waitStart) *
                 (1000.0 / System.Diagnostics.Stopwatch.Frequency));
             LastCrowdGridMutations = _crowdGridMetadata.IsCreated ? _crowdGridMetadata[1] : 0;
+            LastCrowdGridChangedCells = _crowdGridMetadata[2];
+            LastCrowdGridScannedEntries = _crowdGridMetadata[3];
             if (applyResults)
             {
                 if (_useChunkApply && _movementWorld != null && _movementWorld.IsCreated)
@@ -3537,9 +3976,13 @@ namespace RecoilPathfinding
                 var a = triangulation.vertices[triangulation.indices[index]];
                 var b = triangulation.vertices[triangulation.indices[index + 1]];
                 var c = triangulation.vertices[triangulation.indices[index + 2]];
-                AddEdge(triangleIndex, a, b, sharedEdges);
-                AddEdge(triangleIndex, b, c, sharedEdges);
-                AddEdge(triangleIndex, c, a, sharedEdges);
+                // Terrain mode duplicates overlapping geometry for the two team-specific
+                // walkability masks; keep those copies disconnected. Ordinary NavMesh areas
+                // remain connected as before.
+                var area = UsingTerrainMap ? _triangles[triangleIndex].Area : 0;
+                AddEdge(triangleIndex, a, b, area, sharedEdges);
+                AddEdge(triangleIndex, b, c, area, sharedEdges);
+                AddEdge(triangleIndex, c, a, area, sharedEdges);
             }
         }
 
@@ -3547,9 +3990,10 @@ namespace RecoilPathfinding
             int triangleIndex,
             Vector3 a,
             Vector3 b,
+            int area,
             Dictionary<EdgeKey, EdgeReference> sharedEdges)
         {
-            var key = new EdgeKey(new VertexKey(a), new VertexKey(b));
+            var key = new EdgeKey(new VertexKey(a), new VertexKey(b), area);
             var midpoint = (a + b) * 0.5f;
             if (sharedEdges.TryGetValue(key, out var shared))
             {
@@ -3720,9 +4164,9 @@ namespace RecoilPathfinding
             }
             }
 
-            var deliveryStart = System.Diagnostics.Stopwatch.GetTimestamp();
+            var deliveryStart = RecoilCpuPhases.Timestamp();
             using (DeliveryMarker.Auto()) DeliverReadyPaths();
-            LastPathDeliveryMilliseconds = (float)((System.Diagnostics.Stopwatch.GetTimestamp() - deliveryStart) *
+            LastPathDeliveryMilliseconds = (float)((RecoilCpuPhases.Timestamp() - deliveryStart) *
                 (1000.0 / System.Diagnostics.Stopwatch.Frequency));
             using (FieldMarker.Auto()) StartQueuedFields();
         }

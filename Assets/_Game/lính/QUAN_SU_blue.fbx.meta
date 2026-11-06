@@ -3,7 +3,12 @@ guid: b66f0fe63e568ca4d911f6404af757c8
 ModelImporter:
   serializedVersion: 24300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gacatluong.001
+    second: {fileID: 2100000, guid: 1844f4a5f299b2547ab0f2d7d7f22255, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,16 +1,16 @@
-BO_BINH_blue: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull
-BO_BINH_red: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull
-CUNG_KY_blue: LOD1/2/3: 1/1/1; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: body_cungky_blue_LOD1
-CUNG_KY_red: LOD1/2/3: 1/1/1; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: body_cungky_red_LOD1
-DAN_BINH_blue: LOD1/2/3: 2/2/2; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: Cylinder.001_LOD1, Cylinder.009_LOD1
-DAN_BINH_red: LOD1/2/3: 2/2/2; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: Cylinder.001_LOD1.001, Cylinder.009_LOD1.001
-GIAO_BINH_blue: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: BODY_linh.001_LOD1, khien dai.001_LOD1, giao.001_LOD1
-GIAO_BINH_red: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: BODY_linh_LOD1, khien dai_LOD1, giao_LOD1
-KY_BINH_blue: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: character.002_LOD1, character.003_LOD1, Horse.001_LOD1
-KY_BINH_red: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: character.001_LOD1, character_LOD1, Horse.004_LOD1
-maybanda_v02_blue: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: Catapulte_Low.004_LOD1, xanh duohg_LOD1, Catapulte_Low.003_LOD1
-maybanda_v02_red: LOD1/2/3: 3/3/3; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: Catapulte_Low.003_LOD1, do_LOD1, Catapulte_Low.004_LOD1
-QUAN_SU_blue: LOD1/2/3: 2/2/2; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: gaicatluong.002_LOD1, gaicatluong.001_LOD1
-QUAN_SU_red: LOD1/2/3: 2/2/2; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: gaicatluong.002_LOD1.001, gaicatluong.001_LOD1.001
-VOI_blue: LOD1/2/3: 1/1/1; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: ElephantLP_LOD1
-VOI_red: LOD1/2/3: 1/1/1; chỉ mesh 3D; LOD3 không bị cull; tắt bản trùng LOD1: ElephantLP.001_LOD1
+BO_BINH_blue: LOD1/2/3: 3/3/3; impostor: 1
+BO_BINH_red: LOD1/2/3: 3/3/3; impostor: 1
+CUNG_KY_blue: LOD1/2/3: 1/1/1; impostor: 1; tắt bản trùng LOD1: body_cungky_blue_LOD1
+CUNG_KY_red: LOD1/2/3: 1/1/1; impostor: 1; tắt bản trùng LOD1: body_cungky_red_LOD1
+DAN_BINH_blue: LOD1/2/3: 2/2/2; impostor: 1; tắt bản trùng LOD1: Cylinder.001_LOD1, Cylinder.009_LOD1
+DAN_BINH_red: LOD1/2/3: 2/2/2; impostor: 1; tắt bản trùng LOD1: Cylinder.001_LOD1.001, Cylinder.009_LOD1.001
+GIAO_BINH_blue: LOD1/2/3: 3/3/3; impostor: 1; tắt bản trùng LOD1: BODY_linh.001_LOD1, khien dai.001_LOD1, giao.001_LOD1
+GIAO_BINH_red: LOD1/2/3: 3/3/3; impostor: 1; tắt bản trùng LOD1: BODY_linh_LOD1, khien dai_LOD1, giao_LOD1
+KY_BINH_blue: LOD1/2/3: 3/3/3; impostor: 1; tắt bản trùng LOD1: character.002_LOD1, character.003_LOD1, Horse.001_LOD1
+KY_BINH_red: LOD1/2/3: 3/3/3; impostor: 1; tắt bản trùng LOD1: character.001_LOD1, character_LOD1, Horse.004_LOD1
+maybanda_v02_blue: LOD1/2/3: 3/3/3; impostor: 1; tắt bản trùng LOD1: Catapulte_Low.004_LOD1, xanh duohg_LOD1, Catapulte_Low.003_LOD1
+maybanda_v02_red: LOD1/2/3: 3/3/3; impostor: 1; tắt bản trùng LOD1: Catapulte_Low.003_LOD1, do_LOD1, Catapulte_Low.004_LOD1
+QUAN_SU_blue: LOD1/2/3: 2/2/2; impostor: 1; tắt bản trùng LOD1: gaicatluong.002_LOD1, gaicatluong.001_LOD1
+QUAN_SU_red: LOD1/2/3: 2/2/2; impostor: 1; tắt bản trùng LOD1: gaicatluong.002_LOD1.001, gaicatluong.001_LOD1.001
+VOI_blue: LOD1/2/3: 1/1/1; impostor: 1; tắt bản trùng LOD1: ElephantLP_LOD1
+VOI_red: LOD1/2/3: 1/1/1; impostor: 1; tắt bản trùng LOD1: ElephantLP.001_LOD1

@@ -18,3 +18,8 @@ Assets/_Game/lính/CUNG_KY_blue.fbx filter=lfs diff=lfs merge=lfs -text
 Assets/_Game/lính/CUNG_KY_red.fbx filter=lfs diff=lfs merge=lfs -text
 Assets/_Game/lính/GIAO_BINH_blue.fbx filter=lfs diff=lfs merge=lfs -text
 Assets/_Game/lính/GIAO_BINH_red.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/Data/Characters/Prefabs[[:space:]]VAT/**/part*_positions.asset filter=lfs diff=lfs merge=lfs -text
+Assets/Resources/RecoilGpuSkinningMeshes.asset filter=lfs diff=lfs merge=lfs -text
+Assets/Nhi[[:space:]]quoc[[:space:]]map/Export[[:space:]]1.png filter=lfs diff=lfs merge=lfs -text
+Assets/_Game/lính/tonghop06.png filter=lfs diff=lfs merge=lfs -text
+Assets/asset/tonghop05.png filter=lfs diff=lfs merge=lfs -text
